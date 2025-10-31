@@ -48,6 +48,11 @@ class FULLTRUTLOrchestrator {
     this.app.use(express.json());
     this.app.use(express.static('public'));
     
+    // Initialize core systems
+    this.webxr.initialize();
+    this.nft.initialize();
+    this.agi.initialize();
+    
     // Setup routes
     this.setupRoutes();
     
