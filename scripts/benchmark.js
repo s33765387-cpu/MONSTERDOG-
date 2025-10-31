@@ -80,11 +80,13 @@ benchmark('MONSTERDOG Entity Creation', () => {
   new MonsterdogEntity();
 });
 
-const monsterdog = new MonsterdogEntity();
 benchmark('MONSTERDOG Entity Activation', () => {
+  const monsterdog = new MonsterdogEntity();
   monsterdog.activate();
 }, 100);
 
+const monsterdog = new MonsterdogEntity();
+monsterdog.activate();
 benchmark('MONSTERDOG Entity getStatus()', () => {
   monsterdog.getStatus();
 });
@@ -99,11 +101,13 @@ benchmark('GEMINIDOG Entity Creation', () => {
   new GeminidogEntity();
 });
 
-const geminidog = new GeminidogEntity();
 benchmark('GEMINIDOG Entity Activation', () => {
+  const geminidog = new GeminidogEntity();
   geminidog.activate();
 }, 100);
 
+const geminidog = new GeminidogEntity();
+geminidog.activate();
 benchmark('GEMINIDOG Entity getStatus()', () => {
   geminidog.getStatus();
 });
@@ -118,11 +122,13 @@ benchmark('EXOCHRONOS Entity Creation', () => {
   new ExochronosEntity();
 });
 
-const exochronos = new ExochronosEntity();
 benchmark('EXOCHRONOS Entity Activation', () => {
+  const exochronos = new ExochronosEntity();
   exochronos.activate();
 }, 100);
 
+const exochronos = new ExochronosEntity();
+exochronos.activate();
 benchmark('EXOCHRONOS Entity getStatus()', () => {
   exochronos.getStatus();
 });
@@ -137,11 +143,13 @@ benchmark('WebXR Engine Creation', () => {
   new WebXREngine();
 });
 
-const webxr = new WebXREngine();
 benchmark('WebXR Engine Initialization', () => {
+  const webxr = new WebXREngine();
   webxr.initialize();
 }, 100);
 
+const webxr = new WebXREngine();
+webxr.initialize();
 benchmark('WebXR Engine getScene()', () => {
   webxr.getScene();
 });
@@ -152,16 +160,18 @@ benchmark('NFT Integration Creation', () => {
   new NFTIntegration();
 });
 
-const nft = new NFTIntegration();
 benchmark('NFT Integration Initialization', () => {
+  const nft = new NFTIntegration();
   nft.initialize();
 }, 100);
 
+const nft = new NFTIntegration();
+nft.initialize();
 benchmark('NFT Integration getCollection()', () => {
   nft.getCollection();
 });
 
-benchmark('NFT mintEntity()', () => {
+benchmark('NFT Integration mintEntity()', () => {
   nft.mintEntity('MONSTERDOG', '0x123');
 });
 
@@ -171,11 +181,13 @@ benchmark('AGI Orchestrator Creation', () => {
   new AGIOrchestrator();
 });
 
-const agi = new AGIOrchestrator();
 benchmark('AGI Orchestrator Initialization', () => {
+  const agi = new AGIOrchestrator();
   agi.initialize();
 }, 100);
 
+const agi = new AGIOrchestrator();
+agi.initialize();
 benchmark('AGI Orchestrator getStatus()', () => {
   agi.getStatus();
 });
@@ -205,17 +217,17 @@ const components = {
 };
 
 benchmarkResults.forEach(result => {
-  if (result.name.includes('MONSTERDOG') && !result.name.includes('GEMINIDOG')) {
+  if (result.name.startsWith('MONSTERDOG Entity')) {
     components['MONSTERDOG Entity'].push(result);
-  } else if (result.name.includes('GEMINIDOG')) {
+  } else if (result.name.startsWith('GEMINIDOG Entity')) {
     components['GEMINIDOG Entity'].push(result);
-  } else if (result.name.includes('EXOCHRONOS')) {
+  } else if (result.name.startsWith('EXOCHRONOS Entity')) {
     components['EXOCHRONOS Entity'].push(result);
-  } else if (result.name.includes('WebXR')) {
+  } else if (result.name.startsWith('WebXR Engine')) {
     components['WebXR Engine'].push(result);
-  } else if (result.name.includes('NFT')) {
+  } else if (result.name.startsWith('NFT Integration')) {
     components['NFT Integration'].push(result);
-  } else if (result.name.includes('AGI')) {
+  } else if (result.name.startsWith('AGI')) {
     components['AGI Orchestrator'].push(result);
   }
 });
