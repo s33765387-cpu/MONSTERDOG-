@@ -254,6 +254,22 @@ Each entity maintains independent consciousness while synchronizing through the 
 npm test
 ```
 
+### Run Benchmarks
+```bash
+npm run benchmark
+```
+
+The benchmark suite measures the performance of all entities and systems:
+- Entity creation, activation, and data retrieval
+- WebXR engine operations
+- NFT integration performance
+- AGI orchestrator command execution
+
+Benchmark results include:
+- Operations per second
+- Average execution time per operation
+- Total execution time across iterations
+
 ### Development Mode
 ```bash
 npm run dev
