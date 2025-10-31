@@ -113,6 +113,11 @@ MONSTERDOG-/
 - `GET /entities/geminidog` - GEMINIDOG entity data
 - `GET /entities/exochronos` - EXOCHRONOS entity data
 
+### Agentic Actions
+- `GET /agentic/actions` - List all 20 available agentic actions
+- `POST /agentic/execute` - Execute a specific agentic action
+- `GET /agentic/state` - Get agentic system state and history
+
 ### Systems
 - `GET /webxr/scene` - WebXR scene configuration
 - `GET /nft/collection` - NFT collection information
@@ -126,6 +131,18 @@ MONSTERDOG-/
 - Unified entity management
 - Fractal reality execution
 - Supreme mode activation
+
+### 🎯 Agentic Actions System
+- **20 autonomous agentic actions** for MONSTERDOG
+- Reality manipulation capabilities (4 actions)
+- Consciousness expansion & control (4 actions)
+- Entity coordination & orchestration (4 actions)
+- Temporal navigation & control (4 actions)
+- Learning & adaptation mechanisms (4 actions)
+- Full API integration for action execution
+- Action state tracking and history
+
+See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for complete documentation.
 
 ### 🌐 WebXR Integration
 - VR/AR/MR support

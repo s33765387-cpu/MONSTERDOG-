@@ -107,6 +107,38 @@ class FULLTRUTLOrchestrator {
       const result = this.agi.executeCommand(req.body);
       res.json(result);
     });
+    
+    // Agentic action endpoints
+    this.app.get('/agentic/actions', (req, res) => {
+      res.json({
+        success: true,
+        totalActions: 20,
+        actions: this.entities.monsterdog.getAgenticActions()
+      });
+    });
+    
+    this.app.post('/agentic/execute', (req, res) => {
+      const { action, parameters } = req.body;
+      
+      if (!action) {
+        return res.status(400).json({
+          success: false,
+          error: 'MISSING_ACTION',
+          message: 'Action name is required'
+        });
+      }
+      
+      const result = this.entities.monsterdog.executeAgenticAction(action, parameters || {});
+      res.json(result);
+    });
+    
+    this.app.get('/agentic/state', (req, res) => {
+      res.json({
+        success: true,
+        entityId: 'MONSTERDOG-248K',
+        state: this.entities.monsterdog.getAgenticState()
+      });
+    });
   }
   
   activateEntities() {
