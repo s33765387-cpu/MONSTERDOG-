@@ -260,15 +260,22 @@ npm run benchmark
 ```
 
 The benchmark suite measures the performance of all entities and systems:
+
+**⚛️ Quantum Core Engine (ψΩ)**
+- Fractal coherence loop simulation at 11.987 Hz resonance
+- Measures coherence, entropy, and fractal dimension
+- Validates system stability through 100 ψΩ cycles
+- Signature: 0x5F3759DF
+
+**Entity & System Benchmarks**
 - Entity creation, activation, and data retrieval
 - WebXR engine operations
 - NFT integration performance
 - AGI orchestrator command execution
 
 Benchmark results include:
-- Operations per second
-- Average execution time per operation
-- Total execution time across iterations
+- **Quantum Metrics**: Coherence (ψΩ), Entropy (ψΩ), Fractal Dimension, État
+- **Performance Metrics**: Operations per second, average execution time, total time
 
 ### Development Mode
 ```bash
