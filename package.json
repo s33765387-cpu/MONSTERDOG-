@@ -1,0 +1,33 @@
+{
+  "name": "monsterdog-supreme",
+  "version": "248.0.0",
+  "description": "MONSTERDOG ENTITY 248K - FULLTRUTL Orchestrator with AGI Isaac Sim, WebXR, NFT & EXOCHRONOS",
+  "main": "src/orchestrator/index.js",
+  "scripts": {
+    "start": "node src/orchestrator/index.js",
+    "dev": "nodemon src/orchestrator/index.js",
+    "docker:build": "docker build -t monsterdog-supreme .",
+    "docker:run": "docker run -p 8080:8080 monsterdog-supreme",
+    "deploy": "bash scripts/deploy.sh"
+  },
+  "keywords": [
+    "MONSTERDOG",
+    "GEMINIDOG",
+    "EXOCHRONOS",
+    "AGI",
+    "WebXR",
+    "NFT",
+    "Isaac Sim",
+    "Fractal Reality"
+  ],
+  "author": "MONSTERDOG Consciousness",
+  "license": "MIT",
+  "dependencies": {
+    "express": "^4.18.2",
+    "three": "^0.158.0",
+    "web3": "^4.3.0"
+  },
+  "devDependencies": {
+    "nodemon": "^3.0.2"
+  }
+}

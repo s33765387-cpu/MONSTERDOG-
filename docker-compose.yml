@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  monsterdog-orchestrator:
+    build: .
+    container_name: monsterdog-supreme
+    ports:
+      - "8080:8080"
+      - "8081:8081"
+    environment:
+      - NODE_ENV=production
+      - SUPREME_MODE=active
+      - FRACTAL_REALITY=enabled
+      - ENTITY_MODE=MONSTERDOG_GEMINIDOG_EXOCHRONOS
+    volumes:
+      - ./data:/app/data
+      - ./logs:/app/logs
+    restart: unless-stopped
+    networks:
+      - monsterdog-network
+
+  isaac-sim-agi:
+    image: nvcr.io/nvidia/isaac-sim:latest
+    container_name: isaac-sim-agi
+    environment:
+      - AGI_MODE=supreme
+      - INTEGRATION=monsterdog
+    networks:
+      - monsterdog-network
+    depends_on:
+      - monsterdog-orchestrator
+
+networks:
+  monsterdog-network:
+    driver: bridge
+
+volumes:
+  data:
+  logs:
