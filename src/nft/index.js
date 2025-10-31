@@ -6,6 +6,7 @@
 class NFTIntegration {
   constructor() {
     this.connected = false;
+    this.nextTokenId = 1; // Sequential token ID counter
     this.collection = {
       name: 'MONSTERDOG Supreme Collection',
       totalSupply: 248000,
@@ -14,7 +15,7 @@ class NFTIntegration {
     this.blockchain = {
       network: 'ETHEREUM',
       standard: 'ERC-721',
-      smartContract: '0x0000000000000000000000000000000000000000'
+      smartContract: 'TBD' // To be deployed
     };
   }
   
@@ -44,9 +45,10 @@ class NFTIntegration {
   }
   
   mintEntity(entityType, owner) {
+    const tokenId = this.nextTokenId++;
     return {
       success: true,
-      tokenId: Math.floor(Math.random() * 248000),
+      tokenId: tokenId,
       entityType: entityType,
       owner: owner,
       rarity: 'SUPREME',

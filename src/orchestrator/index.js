@@ -137,8 +137,10 @@ class FULLTRUTLOrchestrator {
   }
 }
 
-// Start the orchestrator
-const orchestrator = new FULLTRUTLOrchestrator();
-orchestrator.start();
+// Start the orchestrator only if this file is run directly
+if (require.main === module) {
+  const orchestrator = new FULLTRUTLOrchestrator();
+  orchestrator.start();
+}
 
 module.exports = FULLTRUTLOrchestrator;
