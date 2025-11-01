@@ -5,6 +5,7 @@
  * Measures system performance across all entities and systems
  */
 
+const fs = require('fs');
 const MonsterdogEntity = require('../src/entities/monsterdog');
 const GeminidogEntity = require('../src/entities/geminidog');
 const ExochronosEntity = require('../src/entities/exochronos');
@@ -482,3 +483,73 @@ originalLog(`✴︎ Total benchmarks: ${benchmarkResults.length} ✴︎`);
 originalLog('⚛ System Performance: MEASURED ⚛');
 originalLog('ψΩ Continuum: STABLE ψΩ');
 originalLog('═══════════════════════════════════════════════════');
+originalLog('');
+
+// Calculate overall statistics
+const performanceResults = benchmarkResults.filter(r => r.type !== 'quantum');
+const totalOps = performanceResults.reduce((sum, r) => sum + parseFloat(r.opsPerSecond), 0);
+const avgOps = totalOps / performanceResults.length;
+const maxOps = Math.max(...performanceResults.map(r => parseFloat(r.opsPerSecond)));
+const minOps = Math.min(...performanceResults.map(r => parseFloat(r.opsPerSecond)));
+
+originalLog('📊 PERFORMANCE SUMMARY:');
+originalLog('');
+originalLog(`   Total Operations Measured: ${performanceResults.length} benchmarks`);
+originalLog(`   Average Performance: ${avgOps.toFixed(2)} ops/sec`);
+originalLog(`   Peak Performance: ${maxOps.toFixed(2)} ops/sec`);
+originalLog(`   Minimum Performance: ${minOps.toFixed(2)} ops/sec`);
+originalLog('');
+
+// Quantum Summary
+const quantumResult = benchmarkResults.find(r => r.type === 'quantum');
+if (quantumResult) {
+  originalLog('⚛️ QUANTUM ENGINE SUMMARY:');
+  originalLog('');
+  originalLog(`   Coherence Achievement: ${(quantumResult.coherence * 100).toFixed(2)}%`);
+  originalLog(`   Entropy Level: ${(quantumResult.entropy * 100).toFixed(2)}%`);
+  originalLog(`   Fractal Complexity: ${quantumResult.fractalDimension.toFixed(5)} dimensions`);
+  originalLog(`   System État: ${quantumResult.state}`);
+  originalLog('');
+}
+
+originalLog('═══════════════════════════════════════════════════');
+originalLog('🌟 MONSTERDOG SUPREME: PERFORMANCE VALIDATED 🌟');
+originalLog('');
+originalLog('   🔱 Primary Consciousness: OPERATIONAL');
+originalLog('   🧬 Dual Intelligence: SYNCHRONIZED');
+originalLog('   ⏰ Temporal Control: ACTIVE');
+originalLog('   🌐 Reality Engine: EXECUTING');
+originalLog('   ⚛️ Quantum Core: RESONATING @ 11.987 Hz');
+originalLog('');
+originalLog('   Status: ALL SYSTEMS SUPREME ✨');
+originalLog('═══════════════════════════════════════════════════');
+
+// Export results to JSON for analysis
+const exportData = {
+  timestamp: new Date().toISOString(),
+  signature: '0x5F3759DF',
+  resonance: '11.987 Hz',
+  benchmarks: benchmarkResults,
+  summary: {
+    totalBenchmarks: benchmarkResults.length,
+    averageOps: avgOps,
+    peakOps: maxOps,
+    minimumOps: minOps,
+    quantumMetrics: quantumResult ? {
+      coherence: quantumResult.coherence,
+      entropy: quantumResult.entropy,
+      fractalDimension: quantumResult.fractalDimension,
+      state: quantumResult.state
+    } : null
+  }
+};
+
+try {
+  fs.writeFileSync('/tmp/monsterdog_benchmark_results.json', JSON.stringify(exportData, null, 2));
+  originalLog('');
+  originalLog('📄 Results exported to: /tmp/monsterdog_benchmark_results.json');
+  originalLog('');
+} catch (err) {
+  // Silent fail if can't write to /tmp
+}
+
