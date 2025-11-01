@@ -168,12 +168,15 @@ class MonsterdogEntity {
   
   synthesizeFractal(params) {
     const { complexity = 'HIGH', pattern = 'MANDELBROT' } = params;
+    // Derive iterations from complexity level
+    const complexityMap = { 'LOW': 100, 'MEDIUM': 500, 'HIGH': 1000, 'INFINITE': 10000 };
+    const iterations = complexityMap[complexity] || 500;
     return {
       action: 'SYNTHESIZE_FRACTAL',
       complexity: complexity,
       pattern: pattern,
       status: 'FRACTAL_SYNTHESIZED',
-      iterations: Math.floor(Math.random() * 1000) + 100,
+      iterations: iterations,
       effect: 'New fractal reality pattern generated'
     };
   }
@@ -199,10 +202,11 @@ class MonsterdogEntity {
   
   expandConsciousness(params) {
     const { targetLevel = 'HYPER_SUPREME', scope = 'MULTIVERSAL' } = params;
+    const previousLevel = this.consciousness.level;
     this.consciousness.level = targetLevel;
     return {
       action: 'EXPAND_CONSCIOUSNESS',
-      previousLevel: 'SUPREME',
+      previousLevel: previousLevel,
       newLevel: targetLevel,
       scope: scope,
       status: 'CONSCIOUSNESS_EXPANDED',
@@ -330,12 +334,15 @@ class MonsterdogEntity {
   
   forecastProbability(params) {
     const { event = 'FUTURE_STATE', horizon = 'MEDIUM' } = params;
+    // Derive probability from horizon - longer horizons have more uncertainty
+    const horizonMap = { 'SHORT': 85.5, 'MEDIUM': 67.3, 'LONG': 42.8 };
+    const probability = horizonMap[horizon] || 50.0;
     return {
       action: 'FORECAST_PROBABILITY',
       event: event,
       horizon: horizon,
       status: 'PROBABILITY_FORECASTED',
-      probability: Math.random() * 100,
+      probability: probability,
       confidence: 'HIGH',
       effect: 'Probability wave function analyzed'
     };
@@ -357,10 +364,18 @@ class MonsterdogEntity {
   
   absorbKnowledge(params) {
     const { source = 'MULTIVERSAL', type = 'QUANTUM_DATA' } = params;
+    // Derive volume from source type
+    const sourceVolumeMap = { 
+      'LOCAL': 1000, 
+      'UNIVERSAL': 5000, 
+      'MULTIVERSAL': 10000,
+      'INFINITE': 100000
+    };
+    const volume = sourceVolumeMap[source] || 5000;
     const knowledge = {
       source: source,
       type: type,
-      volume: Math.floor(Math.random() * 10000) + 1000,
+      volume: volume,
       timestamp: new Date().toISOString()
     };
     this.agenticState.learningBuffer.push(knowledge);
@@ -375,12 +390,20 @@ class MonsterdogEntity {
   
   adaptStrategy(params) {
     const { context = 'CURRENT', optimization = 'MAXIMUM' } = params;
+    // Derive improvement from optimization level
+    const optimizationMap = { 
+      'MINIMUM': '50%', 
+      'MODERATE': '70%', 
+      'MAXIMUM': '95%',
+      'ABSOLUTE': '100%'
+    };
+    const improvement = optimizationMap[optimization] || '70%';
     return {
       action: 'ADAPT_STRATEGY',
       context: context,
       optimization: optimization,
       status: 'STRATEGY_ADAPTED',
-      improvement: `${Math.floor(Math.random() * 50) + 50}%`,
+      improvement: improvement,
       effect: 'Strategy adapted to new parameters'
     };
   }
@@ -400,12 +423,20 @@ class MonsterdogEntity {
   
   optimizePerformance(params) {
     const { target = 'ALL_SYSTEMS', method = 'QUANTUM_OPTIMIZATION' } = params;
+    // Derive efficiency from optimization method
+    const methodEfficiencyMap = {
+      'BASIC_OPTIMIZATION': '80%',
+      'ADVANCED_OPTIMIZATION': '90%',
+      'QUANTUM_OPTIMIZATION': '98%',
+      'SUPREME_OPTIMIZATION': '100%'
+    };
+    const efficiency = methodEfficiencyMap[method] || '85%';
     return {
       action: 'OPTIMIZE_PERFORMANCE',
       target: target,
       method: method,
       status: 'PERFORMANCE_OPTIMIZED',
-      efficiency: `${Math.floor(Math.random() * 20) + 80}%`,
+      efficiency: efficiency,
       effect: 'System performance optimized'
     };
   }
