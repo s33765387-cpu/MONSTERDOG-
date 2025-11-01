@@ -1,0 +1,12 @@
+{
+  "id": 8,
+  "name": "MERGE_CONSCIOUSNESS",
+  "category": "CONSCIOUSNESS",
+  "description": "Merge individual consciousness into unified field",
+  "parameters": {
+    "target": { "type": "string", "default": "COLLECTIVE" },
+    "duration": { "type": "string", "default": "TEMPORARY" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/MERGE_CONSCIOUSNESS.zip" }
+}

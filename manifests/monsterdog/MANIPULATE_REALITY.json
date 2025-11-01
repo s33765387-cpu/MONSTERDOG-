@@ -1,0 +1,12 @@
+{
+  "id": 1,
+  "name": "MANIPULATE_REALITY",
+  "category": "REALITY_MANIPULATION",
+  "description": "Alter the fabric of reality in specified dimensions",
+  "parameters": {
+    "dimension": { "type": "string", "default": "3D" },
+    "intensity": { "type": "string", "default": "MEDIUM" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/MANIPULATE_REALITY.zip" }
+}

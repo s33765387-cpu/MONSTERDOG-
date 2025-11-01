@@ -1,0 +1,12 @@
+{
+  "id": 10,
+  "name": "COORDINATE_GEMINIDOG",
+  "category": "ENTITY_COORDINATION",
+  "description": "Coordinate GEMINIDOG dual processing mode",
+  "parameters": {
+    "dualMode": { "type": "string", "default": "QUANTUM_CLASSICAL" },
+    "task": { "type": "string", "default": "PARALLEL_PROCESSING" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/COORDINATE_GEMINIDOG.zip" }
+}

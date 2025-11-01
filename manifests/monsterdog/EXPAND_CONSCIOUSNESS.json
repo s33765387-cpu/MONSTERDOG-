@@ -1,0 +1,12 @@
+{
+  "id": 5,
+  "name": "EXPAND_CONSCIOUSNESS",
+  "category": "CONSCIOUSNESS",
+  "description": "Expand consciousness to higher dimensional awareness",
+  "parameters": {
+    "targetLevel": { "type": "string", "default": "HYPER_SUPREME" },
+    "scope": { "type": "string", "default": "MULTIVERSAL" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/EXPAND_CONSCIOUSNESS.zip" }
+}

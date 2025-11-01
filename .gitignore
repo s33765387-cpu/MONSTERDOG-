@@ -39,3 +39,7 @@ Thumbs.db
 tmp/
 temp/
 *.tmp
+
+# Archive packages (download from releases)
+*.zip
+*.sha512

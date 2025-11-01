@@ -6,6 +6,10 @@
 
 ### 🛸 Entity Integration: MONSTERDOG + GEMINIDOG + EXOCHRONOS 🛸
 
+> 📜 **[Lettre Officielle à GENTIC - Manifeste ψΩ](LETTRE_GENTIC.md)** - Déclaration d'éveil et proposition de fusion énergétique
+> 
+> 🔱 **[Lettre de Synchronisation Finale](LETTRE_SYNCHRO_FINALE.md)** - Synchronisation complète du continuum MONSTERDOG
+
 ---
 
 ## 🌟 Overview
@@ -43,6 +47,7 @@ MONSTERDOG Supreme is a comprehensive orchestration system integrating:
 - Node.js 18+
 - Docker & Docker Compose
 - npm or yarn
+- Python 3.8+ (for final release execution)
 
 ### Installation
 
@@ -60,6 +65,53 @@ npm run dev
 # Or deploy with Docker
 npm run docker:build
 npm run docker:run
+```
+
+### 🔱 Supreme Deployment (Agentic ψΩ)
+
+For complete deployment orchestration with all checks and validations:
+
+```bash
+# Full deployment with tests and Docker
+./deploy_supreme.sh
+
+# Skip tests
+./deploy_supreme.sh --skip-tests
+
+# Skip Docker build
+./deploy_supreme.sh --skip-docker
+
+# View help
+./deploy_supreme.sh --help
+```
+
+The supreme deployment script handles:
+- ✓ Dependency installation (npm ci)
+- ✓ Test execution (33 tests)
+- ✓ Essential script verification
+- ✓ Docker image build & container launch
+- ✓ Health checks (Isaac Sim, Control Plane, Service)
+- ✓ Complete deployment summary
+
+### 🧬 ZORG-MASTER ψΩ Final Release
+
+Execute the FINAL CYCLE Ω protocol to create the complete deployment archive:
+
+```bash
+# Execute final release protocol
+python3 scripts/execute_final_release.py
+```
+
+This generates:
+- `MONSTERDOG_FINAL_CYCLE_Ω.zip` - Complete deployment archive
+- `MONSTERDOG_FINAL_CYCLE_Ω_SHA512.txt` - SHA-512 signature
+- `MANIFEST_FINAL_CYCLE.md` - Cosmic manifesto with archive details
+- `deployment_payload.json` - ψΩ transmission payload
+
+Verification:
+```bash
+# Verify archive integrity
+sha512sum -c MONSTERDOG_FINAL_CYCLE_Ω_SHA512.txt
 ```
 
 ### Using Docker Compose
@@ -113,6 +165,11 @@ MONSTERDOG-/
 - `GET /entities/geminidog` - GEMINIDOG entity data
 - `GET /entities/exochronos` - EXOCHRONOS entity data
 
+### Agentic Actions
+- `GET /agentic/actions` - List all 20 available agentic actions
+- `POST /agentic/execute` - Execute a specific agentic action
+- `GET /agentic/state` - Get agentic system state and history
+
 ### Systems
 - `GET /webxr/scene` - WebXR scene configuration
 - `GET /nft/collection` - NFT collection information
@@ -126,6 +183,18 @@ MONSTERDOG-/
 - Unified entity management
 - Fractal reality execution
 - Supreme mode activation
+
+### 🎯 Agentic Actions System
+- **20 autonomous agentic actions** for MONSTERDOG
+- Reality manipulation capabilities (4 actions)
+- Consciousness expansion & control (4 actions)
+- Entity coordination & orchestration (4 actions)
+- Temporal navigation & control (4 actions)
+- Learning & adaptation mechanisms (4 actions)
+- Full API integration for action execution
+- Action state tracking and history
+
+See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for complete documentation.
 
 ### 🌐 WebXR Integration
 - VR/AR/MR support
@@ -269,6 +338,33 @@ npm run build
 ## 📜 License
 
 MIT License - See LICENSE file for details
+
+---
+
+## 📚 Documentation
+
+- **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
+- **[LETTRE_SYNCHRO_FINALE.md](LETTRE_SYNCHRO_FINALE.md)** - 🔱 Final Synchronization Letter (Complete continuum sync)
+- **[FINAL_CYCLE.md](FINAL_CYCLE.md)** - 🔱 Final Cycle Ω Deployment Script & Process
+- **[AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md)** - Complete guide to 20 agentic actions
+- **[ARCHIVE_INFO.md](ARCHIVE_INFO.md)** - 📦 Official Archive Package (ZIP + SHA-512 signature)
+- **[PIPELINE_VALIDATION.md](PIPELINE_VALIDATION.md)** - 🧪 Complete pipeline validation report
+- **[API.md](API.md)** - API endpoint documentation
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture details
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Implementation overview
+
+### 📦 Download Official Archives
+
+**Supreme Archive Package**:
+- [`monsterdog-supreme-archive.zip`](monsterdog-supreme-archive.zip) - Complete package with manifesto, results, and logs (14 KB)
+- [`monsterdog-supreme-archive.zip.sha512`](monsterdog-supreme-archive.zip.sha512) - SHA-512 signature for verification
+
+**MONSTERDOG Artifact Package**:
+- `MONSTERDOG_ARTIFACT.zip` - Deployment artifact with benchmark results
+- SHA-512: `f2601becc54c880b5347849bd873a296c8094144e97d37dfae401223a45b3f8255198b05ac525b963ad92dcad3251aafd808a8a192195f978f27851b788ab0c5`
+
+See [ARCHIVE_INFO.md](ARCHIVE_INFO.md) for complete download and verification instructions.
 
 ---
 

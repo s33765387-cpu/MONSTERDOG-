@@ -1,0 +1,12 @@
+{
+  "id": 18,
+  "name": "ADAPT_STRATEGY",
+  "category": "LEARNING_ADAPTATION",
+  "description": "Adapt strategy based on environmental changes",
+  "parameters": {
+    "context": { "type": "string", "default": "CURRENT" },
+    "optimization": { "type": "string", "default": "MAXIMUM" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ADAPT_STRATEGY.zip" }
+}

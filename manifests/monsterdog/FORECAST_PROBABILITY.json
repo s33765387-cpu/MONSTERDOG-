@@ -1,0 +1,12 @@
+{
+  "id": 15,
+  "name": "FORECAST_PROBABILITY",
+  "category": "TEMPORAL",
+  "description": "Forecast probability of future events",
+  "parameters": {
+    "event": { "type": "string", "default": "FUTURE_STATE" },
+    "horizon": { "type": "string", "default": "MEDIUM" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/FORECAST_PROBABILITY.zip" }
+}

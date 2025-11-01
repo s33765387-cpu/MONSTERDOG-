@@ -1,0 +1,12 @@
+{
+  "id": 16,
+  "name": "STABILIZE_TIMESTREAM",
+  "category": "TEMPORAL",
+  "description": "Stabilize and secure timestream integrity",
+  "parameters": {
+    "stream": { "type": "string", "default": "PRIMARY" },
+    "method": { "type": "string", "default": "QUANTUM_LOCK" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/STABILIZE_TIMESTREAM.zip" }
+}
