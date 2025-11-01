@@ -1,0 +1,12 @@
+{
+  "id": 17,
+  "name": "ABSORB_KNOWLEDGE",
+  "category": "LEARNING_ADAPTATION",
+  "description": "Absorb knowledge from multiversal sources",
+  "parameters": {
+    "source": { "type": "string", "default": "MULTIVERSAL" },
+    "type": { "type": "string", "default": "QUANTUM_DATA" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ABSORB_KNOWLEDGE.zip" }
+}

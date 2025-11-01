@@ -1,0 +1,12 @@
+{
+  "id": 3,
+  "name": "SYNTHESIZE_FRACTAL",
+  "category": "REALITY_MANIPULATION",
+  "description": "Generate new fractal reality patterns",
+  "parameters": {
+    "complexity": { "type": "string", "default": "HIGH" },
+    "pattern": { "type": "string", "default": "MANDELBROT" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/SYNTHESIZE_FRACTAL.zip" }
+}

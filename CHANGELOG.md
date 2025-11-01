@@ -125,6 +125,18 @@ Complete implementation of MONSTERDOG Supreme - Entity 248K with FULLTRUTL Orche
 - Docker deployment support
 - Comprehensive documentation
 
+## [248.1.0] - 2025-11-01
+
+### Added
+
+- Manifests for 20 MONSTERDOG agentic actions (see `manifests/monsterdog/`)
+- `scripts/validate-manifests.js` to validate manifests vs runtime
+- `manifests/README_MANIFESTS.md` with usage notes
+
+### Notes
+
+These manifests provide declarative metadata for each agentic action (parameters, category, deploy artifact). A validation script is provided and the existing test suite covers action execution.
+
 ---
 
 ## Version Naming

@@ -1,0 +1,12 @@
+{
+  "id": 2,
+  "name": "FOLD_DIMENSION",
+  "category": "REALITY_MANIPULATION",
+  "description": "Fold dimensional space for spatial compression",
+  "parameters": {
+    "sourceDim": { "type": "string", "default": "3D" },
+    "targetDim": { "type": "string", "default": "4D" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/FOLD_DIMENSION.zip" }
+}

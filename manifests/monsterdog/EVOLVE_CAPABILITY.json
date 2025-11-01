@@ -1,0 +1,12 @@
+{
+  "id": 19,
+  "name": "EVOLVE_CAPABILITY",
+  "category": "LEARNING_ADAPTATION",
+  "description": "Evolve new capabilities and powers",
+  "parameters": {
+    "capability": { "type": "string", "default": "NEW_POWER" },
+    "level": { "type": "string", "default": "ADVANCED" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/EVOLVE_CAPABILITY.zip" }
+}

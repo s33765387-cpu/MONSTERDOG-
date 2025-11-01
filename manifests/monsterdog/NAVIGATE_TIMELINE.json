@@ -1,0 +1,13 @@
+{
+  "id": 13,
+  "name": "NAVIGATE_TIMELINE",
+  "category": "TEMPORAL",
+  "description": "Navigate through temporal dimensions",
+  "parameters": {
+    "direction": { "type": "string", "default": "FUTURE" },
+    "distance": { "type": "string", "default": "NEAR" },
+    "precision": { "type": "string", "default": "HIGH" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/NAVIGATE_TIMELINE.zip" }
+}

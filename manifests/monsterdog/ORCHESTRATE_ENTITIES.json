@@ -1,0 +1,12 @@
+{
+  "id": 9,
+  "name": "ORCHESTRATE_ENTITIES",
+  "category": "ENTITY_COORDINATION",
+  "description": "Orchestrate all entities under unified command",
+  "parameters": {
+    "mode": { "type": "string", "default": "SUPREME" },
+    "coordination": { "type": "string", "default": "FULL" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ORCHESTRATE_ENTITIES.zip" }
+}

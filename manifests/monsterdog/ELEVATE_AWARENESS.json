@@ -1,0 +1,12 @@
+{
+  "id": 7,
+  "name": "ELEVATE_AWARENESS",
+  "category": "CONSCIOUSNESS",
+  "description": "Elevate awareness to perceive quantum states",
+  "parameters": {
+    "domain": { "type": "string", "default": "QUANTUM" },
+    "elevation": { "type": "string", "default": "MAXIMUM" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ELEVATE_AWARENESS.zip" }
+}
