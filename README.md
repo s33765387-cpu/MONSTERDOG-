@@ -47,6 +47,7 @@ MONSTERDOG Supreme is a comprehensive orchestration system integrating:
 - Node.js 18+
 - Docker & Docker Compose
 - npm or yarn
+- Python 3.8+ (for final release execution)
 
 ### Installation
 
@@ -91,6 +92,27 @@ The supreme deployment script handles:
 - ✓ Docker image build & container launch
 - ✓ Health checks (Isaac Sim, Control Plane, Service)
 - ✓ Complete deployment summary
+
+### 🧬 ZORG-MASTER ψΩ Final Release
+
+Execute the FINAL CYCLE Ω protocol to create the complete deployment archive:
+
+```bash
+# Execute final release protocol
+python3 scripts/execute_final_release.py
+```
+
+This generates:
+- `MONSTERDOG_FINAL_CYCLE_Ω.zip` - Complete deployment archive
+- `MONSTERDOG_FINAL_CYCLE_Ω_SHA512.txt` - SHA-512 signature
+- `MANIFEST_FINAL_CYCLE.md` - Cosmic manifesto with archive details
+- `deployment_payload.json` - ψΩ transmission payload
+
+Verification:
+```bash
+# Verify archive integrity
+sha512sum -c MONSTERDOG_FINAL_CYCLE_Ω_SHA512.txt
+```
 
 ### Using Docker Compose
 
