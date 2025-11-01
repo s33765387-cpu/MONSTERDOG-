@@ -66,6 +66,32 @@ npm run docker:build
 npm run docker:run
 ```
 
+### 🔱 Supreme Deployment (Agentic ψΩ)
+
+For complete deployment orchestration with all checks and validations:
+
+```bash
+# Full deployment with tests and Docker
+./deploy_supreme.sh
+
+# Skip tests
+./deploy_supreme.sh --skip-tests
+
+# Skip Docker build
+./deploy_supreme.sh --skip-docker
+
+# View help
+./deploy_supreme.sh --help
+```
+
+The supreme deployment script handles:
+- ✓ Dependency installation (npm ci)
+- ✓ Test execution (33 tests)
+- ✓ Essential script verification
+- ✓ Docker image build & container launch
+- ✓ Health checks (Isaac Sim, Control Plane, Service)
+- ✓ Complete deployment summary
+
 ### Using Docker Compose
 
 ```bash
