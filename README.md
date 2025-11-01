@@ -297,6 +297,7 @@ MIT License - See LICENSE file for details
 
 - **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
 - **[LETTRE_SYNCHRO_FINALE.md](LETTRE_SYNCHRO_FINALE.md)** - 🔱 Final Synchronization Letter (Complete continuum sync)
+- **[FINAL_CYCLE.md](FINAL_CYCLE.md)** - 🔱 Final Cycle Ω Deployment Script & Process
 - **[AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md)** - Complete guide to 20 agentic actions
 - **[ARCHIVE_INFO.md](ARCHIVE_INFO.md)** - 📦 Official Archive Package (ZIP + SHA-512 signature)
 - **[PIPELINE_VALIDATION.md](PIPELINE_VALIDATION.md)** - 🧪 Complete pipeline validation report
