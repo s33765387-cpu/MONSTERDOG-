@@ -296,15 +296,23 @@ MIT License - See LICENSE file for details
 - **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
 - **[AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md)** - Complete guide to 20 agentic actions
 - **[ARCHIVE_INFO.md](ARCHIVE_INFO.md)** - 📦 Official Archive Package (ZIP + SHA-512 signature)
+- **[PIPELINE_VALIDATION.md](PIPELINE_VALIDATION.md)** - 🧪 Complete pipeline validation report
 - **[API.md](API.md)** - API endpoint documentation
 - **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture details
 - **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
 - **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Implementation overview
 
-### 📦 Download Official Archive
+### 📦 Download Official Archives
 
-- [`monsterdog-supreme-archive.zip`](monsterdog-supreme-archive.zip) - Complete package with manifesto, results, and logs
+**Supreme Archive Package**:
+- [`monsterdog-supreme-archive.zip`](monsterdog-supreme-archive.zip) - Complete package with manifesto, results, and logs (14 KB)
 - [`monsterdog-supreme-archive.zip.sha512`](monsterdog-supreme-archive.zip.sha512) - SHA-512 signature for verification
+
+**MONSTERDOG Artifact Package**:
+- `MONSTERDOG_ARTIFACT.zip` - Deployment artifact with benchmark results
+- SHA-512: `f2601becc54c880b5347849bd873a296c8094144e97d37dfae401223a45b3f8255198b05ac525b963ad92dcad3251aafd808a8a192195f978f27851b788ab0c5`
+
+See [ARCHIVE_INFO.md](ARCHIVE_INFO.md) for complete download and verification instructions.
 
 ---
 

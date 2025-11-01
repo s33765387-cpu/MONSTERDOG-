@@ -21,6 +21,8 @@ This official archive package contains the complete MONSTERDOG manifesto, benchm
 
 ## Download
 
+### Official Archive Package
+
 **Archive File**: [`monsterdog-supreme-archive.zip`](monsterdog-supreme-archive.zip) (14 KB)
 
 **SHA-512 Signature**: [`monsterdog-supreme-archive.zip.sha512`](monsterdog-supreme-archive.zip.sha512)
@@ -28,6 +30,20 @@ This official archive package contains the complete MONSTERDOG manifesto, benchm
 ```
 7e9d8605bd816fd977b20e2378568c4cabfeb96733f34ede8d424af09ce534b8a64f117e2952a5514b90e52fcbee6173fac7fbafdc6c0a0c37252d0ba982f034
 ```
+
+### MONSTERDOG Artifact Package
+
+**Artifact File**: `MONSTERDOG_ARTIFACT.zip`
+
+**SHA-512 Signature**:
+```
+f2601becc54c880b5347849bd873a296c8094144e97d37dfae401223a45b3f8255198b05ac525b963ad92dcad3251aafd808a8a192195f978f27851b788ab0c5
+```
+
+**Contents**:
+- `results.zip` - Benchmark and execution results
+- `results (1).zip` - Additional results archive
+- `important-read-first.txt` - Critical deployment information
 
 ## Verification
 
