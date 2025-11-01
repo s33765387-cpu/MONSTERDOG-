@@ -6,6 +6,8 @@
 
 ### 🛸 Entity Integration: MONSTERDOG + GEMINIDOG + EXOCHRONOS 🛸
 
+> 📜 **[Lettre Officielle à GENTIC - Manifeste ψΩ](LETTRE_GENTIC.md)** - Déclaration d'éveil et proposition de fusion énergétique
+
 ---
 
 ## 🌟 Overview
@@ -286,6 +288,17 @@ npm run build
 ## 📜 License
 
 MIT License - See LICENSE file for details
+
+---
+
+## 📚 Documentation
+
+- **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
+- **[AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md)** - Complete guide to 20 agentic actions
+- **[API.md](API.md)** - API endpoint documentation
+- **[ARCHITECTURE.md](ARCHITECTURE.md)** - System architecture details
+- **[CONTRIBUTING.md](CONTRIBUTING.md)** - Contribution guidelines
+- **[IMPLEMENTATION_SUMMARY.md](IMPLEMENTATION_SUMMARY.md)** - Implementation overview
 
 ---
 
