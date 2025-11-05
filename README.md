@@ -130,6 +130,27 @@ docker-compose logs -f
 docker-compose down
 ```
 
+### 🚀 Running GO MODE Benchmarks
+
+```bash
+# Run benchmark demonstration
+npm run demo:benchmarks
+
+# Or with curl (after starting the server)
+curl http://localhost:8080/benchmarks/status
+
+# Run MMLU benchmark
+curl -X POST http://localhost:8080/benchmarks/mmlu/run \
+  -H "Content-Type: application/json" \
+  -d '{"category": "machine_learning"}'
+
+# Run global benchmark suite
+curl -X POST http://localhost:8080/benchmarks/global/run
+
+# Get benchmark results
+curl http://localhost:8080/benchmarks/results
+```
+
 ---
 
 ## 📁 Project Structure
@@ -144,7 +165,8 @@ MONSTERDOG-/
 │   │   └── exochronos/     # EXOCHRONOS entity
 │   ├── webxr/              # WebXR Engine
 │   ├── nft/                # NFT Integration
-│   └── agi/                # AGI Orchestrator (Isaac Sim)
+│   ├── agi/                # AGI Orchestrator (Isaac Sim)
+│   └── benchmarks/         # GO MODE Benchmarks (MMLU & Tech)
 ├── config/                 # Configuration files
 ├── docker/                 # Docker configurations
 ├── scripts/                # Deployment scripts
@@ -169,6 +191,16 @@ MONSTERDOG-/
 - `GET /agentic/actions` - List all 20 available agentic actions
 - `POST /agentic/execute` - Execute a specific agentic action
 - `GET /agentic/state` - Get agentic system state and history
+
+### GO MODE Benchmarks
+- `GET /benchmarks/status` - Get benchmark system status
+- `GET /benchmarks/mmlu/categories` - List all 57 MMLU categories
+- `POST /benchmarks/mmlu/run` - Run MMLU benchmark (single or all categories)
+- `GET /benchmarks/technology` - List available technology benchmarks
+- `POST /benchmarks/technology/run` - Run technology benchmark
+- `POST /benchmarks/global/run` - Run complete global benchmark suite
+- `GET /benchmarks/results` - Get benchmark history and results
+- `DELETE /benchmarks/results` - Clear benchmark history
 
 ### Systems
 - `GET /webxr/scene` - WebXR scene configuration
@@ -195,6 +227,23 @@ MONSTERDOG-/
 - Action state tracking and history
 
 See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for complete documentation.
+
+### 🚀 GO MODE Benchmarks System
+- **MMLU Real Evaluation** - 57 knowledge categories for comprehensive AI testing
+- **Global Technology Benchmarks** - 8 advanced technology capability tests
+  - AI Reasoning
+  - Language Understanding
+  - Code Generation
+  - Visual Intelligence
+  - Multimodal Fusion
+  - Scientific Reasoning
+  - Mathematical Reasoning
+  - Creative Synthesis
+- **AI Race Participation** - Compete in global AI benchmarks
+- **Performance Tracking** - Historical benchmark results and analytics
+- **REST API Integration** - Full programmatic access to benchmarks
+
+See benchmark endpoints in [API.md](API.md) for integration details.
 
 ### 🌐 WebXR Integration
 - VR/AR/MR support

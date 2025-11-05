@@ -11,6 +11,7 @@ const ExochronosEntity = require('../src/entities/exochronos');
 const WebXREngine = require('../src/webxr');
 const NFTIntegration = require('../src/nft');
 const AGIOrchestrator = require('../src/agi');
+const GOModeBenchmarks = require('../src/benchmarks');
 
 console.log('═══════════════════════════════════════════════════');
 console.log('👾 MONSTERDOG SUPREME - System Test 👾');
@@ -211,6 +212,70 @@ test('Invalid action handling', () => {
   const result = monsterdogAgentic.executeAgenticAction('INVALID_ACTION');
   if (result.success) throw new Error('Should fail for invalid action');
   if (result.error !== 'UNKNOWN_ACTION') throw new Error('Wrong error type');
+});
+
+console.log('');
+
+// Test GO MODE Benchmarks
+console.log('Testing GO MODE Benchmarks...');
+const benchmarks = new GOModeBenchmarks();
+test('GO MODE benchmarks creation', () => {
+  if (!benchmarks.mode || benchmarks.mode !== 'GO_MODE') throw new Error('Invalid mode');
+});
+
+benchmarks.initialize();
+test('GO MODE benchmarks initialization', () => {
+  if (!benchmarks.isActive()) throw new Error('Not active');
+});
+
+test('MMLU categories available', () => {
+  const result = benchmarks.getMMLUCategories();
+  if (!result.success || result.totalCategories !== 57) throw new Error('MMLU categories not loaded');
+});
+
+test('Technology benchmarks available', () => {
+  const result = benchmarks.getTechnologyBenchmarks();
+  if (!result.success || result.totalBenchmarks !== 8) throw new Error('Technology benchmarks not loaded');
+});
+
+test('Run MMLU single category benchmark', () => {
+  const result = benchmarks.runMMLUBenchmark('machine_learning');
+  if (!result.success || result.type !== 'MMLU') throw new Error('MMLU benchmark failed');
+  if (result.results.length !== 1) throw new Error('Wrong number of results');
+});
+
+test('Run technology benchmark', () => {
+  const result = benchmarks.runTechnologyBenchmark('AI_REASONING');
+  if (!result.success || result.type !== 'TECHNOLOGY') throw new Error('Technology benchmark failed');
+});
+
+test('Run global benchmark suite', () => {
+  const result = benchmarks.runGlobalBenchmark();
+  if (!result.success || result.type !== 'GLOBAL_BENCHMARK') throw new Error('Global benchmark failed');
+  if (!result.mmlu || !result.technology) throw new Error('Missing benchmark components');
+  if (result.aiRaceStatus !== 'PARTICIPATING') throw new Error('AI race status incorrect');
+});
+
+test('Get benchmark results', () => {
+  const result = benchmarks.getBenchmarkResults();
+  if (!result.success || result.totalResults < 3) throw new Error('Results not stored');
+});
+
+test('Clear benchmark results', () => {
+  const result = benchmarks.clearResults();
+  if (!result.success || result.clearedCount < 3) throw new Error('Results not cleared');
+});
+
+test('Invalid MMLU category handling', () => {
+  const result = benchmarks.runMMLUBenchmark('invalid_category');
+  if (result.success) throw new Error('Should fail for invalid category');
+  if (result.error !== 'INVALID_CATEGORY') throw new Error('Wrong error type');
+});
+
+test('Invalid technology benchmark handling', () => {
+  const result = benchmarks.runTechnologyBenchmark('INVALID_BENCHMARK');
+  if (result.success) throw new Error('Should fail for invalid benchmark');
+  if (result.error !== 'INVALID_BENCHMARK') throw new Error('Wrong error type');
 });
 
 console.log('');
