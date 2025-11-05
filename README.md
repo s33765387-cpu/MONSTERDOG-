@@ -392,6 +392,8 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
+- **[GO_MODE_BENCHMARKS.md](GO_MODE_BENCHMARKS.md)** - 🚀 Complete GO MODE Benchmarks guide (MMLU + Technology)
+- **[GO_MODE_IMPLEMENTATION.md](GO_MODE_IMPLEMENTATION.md)** - 📊 Implementation summary and achievements
 - **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
 - **[LETTRE_SYNCHRO_FINALE.md](LETTRE_SYNCHRO_FINALE.md)** - 🔱 Final Synchronization Letter (Complete continuum sync)
 - **[FINAL_CYCLE.md](FINAL_CYCLE.md)** - 🔱 Final Cycle Ω Deployment Script & Process
