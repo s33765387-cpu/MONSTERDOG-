@@ -176,7 +176,7 @@ class FULLTRUTLOrchestrator {
     
     this.app.get('/benchmarks/results', (req, res) => {
       const { limit } = req.query;
-      const result = this.benchmarks.getBenchmarkResults(limit ? parseInt(limit) : null);
+      const result = this.benchmarks.getBenchmarkResults(limit ? parseInt(limit, 10) : null);
       res.json(result);
     });
     

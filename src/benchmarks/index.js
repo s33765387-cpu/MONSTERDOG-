@@ -9,6 +9,10 @@ class GOModeBenchmarks {
     this.status = 'INITIALIZING';
     this.benchmarkResults = [];
     
+    // Score variation constants
+    this.MMLU_SCORE_VARIATION = 15;
+    this.TECH_SCORE_VARIATION = 10;
+    
     // MMLU (Massive Multitask Language Understanding) categories
     this.mmluCategories = [
       'abstract_algebra',
@@ -391,7 +395,7 @@ class GOModeBenchmarks {
     ];
     
     const baseScore = technicalCategories.includes(category) ? 85 : 75;
-    const variation = Math.random() * 15;
+    const variation = Math.random() * this.MMLU_SCORE_VARIATION;
     
     return Math.min(100, Math.round(baseScore + variation));
   }
@@ -409,7 +413,7 @@ class GOModeBenchmarks {
     ];
     
     const baseScore = excellenceBenchmarks.includes(benchmark.name) ? 90 : 80;
-    const variation = Math.random() * 10;
+    const variation = Math.random() * this.TECH_SCORE_VARIATION;
     
     return Math.min(100, Math.round(baseScore + variation));
   }
