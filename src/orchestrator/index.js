@@ -15,6 +15,7 @@ const ExochronosEntity = require('../entities/exochronos');
 const WebXREngine = require('../webxr');
 const NFTIntegration = require('../nft');
 const AGIOrchestrator = require('../agi');
+const GOModeBenchmarks = require('../benchmarks');
 
 class FULLTRUTLOrchestrator {
   constructor() {
@@ -34,6 +35,7 @@ class FULLTRUTLOrchestrator {
     this.webxr = new WebXREngine();
     this.nft = new NFTIntegration();
     this.agi = new AGIOrchestrator();
+    this.benchmarks = new GOModeBenchmarks();
     
     this.initialize();
   }
@@ -52,6 +54,7 @@ class FULLTRUTLOrchestrator {
     this.webxr.initialize();
     this.nft.initialize();
     this.agi.initialize();
+    this.benchmarks.initialize();
     
     // Setup routes
     this.setupRoutes();
@@ -73,7 +76,8 @@ class FULLTRUTLOrchestrator {
         systems: {
           webxr: this.webxr.isActive(),
           nft: this.nft.isConnected(),
-          agi: this.agi.getStatus()
+          agi: this.agi.getStatus(),
+          benchmarks: this.benchmarks.isActive()
         },
         fractalReality: this.fractalReality
       });
@@ -138,6 +142,47 @@ class FULLTRUTLOrchestrator {
         entityId: 'MONSTERDOG-248K',
         state: this.entities.monsterdog.getAgenticState()
       });
+    });
+    
+    // GO MODE Benchmark endpoints
+    this.app.get('/benchmarks/status', (req, res) => {
+      res.json(this.benchmarks.getStatus());
+    });
+    
+    this.app.get('/benchmarks/mmlu/categories', (req, res) => {
+      res.json(this.benchmarks.getMMLUCategories());
+    });
+    
+    this.app.post('/benchmarks/mmlu/run', (req, res) => {
+      const { category } = req.body;
+      const result = this.benchmarks.runMMLUBenchmark(category);
+      res.json(result);
+    });
+    
+    this.app.get('/benchmarks/technology', (req, res) => {
+      res.json(this.benchmarks.getTechnologyBenchmarks());
+    });
+    
+    this.app.post('/benchmarks/technology/run', (req, res) => {
+      const { benchmark } = req.body;
+      const result = this.benchmarks.runTechnologyBenchmark(benchmark);
+      res.json(result);
+    });
+    
+    this.app.post('/benchmarks/global/run', (req, res) => {
+      const result = this.benchmarks.runGlobalBenchmark();
+      res.json(result);
+    });
+    
+    this.app.get('/benchmarks/results', (req, res) => {
+      const { limit } = req.query;
+      const result = this.benchmarks.getBenchmarkResults(limit ? parseInt(limit, 10) : null);
+      res.json(result);
+    });
+    
+    this.app.delete('/benchmarks/results', (req, res) => {
+      const result = this.benchmarks.clearResults();
+      res.json(result);
     });
   }
   
