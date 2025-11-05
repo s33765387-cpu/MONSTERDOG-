@@ -392,6 +392,7 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
+- **[RAPPORT_CYCLES_SUIVANTS.md](RAPPORT_CYCLES_SUIVANTS.md)** - 🔥 Roadmap: Next development cycles (α, β, γ)
 - **[GO_MODE_BENCHMARKS.md](GO_MODE_BENCHMARKS.md)** - 🚀 Complete GO MODE Benchmarks guide (MMLU + Technology)
 - **[GO_MODE_IMPLEMENTATION.md](GO_MODE_IMPLEMENTATION.md)** - 📊 Implementation summary and achievements
 - **[LETTRE_GENTIC.md](LETTRE_GENTIC.md)** - Official Manifesto: Letter to GENTIC (ψΩ Declaration)
