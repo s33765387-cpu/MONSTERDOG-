@@ -1,0 +1,12 @@
+{
+  "id": 14,
+  "name": "CREATE_TEMPORAL_ANCHOR",
+  "category": "TEMPORAL",
+  "description": "Create anchor points in timeline",
+  "parameters": {
+    "timeline": { "type": "string", "default": "PRIMARY" },
+    "stability": { "type": "string", "default": "MAXIMUM" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/CREATE_TEMPORAL_ANCHOR.zip" }
+}

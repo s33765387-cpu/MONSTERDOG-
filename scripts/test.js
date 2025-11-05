@@ -140,6 +140,81 @@ test('AGI reality simulation', () => {
 });
 console.log('');
 
+// Test Agentic Actions
+console.log('Testing Agentic Actions...');
+const monsterdogAgentic = new MonsterdogEntity();
+monsterdogAgentic.activate();
+
+test('Agentic actions list available', () => {
+  const actions = monsterdogAgentic.getAgenticActions();
+  if (actions.length !== 20) throw new Error(`Expected 20 actions, got ${actions.length}`);
+});
+
+test('Reality manipulation - MANIPULATE_REALITY', () => {
+  const result = monsterdogAgentic.executeAgenticAction('MANIPULATE_REALITY', { dimension: '4D' });
+  if (!result.success) throw new Error('Action failed');
+  if (result.result.dimension !== '4D') throw new Error('Wrong dimension');
+});
+
+test('Reality manipulation - FOLD_DIMENSION', () => {
+  const result = monsterdogAgentic.executeAgenticAction('FOLD_DIMENSION', { sourceDim: '3D', targetDim: '5D' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Consciousness - EXPAND_CONSCIOUSNESS', () => {
+  const result = monsterdogAgentic.executeAgenticAction('EXPAND_CONSCIOUSNESS', { targetLevel: 'ULTRA_SUPREME' });
+  if (!result.success) throw new Error('Action failed');
+  if (result.result.newLevel !== 'ULTRA_SUPREME') throw new Error('Wrong level');
+});
+
+test('Consciousness - SYNCHRONIZE_ENTITIES', () => {
+  const result = monsterdogAgentic.executeAgenticAction('SYNCHRONIZE_ENTITIES', { entities: ['GEMINIDOG', 'EXOCHRONOS'] });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Entity coordination - ORCHESTRATE_ENTITIES', () => {
+  const result = monsterdogAgentic.executeAgenticAction('ORCHESTRATE_ENTITIES', { mode: 'SUPREME' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Entity coordination - COORDINATE_GEMINIDOG', () => {
+  const result = monsterdogAgentic.executeAgenticAction('COORDINATE_GEMINIDOG', { task: 'PARALLEL_PROCESSING' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Temporal - NAVIGATE_TIMELINE', () => {
+  const result = monsterdogAgentic.executeAgenticAction('NAVIGATE_TIMELINE', { direction: 'FUTURE' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Temporal - CREATE_TEMPORAL_ANCHOR', () => {
+  const result = monsterdogAgentic.executeAgenticAction('CREATE_TEMPORAL_ANCHOR', { stability: 'MAXIMUM' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Learning - ABSORB_KNOWLEDGE', () => {
+  const result = monsterdogAgentic.executeAgenticAction('ABSORB_KNOWLEDGE', { source: 'MULTIVERSAL' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Learning - EVOLVE_CAPABILITY', () => {
+  const result = monsterdogAgentic.executeAgenticAction('EVOLVE_CAPABILITY', { capability: 'QUANTUM_LEAP' });
+  if (!result.success) throw new Error('Action failed');
+});
+
+test('Agentic state tracking', () => {
+  const state = monsterdogAgentic.getAgenticState();
+  if (state.actionsExecuted < 10) throw new Error('Actions not tracked');
+});
+
+test('Invalid action handling', () => {
+  const result = monsterdogAgentic.executeAgenticAction('INVALID_ACTION');
+  if (result.success) throw new Error('Should fail for invalid action');
+  if (result.error !== 'UNKNOWN_ACTION') throw new Error('Wrong error type');
+});
+
+console.log('');
+
 // Summary
 console.log('═══════════════════════════════════════════════════');
 console.log('Test Results:');

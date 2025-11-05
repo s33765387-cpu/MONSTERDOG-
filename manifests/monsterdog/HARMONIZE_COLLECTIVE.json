@@ -1,0 +1,12 @@
+{
+  "id": 12,
+  "name": "HARMONIZE_COLLECTIVE",
+  "category": "ENTITY_COORDINATION",
+  "description": "Harmonize collective entity resonance",
+  "parameters": {
+    "frequency": { "type": "string", "default": "SUPREME" },
+    "resonance": { "type": "string", "default": "PERFECT" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/HARMONIZE_COLLECTIVE.zip" }
+}

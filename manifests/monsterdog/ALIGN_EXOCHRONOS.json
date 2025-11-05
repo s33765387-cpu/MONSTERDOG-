@@ -1,0 +1,12 @@
+{
+  "id": 11,
+  "name": "ALIGN_EXOCHRONOS",
+  "category": "ENTITY_COORDINATION",
+  "description": "Align EXOCHRONOS with temporal streams",
+  "parameters": {
+    "timeline": { "type": "string", "default": "PRIMARY" },
+    "alignment": { "type": "string", "default": "SYNCHRONIZED" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ALIGN_EXOCHRONOS.zip" }
+}

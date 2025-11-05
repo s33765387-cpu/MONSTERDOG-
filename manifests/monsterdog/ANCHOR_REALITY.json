@@ -1,0 +1,12 @@
+{
+  "id": 4,
+  "name": "ANCHOR_REALITY",
+  "category": "REALITY_MANIPULATION",
+  "description": "Create stable anchor points in reality",
+  "parameters": {
+    "location": { "type": "string", "default": "CURRENT" },
+    "strength": { "type": "string", "default": "STRONG" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/ANCHOR_REALITY.zip" }
+}

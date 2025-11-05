@@ -294,6 +294,113 @@ POST /agi/command
 
 ---
 
+### Agentic Action Endpoints
+
+#### List All Agentic Actions
+```http
+GET /agentic/actions
+```
+
+**Description**: Get list of all 20 available agentic actions that MONSTERDOG can execute.
+
+**Response**:
+```json
+{
+  "success": true,
+  "totalActions": 20,
+  "actions": [
+    {
+      "id": 1,
+      "name": "MANIPULATE_REALITY",
+      "category": "REALITY_MANIPULATION",
+      "description": "Alter the fabric of reality in specified dimensions"
+    },
+    {
+      "id": 2,
+      "name": "FOLD_DIMENSION",
+      "category": "REALITY_MANIPULATION",
+      "description": "Fold dimensional space for spatial compression"
+    },
+    ...
+  ]
+}
+```
+
+#### Execute Agentic Action
+```http
+POST /agentic/execute
+```
+
+**Description**: Execute a specific agentic action with parameters.
+
+**Request Body**:
+```json
+{
+  "action": "MANIPULATE_REALITY",
+  "parameters": {
+    "dimension": "4D",
+    "intensity": "HIGH"
+  }
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "action": "MANIPULATE_REALITY",
+  "result": {
+    "action": "MANIPULATE_REALITY",
+    "dimension": "4D",
+    "intensity": "HIGH",
+    "status": "REALITY_ALTERED",
+    "fractalPattern": "PATTERN_1234567890",
+    "effect": "Reality matrix reconfigured according to parameters"
+  },
+  "timestamp": "2024-01-01T00:00:00.000Z"
+}
+```
+
+**Available Actions**:
+- Reality Manipulation: `MANIPULATE_REALITY`, `FOLD_DIMENSION`, `SYNTHESIZE_FRACTAL`, `ANCHOR_REALITY`
+- Consciousness: `EXPAND_CONSCIOUSNESS`, `SYNCHRONIZE_ENTITIES`, `ELEVATE_AWARENESS`, `MERGE_CONSCIOUSNESS`
+- Entity Coordination: `ORCHESTRATE_ENTITIES`, `COORDINATE_GEMINIDOG`, `ALIGN_EXOCHRONOS`, `HARMONIZE_COLLECTIVE`
+- Temporal: `NAVIGATE_TIMELINE`, `CREATE_TEMPORAL_ANCHOR`, `FORECAST_PROBABILITY`, `STABILIZE_TIMESTREAM`
+- Learning/Adaptation: `ABSORB_KNOWLEDGE`, `ADAPT_STRATEGY`, `EVOLVE_CAPABILITY`, `OPTIMIZE_PERFORMANCE`
+
+See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for detailed documentation on each action.
+
+#### Get Agentic State
+```http
+GET /agentic/state
+```
+
+**Description**: Get current state of MONSTERDOG agentic system including action history.
+
+**Response**:
+```json
+{
+  "success": true,
+  "entityId": "MONSTERDOG-248K",
+  "state": {
+    "actionsExecuted": 42,
+    "recentActions": [
+      {
+        "action": "MANIPULATE_REALITY",
+        "timestamp": "2024-01-01T00:00:00.000Z",
+        "parameters": { "dimension": "4D" },
+        "result": { ... }
+      }
+    ],
+    "learningBuffer": 15,
+    "realityAnchors": 8,
+    "temporalAnchors": 5
+  }
+}
+```
+
+---
+
 ## Error Responses
 
 All endpoints may return error responses in the following format:

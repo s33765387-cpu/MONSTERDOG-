@@ -1,0 +1,12 @@
+{
+  "id": 6,
+  "name": "SYNCHRONIZE_ENTITIES",
+  "category": "CONSCIOUSNESS",
+  "description": "Synchronize consciousness across multiple entities",
+  "parameters": {
+    "entities": { "type": "array", "default": ["GEMINIDOG","EXOCHRONOS"] },
+    "syncLevel": { "type": "string", "default": "DEEP" }
+  },
+  "version": "1.0.0",
+  "deploy": { "artifact": "packages/monsterdog/SYNCHRONIZE_ENTITIES.zip" }
+}
