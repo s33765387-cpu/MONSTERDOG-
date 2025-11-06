@@ -216,6 +216,114 @@ test('Invalid action handling', () => {
 
 console.log('');
 
+// Test CONTINUUM ACTION System
+console.log('Testing CONTINUUM ACTION System...');
+const monsterdogContinuum = new MonsterdogEntity();
+monsterdogContinuum.activate();
+
+test('CONTINUUM_MODE capability exists', () => {
+  const data = monsterdogContinuum.getData();
+  if (!data.capabilities.includes('CONTINUUM_MODE')) throw new Error('CONTINUUM_MODE capability not found');
+});
+
+test('Queue continuum action with priority', () => {
+  const result = monsterdogContinuum.queueContinuumAction('MANIPULATE_REALITY', { dimension: '4D' }, 8);
+  if (!result.success) throw new Error('Failed to queue action');
+  if (result.priority !== 8) throw new Error('Wrong priority');
+  if (result.queuePosition !== 1) throw new Error('Wrong queue position');
+});
+
+test('Queue multiple actions with different priorities', () => {
+  monsterdogContinuum.queueContinuumAction('FOLD_DIMENSION', {}, 3);
+  monsterdogContinuum.queueContinuumAction('EXPAND_CONSCIOUSNESS', {}, 9);
+  monsterdogContinuum.queueContinuumAction('NAVIGATE_TIMELINE', {}, 5);
+  const status = monsterdogContinuum.getContinuumStatus();
+  if (status.queuedActions !== 4) throw new Error('Wrong queue count');
+  // Check priority sorting - highest priority should be first
+  if (status.currentQueue[0].priority !== 9) throw new Error('Queue not sorted by priority');
+});
+
+test('Get continuum status', () => {
+  const status = monsterdogContinuum.getContinuumStatus();
+  if (status.active !== false) throw new Error('Should not be active');
+  if (status.mode !== 'STANDBY') throw new Error('Wrong mode');
+  if (status.queuedActions < 4) throw new Error('Wrong queued count');
+});
+
+test('Start continuum mode in decisive mode', () => {
+  const result = monsterdogContinuum.startContinuumMode({ 
+    decisive: true, 
+    priorityThreshold: 7,
+    intervalMs: 100 
+  });
+  if (!result.success) throw new Error('Failed to start continuum mode');
+  if (result.mode !== 'DECISIVE') throw new Error('Wrong mode');
+  if (result.status !== 'CONTINUUM_ACTIVE') throw new Error('Wrong status');
+});
+
+test('Continuum mode execution', (done) => {
+  // Wait for continuum to execute some actions
+  setTimeout(() => {
+    const history = monsterdogContinuum.getContinuumHistory(10);
+    if (!history.success) throw new Error('Failed to get history');
+    // In decisive mode with threshold 7, only actions with priority >= 7 should execute
+    const executed = history.history.filter(h => h.status === 'COMPLETED');
+    if (executed.length === 0) throw new Error('No actions executed');
+    // Verify all executed actions had high priority
+    const allHighPriority = executed.every(h => h.priority >= 7);
+    if (!allHighPriority) throw new Error('Low priority actions executed in decisive mode');
+  }, 500);
+});
+
+test('Stop continuum mode', () => {
+  // Wait a bit for execution then stop
+  setTimeout(() => {
+    const result = monsterdogContinuum.stopContinuumMode();
+    if (!result.success) throw new Error('Failed to stop continuum mode');
+    if (result.status !== 'CONTINUUM_STOPPED') throw new Error('Wrong status');
+    if (result.actionsExecuted === 0) throw new Error('No actions were executed');
+  }, 600);
+});
+
+test('Get continuum execution history', () => {
+  setTimeout(() => {
+    const history = monsterdogContinuum.getContinuumHistory(20);
+    if (!history.success) throw new Error('Failed to get history');
+    if (history.totalExecutions === 0) throw new Error('No executions in history');
+    if (!history.statistics) throw new Error('No statistics');
+    if (history.statistics.completed === 0) throw new Error('No completed actions');
+  }, 700);
+});
+
+test('Clear continuum queue', () => {
+  setTimeout(() => {
+    const result = monsterdogContinuum.clearContinuumQueue();
+    if (!result.success) throw new Error('Failed to clear queue');
+    const status = monsterdogContinuum.getContinuumStatus();
+    if (status.queuedActions !== 0) throw new Error('Queue not empty after clear');
+  }, 800);
+});
+
+test('Cannot start continuum when already active', () => {
+  const continuum2 = new MonsterdogEntity();
+  continuum2.activate();
+  continuum2.startContinuumMode();
+  const result = continuum2.startContinuumMode();
+  if (result.success) throw new Error('Should fail when already active');
+  if (result.error !== 'ALREADY_ACTIVE') throw new Error('Wrong error type');
+  continuum2.stopContinuumMode();
+});
+
+test('Cannot queue invalid action', () => {
+  const continuum3 = new MonsterdogEntity();
+  continuum3.activate();
+  const result = continuum3.queueContinuumAction('INVALID_ACTION', {}, 5);
+  if (result.success) throw new Error('Should fail for invalid action');
+  if (result.error !== 'UNKNOWN_ACTION') throw new Error('Wrong error type');
+});
+
+console.log('');
+
 // Test GO MODE Benchmarks
 console.log('Testing GO MODE Benchmarks...');
 const benchmarks = new GOModeBenchmarks();
