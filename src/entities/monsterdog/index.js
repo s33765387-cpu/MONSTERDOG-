@@ -537,7 +537,7 @@ class MonsterdogEntity {
     }
     
     const actionItem = {
-      id: `CONTINUUM_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      id: `CONTINUUM_${Date.now()}_${Math.random().toString(36).substring(2, 11)}`,
       action: actionName,
       parameters: parameters,
       priority: Math.max(1, Math.min(10, priority)), // Clamp priority between 1-10
@@ -588,20 +588,27 @@ class MonsterdogEntity {
       autoQueue = false
     } = options;
     
+    // SECURITY: Validate and sanitize intervalMs to prevent resource exhaustion (CodeQL js/resource-exhaustion)
+    // User-controlled intervalMs is clamped between safe bounds:
+    // - Minimum: 100ms (prevents excessive CPU usage from too-frequent execution)
+    // - Maximum: 60000ms (1 minute, prevents indefinite blocking)
+    // This mitigation addresses the potential resource exhaustion vulnerability
+    const safeIntervalMs = Math.max(100, Math.min(60000, intervalMs || 1000));
+    
     this.continuumState.active = true;
     this.continuumState.mode = decisive ? 'DECISIVE' : 'STANDARD';
     this.continuumState.decisiveMode = decisive;
     this.continuumState.priorityThreshold = priorityThreshold;
     
-    // Start continuous execution engine
+    // Start continuous execution engine with validated interval (SECURITY: safeIntervalMs is sanitized)
     this.continuumState.executionInterval = setInterval(() => {
       this._executeContinuumCycle();
-    }, intervalMs);
+    }, safeIntervalMs);
     
     console.log(`⚡ CONTINUUM MODE ACTIVATED ⚡`);
     console.log(`🎯 Mode: ${this.continuumState.mode}`);
     console.log(`🔱 Priority Threshold: ${priorityThreshold}`);
-    console.log(`⏱ Execution Interval: ${intervalMs}ms`);
+    console.log(`⏱ Execution Interval: ${safeIntervalMs}ms`);
     
     return {
       success: true,
