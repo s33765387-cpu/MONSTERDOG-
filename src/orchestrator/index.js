@@ -144,6 +144,58 @@ class FULLTRUTLOrchestrator {
       });
     });
     
+    // CONTINUUM ACTION endpoints
+    this.app.post('/continuum/queue', (req, res) => {
+      const { action, parameters, priority } = req.body;
+      
+      if (!action) {
+        return res.status(400).json({
+          success: false,
+          error: 'MISSING_ACTION',
+          message: 'Action name is required'
+        });
+      }
+      
+      const result = this.entities.monsterdog.queueContinuumAction(
+        action, 
+        parameters || {}, 
+        priority || 5
+      );
+      res.json(result);
+    });
+    
+    this.app.post('/continuum/start', (req, res) => {
+      const options = req.body || {};
+      const result = this.entities.monsterdog.startContinuumMode(options);
+      res.json(result);
+    });
+    
+    this.app.post('/continuum/stop', (req, res) => {
+      const result = this.entities.monsterdog.stopContinuumMode();
+      res.json(result);
+    });
+    
+    this.app.get('/continuum/status', (req, res) => {
+      const status = this.entities.monsterdog.getContinuumStatus();
+      res.json({
+        success: true,
+        ...status
+      });
+    });
+    
+    this.app.get('/continuum/history', (req, res) => {
+      const { limit } = req.query;
+      const result = this.entities.monsterdog.getContinuumHistory(
+        limit ? parseInt(limit, 10) : 50
+      );
+      res.json(result);
+    });
+    
+    this.app.delete('/continuum/queue', (req, res) => {
+      const result = this.entities.monsterdog.clearContinuumQueue();
+      res.json(result);
+    });
+    
     // GO MODE Benchmark endpoints
     this.app.get('/benchmarks/status', (req, res) => {
       res.json(this.benchmarks.getStatus());

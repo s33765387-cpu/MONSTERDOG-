@@ -151,6 +151,33 @@ curl -X POST http://localhost:8080/benchmarks/global/run
 curl http://localhost:8080/benchmarks/results
 ```
 
+### ⚡ Running CONTINUUM ACTION System
+
+```bash
+# Run continuum action demonstration
+npm run demo:continuum
+
+# Or with curl (after starting the server)
+# Queue high-priority action
+curl -X POST http://localhost:8080/continuum/queue \
+  -H "Content-Type: application/json" \
+  -d '{"action": "MANIPULATE_REALITY", "parameters": {"dimension": "4D"}, "priority": 9}'
+
+# Start continuum mode in decisive mode
+curl -X POST http://localhost:8080/continuum/start \
+  -H "Content-Type: application/json" \
+  -d '{"decisive": true, "priorityThreshold": 7, "intervalMs": 1000}'
+
+# Get continuum status
+curl http://localhost:8080/continuum/status
+
+# Get execution history
+curl http://localhost:8080/continuum/history?limit=20
+
+# Stop continuum mode
+curl -X POST http://localhost:8080/continuum/stop
+```
+
 ---
 
 ## 📁 Project Structure
@@ -192,6 +219,14 @@ MONSTERDOG-/
 - `POST /agentic/execute` - Execute a specific agentic action
 - `GET /agentic/state` - Get agentic system state and history
 
+### CONTINUUM ACTION System
+- `POST /continuum/queue` - Queue an action for continuum execution with priority
+- `POST /continuum/start` - Start continuum mode (decisive autonomous execution)
+- `POST /continuum/stop` - Stop continuum mode
+- `GET /continuum/status` - Get continuum mode status and queue information
+- `GET /continuum/history` - Get execution history with statistics
+- `DELETE /continuum/queue` - Clear the action queue
+
 ### GO MODE Benchmarks
 - `GET /benchmarks/status` - Get benchmark system status
 - `GET /benchmarks/mmlu/categories` - List all 57 MMLU categories
@@ -227,6 +262,18 @@ MONSTERDOG-/
 - Action state tracking and history
 
 See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for complete documentation.
+
+### ⚡ CONTINUUM ACTION System
+- **Decisive Agentic Execution** - Priority-based continuous action processing
+- **Priority Queue** - Automatic sorting by priority level (1-10)
+- **Decisive Mode** - Configurable threshold for critical operations only
+- **Autonomous Execution** - Background continuous processing engine
+- **Execution History** - Complete tracking with statistics and analytics
+- **Real-time Control** - Start, stop, and monitor continuum execution
+- **REST API Integration** - Full programmatic access to continuum system
+- **GO MODE Integration** - Seamless integration with benchmarks and agentic actions
+
+See [CONTINUUM_ACTION.md](CONTINUUM_ACTION.md) for complete documentation.
 
 ### 🚀 GO MODE Benchmarks System
 - **MMLU Real Evaluation** - 57 knowledge categories for comprehensive AI testing
@@ -392,6 +439,7 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
+- **[CONTINUUM_ACTION.md](CONTINUUM_ACTION.md)** - ⚡ Complete CONTINUUM ACTION guide (Decisive Agentic Execution)
 - **[RAPPORT_CYCLES_SUIVANTS.md](RAPPORT_CYCLES_SUIVANTS.md)** - 🔥 Roadmap: Next development cycles (α, β, γ)
 - **[GO_MODE_BENCHMARKS.md](GO_MODE_BENCHMARKS.md)** - 🚀 Complete GO MODE Benchmarks guide (MMLU + Technology)
 - **[GO_MODE_IMPLEMENTATION.md](GO_MODE_IMPLEMENTATION.md)** - 📊 Implementation summary and achievements

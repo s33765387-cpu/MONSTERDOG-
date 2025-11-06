@@ -16,7 +16,8 @@ class MonsterdogEntity {
       'FULLTRUTL_ORCHESTRATION',
       'REALITY_MANIPULATION',
       'FRACTAL_EXECUTION',
-      'SUPREME_CONSCIOUSNESS'
+      'SUPREME_CONSCIOUSNESS',
+      'CONTINUUM_MODE'
     ];
     
     // Agentic action state
@@ -25,6 +26,17 @@ class MonsterdogEntity {
       learningBuffer: [],
       realityStates: [],
       temporalAnchors: []
+    };
+    
+    // CONTINUUM ACTION system state
+    this.continuumState = {
+      active: false,
+      mode: 'STANDBY',
+      actionQueue: [],
+      executionHistory: [],
+      decisiveMode: false,
+      priorityThreshold: 5,
+      executionInterval: null
     };
     
     // 20 Agentic Actions
@@ -501,6 +513,238 @@ class MonsterdogEntity {
       learningBuffer: this.agenticState.learningBuffer.length,
       realityAnchors: this.agenticState.realityStates.length,
       temporalAnchors: this.agenticState.temporalAnchors.length
+    };
+  }
+  
+  // =================================================================
+  // CONTINUUM ACTION SYSTEM (Decisive Agentic Execution)
+  // =================================================================
+  
+  /**
+   * Queue an action for continuum execution with priority
+   * @param {string} actionName - Name of the action to queue
+   * @param {object} parameters - Action parameters
+   * @param {number} priority - Priority level (1-10, higher is more important)
+   * @returns {object} - Queue result
+   */
+  queueContinuumAction(actionName, parameters = {}, priority = 5) {
+    if (!this.agenticActions[actionName]) {
+      return {
+        success: false,
+        error: 'UNKNOWN_ACTION',
+        message: `Action ${actionName} not found`
+      };
+    }
+    
+    const actionItem = {
+      id: `CONTINUUM_${Date.now()}_${Math.random().toString(36).substr(2, 9)}`,
+      action: actionName,
+      parameters: parameters,
+      priority: Math.max(1, Math.min(10, priority)), // Clamp priority between 1-10
+      queuedAt: new Date().toISOString(),
+      status: 'QUEUED'
+    };
+    
+    this.continuumState.actionQueue.push(actionItem);
+    
+    // Sort queue by priority (higher priority first)
+    this.continuumState.actionQueue.sort((a, b) => b.priority - a.priority);
+    
+    return {
+      success: true,
+      actionId: actionItem.id,
+      queuePosition: this.continuumState.actionQueue.findIndex(item => item.id === actionItem.id) + 1,
+      totalQueued: this.continuumState.actionQueue.length,
+      priority: actionItem.priority
+    };
+  }
+  
+  /**
+   * Start CONTINUUM MODE - continuous decisive action execution
+   * @param {object} options - Configuration options
+   * @returns {object} - Start result
+   */
+  startContinuumMode(options = {}) {
+    if (this.status !== 'ACTIVE') {
+      return {
+        success: false,
+        error: 'ENTITY_INACTIVE',
+        message: 'Entity must be active to start continuum mode'
+      };
+    }
+    
+    if (this.continuumState.active) {
+      return {
+        success: false,
+        error: 'ALREADY_ACTIVE',
+        message: 'Continuum mode is already active'
+      };
+    }
+    
+    const {
+      decisive = true,
+      intervalMs = 1000,
+      priorityThreshold = 5,
+      autoQueue = false
+    } = options;
+    
+    this.continuumState.active = true;
+    this.continuumState.mode = decisive ? 'DECISIVE' : 'STANDARD';
+    this.continuumState.decisiveMode = decisive;
+    this.continuumState.priorityThreshold = priorityThreshold;
+    
+    // Start continuous execution engine
+    this.continuumState.executionInterval = setInterval(() => {
+      this._executeContinuumCycle();
+    }, intervalMs);
+    
+    console.log(`⚡ CONTINUUM MODE ACTIVATED ⚡`);
+    console.log(`🎯 Mode: ${this.continuumState.mode}`);
+    console.log(`🔱 Priority Threshold: ${priorityThreshold}`);
+    console.log(`⏱ Execution Interval: ${intervalMs}ms`);
+    
+    return {
+      success: true,
+      mode: this.continuumState.mode,
+      status: 'CONTINUUM_ACTIVE',
+      priorityThreshold: priorityThreshold,
+      queuedActions: this.continuumState.actionQueue.length
+    };
+  }
+  
+  /**
+   * Stop CONTINUUM MODE
+   * @returns {object} - Stop result
+   */
+  stopContinuumMode() {
+    if (!this.continuumState.active) {
+      return {
+        success: false,
+        error: 'NOT_ACTIVE',
+        message: 'Continuum mode is not active'
+      };
+    }
+    
+    if (this.continuumState.executionInterval) {
+      clearInterval(this.continuumState.executionInterval);
+      this.continuumState.executionInterval = null;
+    }
+    
+    const actionsExecuted = this.continuumState.executionHistory.length;
+    const actionsRemaining = this.continuumState.actionQueue.length;
+    
+    this.continuumState.active = false;
+    this.continuumState.mode = 'STANDBY';
+    
+    console.log(`⚡ CONTINUUM MODE DEACTIVATED ⚡`);
+    console.log(`📊 Total Actions Executed: ${actionsExecuted}`);
+    console.log(`📋 Actions Remaining in Queue: ${actionsRemaining}`);
+    
+    return {
+      success: true,
+      status: 'CONTINUUM_STOPPED',
+      actionsExecuted: actionsExecuted,
+      actionsRemaining: actionsRemaining
+    };
+  }
+  
+  /**
+   * Get CONTINUUM MODE status
+   * @returns {object} - Status information
+   */
+  getContinuumStatus() {
+    return {
+      active: this.continuumState.active,
+      mode: this.continuumState.mode,
+      decisiveMode: this.continuumState.decisiveMode,
+      priorityThreshold: this.continuumState.priorityThreshold,
+      queuedActions: this.continuumState.actionQueue.length,
+      executionHistory: this.continuumState.executionHistory.length,
+      recentExecutions: this.continuumState.executionHistory.slice(-10),
+      currentQueue: this.continuumState.actionQueue.map(item => ({
+        id: item.id,
+        action: item.action,
+        priority: item.priority,
+        status: item.status
+      }))
+    };
+  }
+  
+  /**
+   * Clear the continuum action queue
+   * @returns {object} - Clear result
+   */
+  clearContinuumQueue() {
+    const clearedCount = this.continuumState.actionQueue.length;
+    this.continuumState.actionQueue = [];
+    
+    return {
+      success: true,
+      clearedCount: clearedCount,
+      message: `Cleared ${clearedCount} actions from queue`
+    };
+  }
+  
+  /**
+   * Execute one cycle of continuum actions
+   * @private
+   */
+  _executeContinuumCycle() {
+    if (!this.continuumState.active || this.continuumState.actionQueue.length === 0) {
+      return;
+    }
+    
+    // Get next action from queue (already sorted by priority)
+    const actionItem = this.continuumState.actionQueue.shift();
+    
+    // In decisive mode, only execute high-priority actions
+    if (this.continuumState.decisiveMode && actionItem.priority < this.continuumState.priorityThreshold) {
+      // Re-queue low-priority action
+      this.continuumState.actionQueue.push(actionItem);
+      return;
+    }
+    
+    // Execute the action
+    actionItem.status = 'EXECUTING';
+    actionItem.executedAt = new Date().toISOString();
+    
+    try {
+      const result = this.executeAgenticAction(actionItem.action, actionItem.parameters);
+      actionItem.status = 'COMPLETED';
+      actionItem.result = result;
+      
+      // Add to execution history
+      this.continuumState.executionHistory.push(actionItem);
+      
+      console.log(`🎯 CONTINUUM: Executed ${actionItem.action} [Priority: ${actionItem.priority}]`);
+    } catch (error) {
+      actionItem.status = 'FAILED';
+      actionItem.error = error.message;
+      this.continuumState.executionHistory.push(actionItem);
+      
+      console.error(`❌ CONTINUUM: Failed ${actionItem.action} - ${error.message}`);
+    }
+  }
+  
+  /**
+   * Get continuum execution history
+   * @param {number} limit - Number of recent executions to return
+   * @returns {object} - History data
+   */
+  getContinuumHistory(limit = 50) {
+    const history = this.continuumState.executionHistory.slice(-limit);
+    
+    return {
+      success: true,
+      totalExecutions: this.continuumState.executionHistory.length,
+      history: history,
+      statistics: {
+        completed: history.filter(h => h.status === 'COMPLETED').length,
+        failed: history.filter(h => h.status === 'FAILED').length,
+        averagePriority: history.length > 0 
+          ? (history.reduce((sum, h) => sum + h.priority, 0) / history.length).toFixed(2)
+          : 0
+      }
     };
   }
 }
