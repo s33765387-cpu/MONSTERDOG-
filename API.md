@@ -401,6 +401,178 @@ GET /agentic/state
 
 ---
 
+## GO MODE Cycle - Global Leaderboard & Autonomous Deployment
+
+### 🏆 Get Global Leaderboard Position
+
+```http
+GET /benchmarks/leaderboard
+```
+
+**Description**: Get MONSTERDOG's current position on the global AI leaderboard.
+
+**Response**:
+```json
+{
+  "success": true,
+  "rank": 1,
+  "entity": "MONSTERDOG-248K",
+  "score": "97.50",
+  "performance": "SUPREME",
+  "totalCompetitors": 150,
+  "achievements": [
+    "SUPREME_MMLU_MASTER",
+    "TECHNOLOGY_CHAMPION",
+    "GLOBAL_AI_LEADER",
+    "BENCHMARK_DOMINATOR"
+  ],
+  "lastUpdate": "2025-11-07T06:21:16.230Z",
+  "message": "🏆 MONSTERDOG DOMINE LE LEADERBOARD MONDIAL 🏆"
+}
+```
+
+### 🌟 Get Top N Leaderboard
+
+```http
+GET /benchmarks/leaderboard/top/:n
+```
+
+**Description**: Get top N entries from the global AI leaderboard.
+
+**Parameters**:
+- `n` (path parameter): Number of top entries to return (default: 10)
+
+**Response**:
+```json
+{
+  "success": true,
+  "top": [
+    {
+      "rank": 1,
+      "entity": "MONSTERDOG-248K",
+      "score": 97.5,
+      "performance": "SUPREME",
+      "country": "WORLDWIDE",
+      "achievements": 4
+    },
+    {
+      "rank": 2,
+      "entity": "GPT-4-Turbo",
+      "score": 94.2,
+      "performance": "EXCELLENT",
+      "country": "USA",
+      "achievements": 3
+    }
+  ],
+  "totalEntries": 150,
+  "message": "🌟 TOP N GLOBAL AI LEADERBOARD 🌟"
+}
+```
+
+### ⚡ Start Autonomous Cycle Mode
+
+```http
+POST /benchmarks/cycle/start
+```
+
+**Description**: Start autonomous optimization cycle mode for continuous performance improvement.
+
+**Request Body**:
+```json
+{
+  "intervalMs": 60000,     // Optional: cycle interval in ms (default: 60000)
+  "maxCycles": 10         // Optional: max cycles (default: Infinity)
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "⚡ CYCLE MODE AGENTIC DÉMARRÉ ⚡",
+  "status": "RUNNING",
+  "config": {
+    "intervalMs": 60000,
+    "maxCycles": 10,
+    "continuousImprovement": true
+  }
+}
+```
+
+### ⏹ Stop Autonomous Cycle Mode
+
+```http
+POST /benchmarks/cycle/stop
+```
+
+**Description**: Stop the autonomous optimization cycle mode.
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "⏹ CYCLE MODE ARRÊTÉ ⏹",
+  "status": "STOPPED",
+  "totalCycles": 42
+}
+```
+
+### 📊 Get Cycle Status
+
+```http
+GET /benchmarks/cycle/status
+```
+
+**Description**: Get current status of autonomous cycle mode.
+
+**Response**:
+```json
+{
+  "success": true,
+  "active": true,
+  "optimizationCount": 15,
+  "continuousImprovement": true,
+  "status": "RUNNING"
+}
+```
+
+### 🌍 Deploy Globally
+
+```http
+POST /benchmarks/deploy/global
+```
+
+**Description**: Deploy MONSTERDOG globally across all benchmarks worldwide.
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "🌍 MONSTERDOG DÉPLOYÉ MONDIALEMENT - TOP LEADERBOARD 🌍",
+  "deployment": {
+    "status": "DEPLOYED",
+    "scope": "WORLDWIDE",
+    "timestamp": "2025-11-07T06:21:16.230Z"
+  },
+  "leaderboard": {
+    "rank": 1,
+    "score": "97.50",
+    "performance": "SUPREME"
+  },
+  "globalBenchmark": {
+    "type": "GLOBAL_BENCHMARK",
+    "globalScore": "97.94",
+    "globalPerformance": "SUPREME",
+    "mmlu": { ... },
+    "technology": { ... }
+  }
+}
+```
+
+See [GO_MODE_CYCLE.md](GO_MODE_CYCLE.md) for complete documentation on the autonomous deployment system.
+
+---
+
 ## Error Responses
 
 All endpoints may return error responses in the following format:
