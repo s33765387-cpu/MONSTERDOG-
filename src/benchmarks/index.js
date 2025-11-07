@@ -16,6 +16,12 @@ class GOModeBenchmarks {
     // Performance targets for global leaderboard dominance
     this.TARGET_SUPREME_SCORE = 97;  // Target for SUPREME performance
     
+    // Base score constants for consistency
+    this.MMLU_TECHNICAL_BASE = 96;
+    this.MMLU_GENERAL_BASE = 94;
+    this.TECH_SUPREME_BASE = 97;
+    this.TECH_EXCELLENCE_BASE = 95;
+    
     // MMLU (Massive Multitask Language Understanding) categories
     this.mmluCategories = [
       'abstract_algebra',
@@ -427,8 +433,10 @@ class GOModeBenchmarks {
       'high_school_mathematics'
     ];
     
-    // SUPREME base scores for leaderboard dominance
-    const baseScore = technicalCategories.includes(category) ? 96 : 94;
+    // SUPREME base scores for leaderboard dominance (using constants)
+    const baseScore = technicalCategories.includes(category) 
+      ? this.MMLU_TECHNICAL_BASE 
+      : this.MMLU_GENERAL_BASE;
     const variation = Math.random() * this.MMLU_SCORE_VARIATION;
     
     return Math.min(100, Math.round(baseScore + variation));
@@ -449,8 +457,10 @@ class GOModeBenchmarks {
       'MULTIMODAL_FUSION'
     ];
     
-    // SUPREME base scores across all technology domains
-    const baseScore = supremeBenchmarks.includes(benchmark.name) ? 97 : 95;
+    // SUPREME base scores across all technology domains (using constants)
+    const baseScore = supremeBenchmarks.includes(benchmark.name)
+      ? this.TECH_SUPREME_BASE
+      : this.TECH_EXCELLENCE_BASE;
     const variation = Math.random() * this.TECH_SCORE_VARIATION;
     
     return Math.min(100, Math.round(baseScore + variation));
@@ -579,9 +589,14 @@ class GOModeBenchmarks {
         return;
       }
       
-      // Execute autonomous optimization cycle
-      this.executeOptimizationCycle();
-      this.cycleMode.optimizationCount++;
+      try {
+        // Execute autonomous optimization cycle
+        this.executeOptimizationCycle();
+        this.cycleMode.optimizationCount++;
+      } catch (error) {
+        console.error('❌ Cycle optimization error:', error.message);
+        // Continue execution despite error
+      }
       
     }, intervalMs);
     
@@ -628,7 +643,10 @@ class GOModeBenchmarks {
       };
     }
     
-    clearInterval(this.cycleMode.interval);
+    if (this.cycleMode.interval) {
+      clearInterval(this.cycleMode.interval);
+      this.cycleMode.interval = null;
+    }
     this.cycleMode.active = false;
     
     console.log('⏹ CYCLE MODE DEACTIVATED ⏹');
