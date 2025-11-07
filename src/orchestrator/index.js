@@ -236,6 +236,38 @@ class FULLTRUTLOrchestrator {
       const result = this.benchmarks.clearResults();
       res.json(result);
     });
+    
+    // 🏆 LEADERBOARD ENDPOINTS
+    this.app.get('/benchmarks/leaderboard', (req, res) => {
+      res.json(this.benchmarks.getLeaderboard());
+    });
+    
+    this.app.get('/benchmarks/leaderboard/top/:n', (req, res) => {
+      const n = parseInt(req.params.n, 10) || 10;
+      res.json(this.benchmarks.getTopLeaderboard(n));
+    });
+    
+    // ⚡ AUTONOMOUS CYCLE ENDPOINTS
+    this.app.post('/benchmarks/cycle/start', (req, res) => {
+      const config = req.body || {};
+      const result = this.benchmarks.startCycleMode(config);
+      res.json(result);
+    });
+    
+    this.app.post('/benchmarks/cycle/stop', (req, res) => {
+      const result = this.benchmarks.stopCycleMode();
+      res.json(result);
+    });
+    
+    this.app.get('/benchmarks/cycle/status', (req, res) => {
+      res.json(this.benchmarks.getCycleStatus());
+    });
+    
+    // 🌍 GLOBAL DEPLOYMENT ENDPOINT
+    this.app.post('/benchmarks/deploy/global', (req, res) => {
+      const result = this.benchmarks.deployGlobally();
+      res.json(result);
+    });
   }
   
   activateEntities() {
