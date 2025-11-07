@@ -572,8 +572,22 @@ class GOModeBenchmarks {
       };
     }
     
-    const intervalMs = config.intervalMs || 60000; // 1 minute par défaut
-    const maxCycles = config.maxCycles || Infinity;
+    // Validate and sanitize user-controlled interval to prevent resource exhaustion
+    const MIN_INTERVAL_MS = 1000;   // Minimum 1 second
+    const MAX_INTERVAL_MS = 3600000; // Maximum 1 hour
+    let intervalMs = config.intervalMs || 60000; // 1 minute par défaut
+    
+    // Ensure interval is within safe bounds
+    if (typeof intervalMs !== 'number' || isNaN(intervalMs)) {
+      intervalMs = 60000;
+    }
+    intervalMs = Math.max(MIN_INTERVAL_MS, Math.min(MAX_INTERVAL_MS, intervalMs));
+    
+    // Validate maxCycles
+    let maxCycles = config.maxCycles || Infinity;
+    if (typeof maxCycles !== 'number' || isNaN(maxCycles) || maxCycles < 0) {
+      maxCycles = Infinity;
+    }
     
     this.cycleMode.active = true;
     this.cycleMode.optimizationCount = 0;
@@ -583,6 +597,8 @@ class GOModeBenchmarks {
     console.log(`⏱ Cycle Interval: ${intervalMs}ms`);
     console.log(`🎯 Max Cycles: ${maxCycles === Infinity ? 'UNLIMITED' : maxCycles}`);
     
+    // SECURITY: intervalMs is validated and bounded (1s - 1h) to prevent resource exhaustion
+    // The validation above ensures intervalMs is always a safe value within MIN_INTERVAL_MS and MAX_INTERVAL_MS
     this.cycleMode.interval = setInterval(() => {
       if (this.cycleMode.optimizationCount >= maxCycles) {
         this.stopCycleMode();
