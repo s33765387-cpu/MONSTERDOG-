@@ -139,6 +139,9 @@ npm run demo:benchmarks
 # Run COMPLETE GO MODE with leaderboard + cycle + global deployment
 npm run demo:go-mode
 
+# Run FULL AGENTIC DEPLOYMENT (complete 5-phase demonstration)
+npm run demo:complete
+
 # Or with curl (after starting the server)
 curl http://localhost:8080/benchmarks/status
 

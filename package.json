@@ -11,6 +11,7 @@
     "demo:benchmarks": "node scripts/demo-benchmarks.js",
     "demo:continuum": "node scripts/demo-continuum.js",
     "demo:go-mode": "node scripts/demo-go-mode-full.js",
+    "demo:complete": "node scripts/demo-complete-deployment.js",
     "validate:manifests": "node scripts/validate-manifests.js",
     "docker:build": "docker build -t monsterdog-supreme .",
     "docker:run": "docker run -p 8080:8080 monsterdog-supreme",
