@@ -450,6 +450,74 @@ Currently no authentication is required. Future versions may include:
 
 ---
 
+### GO MODE CONTINUUM - Continuous Benchmarks
+
+#### Start GO MODE CONTINUUM
+```http
+POST /benchmarks/continuum/start
+Content-Type: application/json
+```
+
+**Description**: Start continuous benchmark execution at full speed (CONTINUEZ À FOND!).
+
+**Request Body**:
+```json
+{
+  "intervalMs": 5000  // Optional: execution interval in milliseconds (default: 5000)
+}
+```
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "GO MODE CONTINUUM ACTIVATED - TOUT GO!",
+  "mode": "CONTINUUM",
+  "intervalMs": 5000,
+  "status": "ACTIVE"
+}
+```
+
+#### Get Continuum Status
+```http
+GET /benchmarks/continuum/status
+```
+
+**Description**: Get current GO MODE CONTINUUM status and statistics.
+
+**Response**:
+```json
+{
+  "success": true,
+  "active": true,
+  "intervalMs": 5000,
+  "totalExecutions": 42,
+  "lastExecution": "2025-11-10T12:30:00.000Z",
+  "totalResults": 142
+}
+```
+
+#### Stop GO MODE CONTINUUM
+```http
+POST /benchmarks/continuum/stop
+```
+
+**Description**: Stop continuous benchmark execution.
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "GO MODE CONTINUUM STOPPED",
+  "statistics": {
+    "totalExecutions": 42,
+    "lastExecution": "2025-11-10T12:30:00.000Z"
+  }
+}
+```
+
+---
+
 ## WebSocket Support (Future)
 
 Real-time updates will be available via WebSocket:
@@ -461,6 +529,16 @@ Topics:
 - `entity.status` - Entity status updates
 - `reality.fractal` - Fractal reality events
 - `agi.simulation` - AGI simulation updates
+
+---
+
+## Notes
+
+- All timestamps are in ISO 8601 format
+- Benchmark scores range from 0-100
+- GO MODE CONTINUUM executes the complete global benchmark suite (57 MMLU + 8 tech benchmarks) each cycle
+- Continuum mode runs continuously until explicitly stopped
+- See [GO_MODE_CONTINUUM.md](GO_MODE_CONTINUUM.md) for detailed documentation
 
 ---
 
