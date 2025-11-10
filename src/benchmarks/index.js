@@ -451,7 +451,19 @@ class GOModeBenchmarks {
       };
     }
     
-    const intervalMs = options.intervalMs || this.continuumState.intervalMs;
+    // Validate and constrain intervalMs to prevent resource exhaustion
+    // Minimum: 1000ms (1 second), Maximum: 60000ms (60 seconds)
+    let intervalMs = options.intervalMs || this.continuumState.intervalMs;
+    
+    // Input validation and sanitization
+    if (typeof intervalMs !== 'number' || isNaN(intervalMs)) {
+      intervalMs = this.continuumState.intervalMs; // Use default
+    }
+    
+    // Enforce reasonable bounds
+    const MIN_INTERVAL = 1000;  // 1 second minimum
+    const MAX_INTERVAL = 60000; // 60 seconds maximum
+    intervalMs = Math.max(MIN_INTERVAL, Math.min(MAX_INTERVAL, intervalMs));
     
     console.log('🚀 GO MODE CONTINUUM ACTIVATED 🚀');
     console.log('⚡ CONTINUEZ À FOND - PLEINEMENT APPLIQUÉ ⚡');
@@ -461,7 +473,7 @@ class GOModeBenchmarks {
     this.continuumState.active = true;
     this.continuumState.intervalMs = intervalMs;
     
-    // Start continuous execution
+    // Start continuous execution with validated interval
     this.continuumState.executionTimer = setInterval(() => {
       this.executeContinuumBenchmark();
     }, intervalMs);
