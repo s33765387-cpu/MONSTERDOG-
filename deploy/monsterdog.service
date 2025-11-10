@@ -1,0 +1,20 @@
+[Unit]
+Description=MONSTERDOG Ultimate Finality Incarnate - ZorgMaster service
+After=network.target
+
+[Service]
+Type=simple
+User=s33765387-cpu
+Group=s33765387-cpu
+EnvironmentFile=/etc/monsterdog/monsterdog.env
+WorkingDirectory=/opt/monsterdog
+# Use SIGINT so the process can run graceful shutdown handler (Ctrl+C equivalent)
+KillSignal=SIGINT
+TimeoutStopSec=30
+Restart=on-failure
+RestartSec=5
+# Start wrapper script which sets up venv and execs the Python process, redirecting output to log
+ExecStart=/bin/bash /opt/monsterdog/deploy/start_monsterdog.sh
+
+[Install]
+WantedBy=multi-user.target

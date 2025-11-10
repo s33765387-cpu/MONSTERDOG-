@@ -1,0 +1,10 @@
+/var/log/monsterdog/monsterdog.log {
+    daily
+    rotate 14
+    compress
+    missingok
+    copytruncate
+    notifempty
+    create 0644 s33765387-cpu adm
+    dateext
+}
