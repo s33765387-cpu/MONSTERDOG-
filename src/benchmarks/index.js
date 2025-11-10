@@ -474,6 +474,8 @@ class GOModeBenchmarks {
     this.continuumState.intervalMs = intervalMs;
     
     // Start continuous execution with validated interval
+    // Note: intervalMs is sanitized above with bounds (1000-60000ms) to prevent resource exhaustion
+    // This mitigates CWE-400 (Resource Exhaustion) by constraining user input
     this.continuumState.executionTimer = setInterval(() => {
       this.executeContinuumBenchmark();
     }, intervalMs);
