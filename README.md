@@ -387,6 +387,57 @@ bash scripts/deploy.sh
 
 ---
 
+## 🔱 Systemd Service Deployment (Python)
+
+For production deployment as a systemd service on Linux servers:
+
+### Python Edition - ZORGMASTER
+
+The repository includes a Python-based service (`MONSTERDOG_ULTIMATE_FINALITY_INCARNATE.py`) that can run as a systemd service with automatic startup, logging, and process management.
+
+**Quick Setup:**
+```bash
+# View complete installation guide (French)
+cat deploy/README.md
+
+# Basic installation steps (requires root):
+sudo mkdir -p /opt/monsterdog /etc/monsterdog /var/log/monsterdog
+sudo cp -r . /opt/monsterdog
+sudo cp deploy/monsterdog.env /etc/monsterdog/
+sudo cp deploy/monsterdog.service /etc/systemd/system/
+sudo cp deploy/logrotate_monsterdog /etc/logrotate.d/monsterdog
+
+# Configure service user/permissions
+sudo chown -R s33765387-cpu:s33765387-cpu /opt/monsterdog /var/log/monsterdog
+
+# Enable and start service
+sudo systemctl daemon-reload
+sudo systemctl enable --now monsterdog.service
+sudo systemctl status monsterdog.service
+```
+
+**Features:**
+- ✅ **Automatic virtual environment** creation and dependency installation
+- ✅ **Systemd integration** with graceful shutdown (SIGINT)
+- ✅ **Log rotation** (14 days retention)
+- ✅ **Auto-restart** on failure
+- ✅ **FastAPI-based** REST API on port 8080
+- ✅ **Environment configuration** via `/etc/monsterdog/monsterdog.env`
+- ✅ **All three entities** (MONSTERDOG, GEMINIDOG, EXOCHRONOS)
+
+**Files:**
+- `deploy/monsterdog.service` - Systemd unit file
+- `deploy/start_monsterdog.sh` - Startup wrapper script
+- `deploy/monsterdog.env` - Environment variables template
+- `deploy/logrotate_monsterdog` - Log rotation config
+- `deploy/README.md` - Complete deployment guide (French)
+- `MONSTERDOG_ULTIMATE_FINALITY_INCARNATE.py` - Python orchestrator
+- `requirements.txt` - Python dependencies
+
+See [deploy/README.md](deploy/README.md) for complete installation instructions.
+
+---
+
 ## 🔱 Environment Variables
 
 - `PORT` - Server port (default: 8080)
@@ -468,6 +519,7 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
+- **[deploy/README.md](deploy/README.md)** - 🔱 Systemd Service Deployment Guide (Complete installation for production)
 - **[GO_MODE_CYCLE.md](GO_MODE_CYCLE.md)** - 🚀 Complete GO MODE Cycle guide (Leaderboard + Autonomous + Global)
 - **[CONTINUUM_ACTION.md](CONTINUUM_ACTION.md)** - ⚡ Complete CONTINUUM ACTION guide (Decisive Agentic Execution)
 - **[RAPPORT_CYCLES_SUIVANTS.md](RAPPORT_CYCLES_SUIVANTS.md)** - 🔥 Roadmap: Next development cycles (α, β, γ)
