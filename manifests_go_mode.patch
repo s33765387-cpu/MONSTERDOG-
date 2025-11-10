@@ -1,0 +1,48 @@
+diff --git a/manifests/monsterdog/ACTIVATE_GO_CONTINUUM.json b/manifests/monsterdog/ACTIVATE_GO_CONTINUUM.json
+new file mode 100644
+index 0000000..8b8e5d3
+--- /dev/null
++++ b/manifests/monsterdog/ACTIVATE_GO_CONTINUUM.json
+@@ -0,0 +1,20 @@
++{
++  "id": 21,
++  "name": "ACTIVATE_GO_CONTINUUM",
++  "category": "GO_MODE",
++  "description": "Activate continuous GO MODE execution - CONTINUEZ À FOND!",
++  "parameters": {
++    "intervalMs": {
++      "type": "number",
++      "default": 5000
++    },
++    "duration": {
++      "type": "string",
++      "default": "CONTINUOUS"
++    }
++  },
++  "version": "1.0.0",
++  "deploy": {
++    "artifact": "packages/monsterdog/ACTIVATE_GO_CONTINUUM.zip"
++  }
++}
+diff --git a/manifests/monsterdog/RUN_GO_BENCHMARKS.json b/manifests/monsterdog/RUN_GO_BENCHMARKS.json
+new file mode 100644
+index 0000000..7c5a8c2
+--- /dev/null
++++ b/manifests/monsterdog/RUN_GO_BENCHMARKS.json
+@@ -0,0 +1,16 @@
++{
++  "id": 22,
++  "name": "RUN_GO_BENCHMARKS",
++  "category": "GO_MODE",
++  "description": "Execute GO MODE global benchmarks suite - Participate in AI race",
++  "parameters": {
++    "benchmarkType": {
++      "type": "string",
++      "default": "GLOBAL"
++    }
++  },
++  "version": "1.0.0",
++  "deploy": {
++    "artifact": "packages/monsterdog/RUN_GO_BENCHMARKS.zip"
++  }
++}

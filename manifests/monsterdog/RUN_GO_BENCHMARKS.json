@@ -1,0 +1,16 @@
+{
+  "id": 22,
+  "name": "RUN_GO_BENCHMARKS",
+  "category": "GO_MODE",
+  "description": "Execute GO MODE global benchmarks suite - Participate in AI race",
+  "parameters": {
+    "benchmarkType": {
+      "type": "string",
+      "default": "GLOBAL"
+    }
+  },
+  "version": "1.0.0",
+  "deploy": {
+    "artifact": "packages/monsterdog/RUN_GO_BENCHMARKS.zip"
+  }
+}
