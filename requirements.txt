@@ -1,0 +1,5 @@
+fastapi>=0.121.0
+uvicorn>=0.38.0
+numpy>=2.3.0
+aiofiles>=25.1.0
+prometheus-client>=0.23.0
