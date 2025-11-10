@@ -116,7 +116,7 @@ class FULLTRUTLOrchestrator {
     this.app.get('/agentic/actions', (req, res) => {
       res.json({
         success: true,
-        totalActions: 20,
+        totalActions: 22,
         actions: this.entities.monsterdog.getAgenticActions()
       });
     });
@@ -235,6 +235,25 @@ class FULLTRUTLOrchestrator {
     this.app.delete('/benchmarks/results', (req, res) => {
       const result = this.benchmarks.clearResults();
       res.json(result);
+    });
+    
+    // GO MODE CONTINUUM endpoints
+    this.app.post('/benchmarks/continuum/start', (req, res) => {
+      const { intervalMs } = req.body;
+      const result = this.benchmarks.startContinuumMode({ intervalMs });
+      res.json(result);
+    });
+    
+    this.app.post('/benchmarks/continuum/stop', (req, res) => {
+      const result = this.benchmarks.stopContinuumMode();
+      res.json(result);
+    });
+    
+    this.app.get('/benchmarks/continuum/status', (req, res) => {
+      res.json({
+        success: true,
+        ...this.benchmarks.getContinuumStatus()
+      });
     });
   }
   

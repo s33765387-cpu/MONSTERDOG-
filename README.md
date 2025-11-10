@@ -151,6 +151,30 @@ curl -X POST http://localhost:8080/benchmarks/global/run
 curl http://localhost:8080/benchmarks/results
 ```
 
+### ⚡ Running GO MODE CONTINUUM - Continuous Benchmarks
+
+**CONTINUEZ À FOND PLEINEMENT APPLIQUÉ!** - Run benchmarks continuously at full speed:
+
+```bash
+# Start GO MODE CONTINUUM (after starting the server)
+curl -X POST http://localhost:8080/benchmarks/continuum/start \
+  -H "Content-Type: application/json" \
+  -d '{"intervalMs": 5000}'
+
+# Get continuum status
+curl http://localhost:8080/benchmarks/continuum/status
+
+# Stop continuum mode
+curl -X POST http://localhost:8080/benchmarks/continuum/stop
+```
+
+The GO MODE CONTINUUM system automatically:
+- Executes global benchmark suite continuously
+- Runs all 57 MMLU categories + 8 technology benchmarks
+- Tracks execution statistics and performance
+- Participates in AI race at full capacity - **TOUT GO!**
+
+
 ### ⚡ Running CONTINUUM ACTION System
 
 ```bash
@@ -215,7 +239,7 @@ MONSTERDOG-/
 - `GET /entities/exochronos` - EXOCHRONOS entity data
 
 ### Agentic Actions
-- `GET /agentic/actions` - List all 20 available agentic actions
+- `GET /agentic/actions` - List all 22 available agentic actions (20 core + 2 GO MODE)
 - `POST /agentic/execute` - Execute a specific agentic action
 - `GET /agentic/state` - Get agentic system state and history
 
@@ -237,6 +261,11 @@ MONSTERDOG-/
 - `GET /benchmarks/results` - Get benchmark history and results
 - `DELETE /benchmarks/results` - Clear benchmark history
 
+### GO MODE CONTINUUM - Continuous Benchmarks
+- `POST /benchmarks/continuum/start` - Start continuous benchmark execution (CONTINUEZ À FOND!)
+- `POST /benchmarks/continuum/stop` - Stop continuous benchmark execution
+- `GET /benchmarks/continuum/status` - Get continuum mode status and statistics
+
 ### Systems
 - `GET /webxr/scene` - WebXR scene configuration
 - `GET /nft/collection` - NFT collection information
@@ -252,12 +281,15 @@ MONSTERDOG-/
 - Supreme mode activation
 
 ### 🎯 Agentic Actions System
-- **20 autonomous agentic actions** for MONSTERDOG
+- **22 autonomous agentic actions** for MONSTERDOG (20 core + 2 GO MODE)
 - Reality manipulation capabilities (4 actions)
 - Consciousness expansion & control (4 actions)
 - Entity coordination & orchestration (4 actions)
 - Temporal navigation & control (4 actions)
 - Learning & adaptation mechanisms (4 actions)
+- **GO MODE integration** (2 actions):
+  - **RUN_GO_BENCHMARKS** - Execute global benchmark suite
+  - **ACTIVATE_GO_CONTINUUM** - Continuous benchmark execution
 - Full API integration for action execution
 - Action state tracking and history
 
@@ -289,6 +321,15 @@ See [CONTINUUM_ACTION.md](CONTINUUM_ACTION.md) for complete documentation.
 - **AI Race Participation** - Compete in global AI benchmarks
 - **Performance Tracking** - Historical benchmark results and analytics
 - **REST API Integration** - Full programmatic access to benchmarks
+
+### ⚡ GO MODE CONTINUUM - CONTINUEZ À FOND!
+- **Continuous Benchmark Execution** - Automated full-speed benchmark runs
+- **TOUT GO Application** - Complete implementation of all GO MODE features
+- **Automatic Global Suite** - Runs all 57 MMLU + 8 tech benchmarks continuously
+- **Configurable Intervals** - Adjustable execution frequency
+- **Real-time Statistics** - Track total executions and performance
+- **Start/Stop Control** - Full control over continuous execution
+- **REST API Integration** - Programmatic access to continuum mode
 
 See benchmark endpoints in [API.md](API.md) for integration details.
 

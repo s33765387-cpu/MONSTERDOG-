@@ -1,0 +1,20 @@
+{
+  "id": 21,
+  "name": "ACTIVATE_GO_CONTINUUM",
+  "category": "GO_MODE",
+  "description": "Activate continuous GO MODE execution - CONTINUEZ À FOND!",
+  "parameters": {
+    "intervalMs": {
+      "type": "number",
+      "default": 5000
+    },
+    "duration": {
+      "type": "string",
+      "default": "CONTINUOUS"
+    }
+  },
+  "version": "1.0.0",
+  "deploy": {
+    "artifact": "packages/monsterdog/ACTIVATE_GO_CONTINUUM.zip"
+  }
+}

@@ -148,7 +148,7 @@ monsterdogAgentic.activate();
 
 test('Agentic actions list available', () => {
   const actions = monsterdogAgentic.getAgenticActions();
-  if (actions.length !== 20) throw new Error(`Expected 20 actions, got ${actions.length}`);
+  if (actions.length !== 22) throw new Error(`Expected 22 actions, got ${actions.length}`);
 });
 
 test('Reality manipulation - MANIPULATE_REALITY', () => {
@@ -384,6 +384,67 @@ test('Invalid technology benchmark handling', () => {
   const result = benchmarks.runTechnologyBenchmark('INVALID_BENCHMARK');
   if (result.success) throw new Error('Should fail for invalid benchmark');
   if (result.error !== 'INVALID_BENCHMARK') throw new Error('Wrong error type');
+});
+
+console.log('');
+
+// Test GO MODE CONTINUUM System
+console.log('Testing GO MODE CONTINUUM System...');
+const goContinuumBenchmarks = new GOModeBenchmarks();
+goContinuumBenchmarks.initialize();
+
+test('GO MODE CONTINUUM start/stop', () => {
+  const startResult = goContinuumBenchmarks.startContinuumMode({ intervalMs: 10000 });
+  if (!startResult.success) throw new Error('Failed to start continuum');
+  if (startResult.mode !== 'CONTINUUM') throw new Error('Wrong mode');
+  
+  const stopResult = goContinuumBenchmarks.stopContinuumMode();
+  if (!stopResult.success) throw new Error('Failed to stop continuum');
+  if (!stopResult.statistics) throw new Error('No statistics');
+});
+
+test('GO MODE CONTINUUM status', () => {
+  const status = goContinuumBenchmarks.getContinuumStatus();
+  if (status.active !== false) throw new Error('Should not be active');
+  if (typeof status.totalExecutions !== 'number') throw new Error('Missing totalExecutions');
+});
+
+test('Cannot start GO MODE CONTINUUM when already active', () => {
+  goContinuumBenchmarks.startContinuumMode();
+  const result = goContinuumBenchmarks.startContinuumMode();
+  if (result.success !== false) throw new Error('Should fail when already active');
+  if (result.error !== 'ALREADY_ACTIVE') throw new Error('Wrong error type');
+  goContinuumBenchmarks.stopContinuumMode();
+});
+
+test('GO MODE Actions - RUN_GO_BENCHMARKS', () => {
+  const testMonsterdog = new MonsterdogEntity();
+  testMonsterdog.activate();
+  
+  const result = testMonsterdog.executeAgenticAction('RUN_GO_BENCHMARKS', { benchmarkType: 'GLOBAL' });
+  if (!result.success) throw new Error('Failed to execute RUN_GO_BENCHMARKS');
+  if (result.action !== 'RUN_GO_BENCHMARKS') throw new Error('Wrong action');
+});
+
+test('GO MODE Actions - ACTIVATE_GO_CONTINUUM', () => {
+  const testMonsterdog = new MonsterdogEntity();
+  testMonsterdog.activate();
+  
+  const result = testMonsterdog.executeAgenticAction('ACTIVATE_GO_CONTINUUM', { intervalMs: 5000 });
+  if (!result.success) throw new Error('Failed to execute ACTIVATE_GO_CONTINUUM');
+  if (result.action !== 'ACTIVATE_GO_CONTINUUM') throw new Error('Wrong action');
+  if (result.result.mode !== 'CONTINUOUS_BENCHMARKS') throw new Error('Wrong mode');
+});
+
+test('Agentic actions count includes GO MODE actions', () => {
+  const testMonsterdog = new MonsterdogEntity();
+  testMonsterdog.activate();
+  
+  const actions = testMonsterdog.getAgenticActions();
+  if (actions.length !== 22) throw new Error(`Expected 22 actions, got ${actions.length}`);
+  
+  const goActions = actions.filter(a => a.category === 'GO_MODE');
+  if (goActions.length !== 2) throw new Error(`Expected 2 GO MODE actions, got ${goActions.length}`);
 });
 
 console.log('');
