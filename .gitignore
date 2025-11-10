@@ -43,3 +43,10 @@ temp/
 # Archive packages (download from releases)
 *.zip
 *.sha512
+
+# MONSTERDOG FINALITY artifacts
+MONSTERDOG_ARTEFACTS/
+MONSTERDOG_HISTORY.jsonl
+__pycache__/
+*.pyc
+*.pyo
