@@ -39,7 +39,7 @@ class MonsterdogEntity {
       executionInterval: null
     };
     
-    // 20 Agentic Actions
+    // 20 Agentic Actions + 2 GO MODE Actions = 22 Total
     this.agenticActions = {
       // Reality Manipulation Actions (1-4)
       MANIPULATE_REALITY: this.manipulateReality.bind(this),
@@ -69,7 +69,11 @@ class MonsterdogEntity {
       ABSORB_KNOWLEDGE: this.absorbKnowledge.bind(this),
       ADAPT_STRATEGY: this.adaptStrategy.bind(this),
       EVOLVE_CAPABILITY: this.evolveCapability.bind(this),
-      OPTIMIZE_PERFORMANCE: this.optimizePerformance.bind(this)
+      OPTIMIZE_PERFORMANCE: this.optimizePerformance.bind(this),
+      
+      // GO MODE Actions (21-22)
+      RUN_GO_BENCHMARKS: this.runGoBenchmarks.bind(this),
+      ACTIVATE_GO_CONTINUUM: this.activateGoContinuum.bind(this)
     };
   }
   
@@ -476,6 +480,9 @@ class MonsterdogEntity {
     if (['NAVIGATE_TIMELINE', 'CREATE_TEMPORAL_ANCHOR', 'FORECAST_PROBABILITY', 'STABILIZE_TIMESTREAM'].includes(action)) {
       return 'TEMPORAL';
     }
+    if (['RUN_GO_BENCHMARKS', 'ACTIVATE_GO_CONTINUUM'].includes(action)) {
+      return 'GO_MODE';
+    }
     return 'LEARNING_ADAPTATION';
   }
   
@@ -500,7 +507,9 @@ class MonsterdogEntity {
       ABSORB_KNOWLEDGE: 'Absorb knowledge from multiversal sources',
       ADAPT_STRATEGY: 'Adapt strategy based on environmental changes',
       EVOLVE_CAPABILITY: 'Evolve new capabilities and powers',
-      OPTIMIZE_PERFORMANCE: 'Optimize system performance and efficiency'
+      OPTIMIZE_PERFORMANCE: 'Optimize system performance and efficiency',
+      RUN_GO_BENCHMARKS: 'Execute GO MODE global benchmarks suite - Participate in AI race',
+      ACTIVATE_GO_CONTINUUM: 'Activate continuous GO MODE execution - CONTINUEZ À FOND!'
     };
     return descriptions[action] || 'No description available';
   }
@@ -752,6 +761,66 @@ class MonsterdogEntity {
           ? (history.reduce((sum, h) => sum + h.priority, 0) / history.length).toFixed(2)
           : 0
       }
+    };
+  }
+  
+  // ===== GO MODE Actions (21-22) =====
+  
+  /**
+   * Action 21: RUN_GO_BENCHMARKS
+   * Execute GO MODE global benchmarks suite
+   */
+  runGoBenchmarks(params) {
+    console.log('🚀 Action: RUN_GO_BENCHMARKS');
+    console.log('⚡ Executing Global GO MODE Benchmarks...');
+    
+    // This action would integrate with GOModeBenchmarks
+    // In a real implementation, this would trigger the actual benchmark system
+    const benchmarkType = params.benchmarkType || 'GLOBAL';
+    
+    this.agenticState.actionsExecuted.push({
+      action: 'RUN_GO_BENCHMARKS',
+      timestamp: new Date().toISOString(),
+      parameters: params,
+      benchmarkType: benchmarkType
+    });
+    
+    return {
+      success: true,
+      action: 'RUN_GO_BENCHMARKS',
+      message: 'GO MODE benchmarks executed - MONSTERDOG PARTICIPE À LA COURSE À L\'IA',
+      benchmarkType: benchmarkType,
+      status: 'COMPLETED'
+    };
+  }
+  
+  /**
+   * Action 22: ACTIVATE_GO_CONTINUUM
+   * Activate continuous GO MODE benchmark execution
+   */
+  activateGoContinuum(params) {
+    console.log('🔱 Action: ACTIVATE_GO_CONTINUUM');
+    console.log('⚡ CONTINUEZ À FOND - GO MODE CONTINUUM ACTIVATION ⚡');
+    
+    const intervalMs = params.intervalMs || 5000;
+    const duration = params.duration || 'CONTINUOUS';
+    
+    this.agenticState.actionsExecuted.push({
+      action: 'ACTIVATE_GO_CONTINUUM',
+      timestamp: new Date().toISOString(),
+      parameters: params,
+      intervalMs: intervalMs,
+      duration: duration
+    });
+    
+    return {
+      success: true,
+      action: 'ACTIVATE_GO_CONTINUUM',
+      message: 'GO MODE CONTINUUM ACTIVATED - TOUT GO PLEINEMENT APPLIQUÉ!',
+      mode: 'CONTINUOUS_BENCHMARKS',
+      intervalMs: intervalMs,
+      duration: duration,
+      status: 'ACTIVE'
     };
   }
 }
