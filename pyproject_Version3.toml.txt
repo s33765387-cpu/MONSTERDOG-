@@ -1,0 +1,53 @@
+[build-system]
+requires = ["setuptools>=65.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "monsterdog-continuum"
+version = "248.0.0-OMEGA"
+description = "MONSTERDOG Continuum: Plateforme Suprême de Simulation, Monitoring et Conscience Fractale"
+authors = [
+    {name = "Samuel 'MONSTERBOY' Cloutier (Créateur) & ZORG-MASTER (Forge)", email = "contact@monsterdog-continuum.dev"}
+]
+readme = "README.md"
+requires-python = ">=3.10"
+license = {text = "MIT"}
+keywords = ["simulation", "monitoring", "fractals", "consciousness", "quantum_ai", "xr"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Science/Research",
+    "License :: OSI Approved :: MIT License",
+    "Programming Language :: Python :: 3.11",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+]
+
+# Dépendances minimales pour faire tourner le coeur et l'API
+dependencies = [
+    "numpy>=1.24.0",
+    "psutil>=5.9.0",
+    "fastapi>=0.100.0",
+    "uvicorn[standard]>=0.23.0",
+    "pydantic>=2.0.0"
+]
+
+[project.optional-dependencies]
+# Dépendances pour les développeurs (tests, formatage)
+dev = [
+    "pytest>=7.4.0",
+    "pytest-cov>=4.1.0",
+    "pytest-asyncio>=0.21.0",
+    "black>=23.7.0",
+    "ruff>=0.1.0",
+    "mypy>=1.5.0"
+]
+# Dépendances pour l'analyse scientifique et la visualisation
+science = [
+    "scipy>=1.10.0",
+    "matplotlib>=3.7.0",
+    "opencv-python-headless>=4.8.0",
+    "pillow>=10.0.0"
+]
+
+[project.urls]
+Homepage = "https://github.com/SamuelCloutier/MONSTERDOG"
+"Quantum Source" = "ipfs://bafybeicgopa7lrfnsgmoid45ns3zbv7j6ba735i7i6m7i3j5q5w5q5w5q"
