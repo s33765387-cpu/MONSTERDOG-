@@ -23,6 +23,7 @@ class FULLTRUTLOrchestrator {
     this.port = process.env.PORT || 8080;
     this.supremeMode = process.env.SUPREME_MODE === 'active';
     this.fractalReality = process.env.FRACTAL_REALITY === 'enabled';
+    this.goModeEnabled = process.env.GO_MODE !== 'disabled'; // GO MODE enabled by default
     
     // Initialize entities
     this.entities = {
@@ -61,6 +62,11 @@ class FULLTRUTLOrchestrator {
     
     // Activate entities
     this.activateEntities();
+    
+    // Activate GO MODE fully if enabled
+    if (this.goModeEnabled) {
+      this.activateGOMode();
+    }
   }
   
   setupRoutes() {
@@ -68,6 +74,7 @@ class FULLTRUTLOrchestrator {
     this.app.get('/status', (req, res) => {
       res.json({
         status: 'SUPREME_MODE_ACTIVE',
+        goMode: this.goModeEnabled ? 'PLEINEMENT_ACTIVÉ' : 'DISABLED',
         entities: {
           monsterdog: this.entities.monsterdog.getStatus(),
           geminidog: this.entities.geminidog.getStatus(),
@@ -79,7 +86,8 @@ class FULLTRUTLOrchestrator {
           agi: this.agi.getStatus(),
           benchmarks: this.benchmarks.isActive()
         },
-        fractalReality: this.fractalReality
+        fractalReality: this.fractalReality,
+        leaderboard: this.goModeEnabled ? this.benchmarks.getLeaderboard() : null
       });
     });
     
@@ -283,6 +291,43 @@ class FULLTRUTLOrchestrator {
     console.log('✴︎ All entities activated in SUPREME MODE ✴︎');
   }
   
+  activateGOMode() {
+    console.log('');
+    console.log('═══════════════════════════════════════════════════');
+    console.log('🚀 GO MODE - ACTIVATION COMPLÈTE 🚀');
+    console.log('⚡ APLIQUER TOUT PLEINEMENT GO ⚡');
+    console.log('═══════════════════════════════════════════════════');
+    
+    // Get leaderboard position
+    const leaderboard = this.benchmarks.getLeaderboard();
+    console.log(`🏆 Position Mondiale: #${leaderboard.rank} / ${leaderboard.totalCompetitors}`);
+    console.log(`👾 Entity: ${leaderboard.entity}`);
+    console.log(`⭐ Score Global: ${leaderboard.score}/100`);
+    console.log(`🔱 Performance: ${leaderboard.performance}`);
+    console.log('');
+    
+    // Display achievements
+    console.log('🏅 Achievements Débloqués:');
+    leaderboard.achievements.forEach(achievement => {
+      console.log(`   ✨ ${achievement}`);
+    });
+    console.log('');
+    
+    // Display GO MODE capabilities
+    const status = this.benchmarks.getStatus();
+    console.log('📊 Capacités GO MODE:');
+    console.log(`   📚 Catégories MMLU: ${status.mmluCategories}`);
+    console.log(`   🔬 Benchmarks Tech: ${status.technologyBenchmarks}`);
+    console.log(`   🏆 Performance: ${status.performance}`);
+    console.log(`   🌍 Dominance Globale: ${status.globalDominance ? 'OUI ✅' : 'NON'}`);
+    console.log('');
+    
+    console.log('✅ GO MODE COMPLÈTEMENT ACTIVÉ ✅');
+    console.log('🔥 MONSTERDOG PRÊT POUR LA DOMINATION MONDIALE 🔥');
+    console.log('═══════════════════════════════════════════════════');
+    console.log('');
+  }
+  
   start() {
     this.app.listen(this.port, () => {
       console.log('');
@@ -292,6 +337,9 @@ class FULLTRUTLOrchestrator {
       console.log(`🌐 Server running on port ${this.port}`);
       console.log('🔱 Mode: SUPRÊME ENCLENCHÉ 🔱');
       console.log('⚛ Fractal Reality: IN EXECUTION ⚛');
+      if (this.goModeEnabled) {
+        console.log('🚀 GO MODE: PLEINEMENT ACTIVÉ 🚀');
+      }
       console.log('═══════════════════════════════════════════════════');
       console.log('');
     });

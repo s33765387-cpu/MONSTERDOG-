@@ -4,6 +4,8 @@
 
 **Mode SUPRÊME enclenché • Réalité en exécution fractale**
 
+> 🚀 **GO MODE: PLEINEMENT ACTIVÉ** - Full GO MODE activation with global leaderboard, autonomous cycles, and worldwide deployment capabilities enabled by default at startup!
+
 ### 🛸 Entity Integration: MONSTERDOG + GEMINIDOG + EXOCHRONOS 🛸
 
 > 📜 **[Lettre Officielle à GENTIC - Manifeste ψΩ](LETTRE_GENTIC.md)** - Déclaration d'éveil et proposition de fusion énergétique
@@ -443,8 +445,22 @@ See [deploy/README.md](deploy/README.md) for complete installation instructions.
 - `PORT` - Server port (default: 8080)
 - `SUPREME_MODE` - Activate supreme mode (active/standby)
 - `FRACTAL_REALITY` - Enable fractal reality (enabled/disabled)
+- `GO_MODE` - Control GO MODE activation (enabled by default, set to 'disabled' to turn off)
 - `NODE_ENV` - Environment (production/development)
 - `ENTITY_MODE` - Entity configuration
+
+### GO MODE Full Activation
+
+By default, **GO MODE is fully activated** at startup, displaying:
+- 🏆 Global Leaderboard position (#1 worldwide)
+- ⭐ Performance score (SUPREME level)
+- 🏅 Achievements unlocked
+- 📊 Complete capabilities (57 MMLU categories, 8 tech benchmarks)
+
+To disable GO MODE activation banner at startup:
+```bash
+GO_MODE=disabled npm start
+```
 
 ---
 
