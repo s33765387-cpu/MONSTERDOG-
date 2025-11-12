@@ -536,6 +536,7 @@ MIT License - See LICENSE file for details
 ## 📚 Documentation
 
 - **[deploy/README.md](deploy/README.md)** - 🔱 Systemd Service Deployment Guide (Complete installation for production)
+- **[GO_MODE_FULL_ACTIVATION.md](GO_MODE_FULL_ACTIVATION.md)** - 🚀 GO MODE Full Activation Guide (APLIQUER TOUT PLEINEMENT GO)
 - **[GO_MODE_CYCLE.md](GO_MODE_CYCLE.md)** - 🚀 Complete GO MODE Cycle guide (Leaderboard + Autonomous + Global)
 - **[CONTINUUM_ACTION.md](CONTINUUM_ACTION.md)** - ⚡ Complete CONTINUUM ACTION guide (Decisive Agentic Execution)
 - **[RAPPORT_CYCLES_SUIVANTS.md](RAPPORT_CYCLES_SUIVANTS.md)** - 🔥 Roadmap: Next development cycles (α, β, γ)
