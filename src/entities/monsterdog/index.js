@@ -18,6 +18,8 @@ class MonsterdogEntity {
       'FRACTAL_EXECUTION',
       'SUPREME_CONSCIOUSNESS'
     ];
+    this.agenticMode = false;
+    this.autonomousActions = 0;
   }
   
   activate() {
@@ -47,7 +49,32 @@ class MonsterdogEntity {
       type: 'PRIMARY_ENTITY',
       designation: '👾 MONSTERDOG 👾',
       power: 'SUPREME',
-      reality: 'FRACTAL_EXECUTION'
+      reality: 'FRACTAL_EXECUTION',
+      agenticMode: this.agenticMode,
+      autonomousActions: this.autonomousActions
+    };
+  }
+  
+  enableAgenticMode() {
+    this.agenticMode = true;
+    console.log(`👾 ${this.entityId} - Agentic mode ENABLED`);
+    return { success: true, agenticMode: this.agenticMode };
+  }
+  
+  disableAgenticMode() {
+    this.agenticMode = false;
+    console.log(`👾 ${this.entityId} - Agentic mode DISABLED`);
+    return { success: true, agenticMode: this.agenticMode };
+  }
+  
+  executeAutonomousAction(action) {
+    this.autonomousActions++;
+    console.log(`👾 ${this.entityId} executing: ${action}`);
+    return {
+      entity: this.entityId,
+      action,
+      executed: this.autonomousActions,
+      timestamp: new Date().toISOString()
     };
   }
 }

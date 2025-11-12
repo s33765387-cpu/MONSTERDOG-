@@ -38,6 +38,13 @@
       "isaacSim": true,
       "intelligence": "GENERAL",
       "learning": "CONTINUOUS"
+    },
+    "continuum": {
+      "enabled": true,
+      "mode": "AGENTIC",
+      "executionInterval": 5000,
+      "autonomousActions": true,
+      "agenticActionsCount": 6
     }
   },
   "deployment": {

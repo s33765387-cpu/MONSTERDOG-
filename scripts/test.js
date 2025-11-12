@@ -11,6 +11,7 @@ const ExochronosEntity = require('../src/entities/exochronos');
 const WebXREngine = require('../src/webxr');
 const NFTIntegration = require('../src/nft');
 const AGIOrchestrator = require('../src/agi');
+const ContinuumMode = require('../src/continuum');
 
 console.log('═══════════════════════════════════════════════════');
 console.log('👾 MONSTERDOG SUPREME - System Test 👾');
@@ -137,6 +138,67 @@ test('AGI command execution', () => {
 test('AGI reality simulation', () => {
   const sim = agi.simulateReality({ test: true });
   if (!sim.simulation) throw new Error('No simulation');
+});
+console.log('');
+
+// Test Continuum Mode
+console.log('Testing Continuum Mode...');
+const mockOrchestrator = {
+  entities: {
+    monsterdog: new MonsterdogEntity(),
+    geminidog: new GeminidogEntity(),
+    exochronos: new ExochronosEntity()
+  }
+};
+const continuum = new ContinuumMode(mockOrchestrator);
+test('Continuum mode creation', () => {
+  if (!continuum) throw new Error('Failed to create');
+});
+continuum.initialize();
+test('Continuum mode initialization', () => {
+  const status = continuum.getStatus();
+  if (status.status !== 'STANDBY') throw new Error('Wrong initial status');
+  if (status.agenticActions !== 6) throw new Error('Wrong action count');
+});
+test('Continuum agentic actions', () => {
+  const actions = continuum.getActions();
+  if (actions.length !== 6) throw new Error('Wrong actions length');
+  if (!actions[0].priority) throw new Error('Missing priority');
+});
+test('Continuum mode activation', () => {
+  const result = continuum.activate();
+  if (!result.success) throw new Error('Activation failed');
+  if (result.status !== 'ACTIVE') throw new Error('Not active');
+});
+test('Continuum action execution', () => {
+  const result = continuum.executeAction('fractal_pulse');
+  if (!result.success) throw new Error('Action execution failed');
+  if (!result.result.timestamp) throw new Error('Missing timestamp');
+});
+test('Continuum mode deactivation', () => {
+  const result = continuum.deactivate();
+  if (!result.success) throw new Error('Deactivation failed');
+  if (result.status !== 'STANDBY') throw new Error('Not in standby');
+});
+console.log('');
+
+// Test Entity Agentic Features
+console.log('Testing Entity Agentic Features...');
+test('MONSTERDOG agentic mode', () => {
+  const result = monsterdog.enableAgenticMode();
+  if (!result.success || !result.agenticMode) throw new Error('Failed to enable');
+});
+test('MONSTERDOG autonomous action', () => {
+  const result = monsterdog.executeAutonomousAction('test_action');
+  if (!result.entity || !result.timestamp) throw new Error('Action failed');
+});
+test('GEMINIDOG agentic mode', () => {
+  const result = geminidog.enableAgenticMode();
+  if (!result.success || !result.agenticMode) throw new Error('Failed to enable');
+});
+test('EXOCHRONOS agentic mode', () => {
+  const result = exochronos.enableAgenticMode();
+  if (!result.success || !result.agenticMode) throw new Error('Failed to enable');
 });
 console.log('');
 
