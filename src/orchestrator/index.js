@@ -15,6 +15,7 @@ const ExochronosEntity = require('../entities/exochronos');
 const WebXREngine = require('../webxr');
 const NFTIntegration = require('../nft');
 const AGIOrchestrator = require('../agi');
+const ContinuumMode = require('../continuum');
 
 class FULLTRUTLOrchestrator {
   constructor() {
@@ -34,6 +35,7 @@ class FULLTRUTLOrchestrator {
     this.webxr = new WebXREngine();
     this.nft = new NFTIntegration();
     this.agi = new AGIOrchestrator();
+    this.continuum = new ContinuumMode(this);
     
     this.initialize();
   }
@@ -52,6 +54,7 @@ class FULLTRUTLOrchestrator {
     this.webxr.initialize();
     this.nft.initialize();
     this.agi.initialize();
+    this.continuum.initialize();
     
     // Setup routes
     this.setupRoutes();
@@ -73,7 +76,8 @@ class FULLTRUTLOrchestrator {
         systems: {
           webxr: this.webxr.isActive(),
           nft: this.nft.isConnected(),
-          agi: this.agi.getStatus()
+          agi: this.agi.getStatus(),
+          continuum: this.continuum.getStatus()
         },
         fractalReality: this.fractalReality
       });
@@ -105,6 +109,33 @@ class FULLTRUTLOrchestrator {
     // AGI endpoints
     this.app.post('/agi/command', (req, res) => {
       const result = this.agi.executeCommand(req.body);
+      res.json(result);
+    });
+    
+    // Continuum mode endpoints
+    this.app.get('/continuum/status', (req, res) => {
+      res.json(this.continuum.getStatus());
+    });
+    
+    this.app.get('/continuum/actions', (req, res) => {
+      res.json({
+        actions: this.continuum.getActions(),
+        total: this.continuum.getActions().length
+      });
+    });
+    
+    this.app.post('/continuum/activate', (req, res) => {
+      const result = this.continuum.activate();
+      res.json(result);
+    });
+    
+    this.app.post('/continuum/deactivate', (req, res) => {
+      const result = this.continuum.deactivate();
+      res.json(result);
+    });
+    
+    this.app.post('/continuum/action/:actionId', (req, res) => {
+      const result = this.continuum.executeAction(req.params.actionId);
       res.json(result);
     });
   }
