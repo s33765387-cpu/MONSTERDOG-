@@ -294,6 +294,139 @@ POST /agi/command
 
 ---
 
+### Continuum Mode Endpoints (NEW)
+
+#### Get Continuum Status
+```http
+GET /continuum/status
+```
+
+**Description**: Get the current status of continuum mode and agentic actions.
+
+**Response**:
+```json
+{
+  "status": "ACTIVE",
+  "mode": "AGENTIC",
+  "agenticActions": 6,
+  "actionsExecuted": 42,
+  "executionInterval": 5000,
+  "active": true
+}
+```
+
+#### Get Agentic Actions
+```http
+GET /continuum/actions
+```
+
+**Description**: List all registered agentic actions.
+
+**Response**:
+```json
+{
+  "actions": [
+    {
+      "id": "fractal_pulse",
+      "name": "Fractal Reality Pulse",
+      "entity": "monsterdog",
+      "priority": 10
+    },
+    {
+      "id": "dual_sync",
+      "name": "Dual Consciousness Sync",
+      "entity": "geminidog",
+      "priority": 9
+    },
+    {
+      "id": "temporal_scan",
+      "name": "Temporal Timeline Scan",
+      "entity": "exochronos",
+      "priority": 8
+    },
+    {
+      "id": "webxr_update",
+      "name": "WebXR Scene Update",
+      "entity": "webxr",
+      "priority": 7
+    },
+    {
+      "id": "nft_verify",
+      "name": "NFT Collection Verification",
+      "entity": "nft",
+      "priority": 6
+    },
+    {
+      "id": "agi_learn",
+      "name": "AGI Continuous Learning",
+      "entity": "agi",
+      "priority": 5
+    }
+  ],
+  "total": 6
+}
+```
+
+#### Activate Continuum Mode
+```http
+POST /continuum/activate
+```
+
+**Description**: Activate continuum mode with autonomous agentic actions.
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Continuum mode activated",
+  "status": "ACTIVE",
+  "agenticActions": 6
+}
+```
+
+#### Deactivate Continuum Mode
+```http
+POST /continuum/deactivate
+```
+
+**Description**: Deactivate continuum mode and stop autonomous execution.
+
+**Response**:
+```json
+{
+  "success": true,
+  "message": "Continuum mode deactivated",
+  "status": "STANDBY",
+  "actionsExecuted": 42
+}
+```
+
+#### Execute Specific Agentic Action
+```http
+POST /continuum/action/:actionId
+```
+
+**Description**: Execute a specific agentic action manually.
+
+**Parameters**:
+- `actionId` (path) - ID of the action to execute (e.g., `fractal_pulse`, `dual_sync`)
+
+**Response**:
+```json
+{
+  "success": true,
+  "result": {
+    "action": "fractal_pulse",
+    "entity": "MONSTERDOG",
+    "result": "Fractal reality pulse propagated",
+    "timestamp": "2024-01-01T00:00:00.000Z",
+    "status": "SUCCESS"
+  }
+}
+```
+
+---
+
 ## Error Responses
 
 All endpoints may return error responses in the following format:
