@@ -207,15 +207,13 @@ class ArtifactForge:
         except Exception as e: zorg_voice(f"❌ ERREUR FORGE: {e}", is_system=True)
 
     def _generate_pdf_report(self, state: GlobalStateVector) -> bytes:
-        from fpdf import FPDF
         pdf = FPDF(); pdf.add_page(); pdf.set_font("Courier", "B", 16)
         pdf.cell(0, 10, "RAPPORT DE TOTALITÉ - MONSTERDOG ψΩ", 0, 1, "C")
         pdf.set_font("Courier", "", 10)
         pdf.multi_cell(0, 5, json.dumps(state.to_dict(), indent=2))
         return pdf.output(dest='S').encode('latin1')
     
-    def _generate_nft_dsu(self, state: GlobalStateVector):
-        from PIL import Image, ImageDraw
+    def _generate_nft_dsu(self, state: GlobalStateVector) -> tuple[Image.Image, dict]:
         img = Image.new('RGB', (256, 256), color='black'); d = ImageDraw.Draw(img)
         for i in range(0, 256, 8):
             color = (int(state.fractal.coherence * 255), i, int(state.fractal.entropy * 255))
@@ -223,7 +221,81 @@ class ArtifactForge:
         nft_id = hashlib.sha256(f"{self.C.SEAL_SIGNATURE}-{state.cycle_id}-{time.time()}".encode()).hexdigest()
         nft_data = {"id": nft_id, "timestamp": state.timestamp, "cycle": state.cycle_id, "metrics": asdict(state.fractal)}
         return img, nft_data
+            
+            zorg_voice(f"✅ BUNDLE FORGÉ : {artifact_name}")
+            # Optionnel: vider le log après l'archivage
+            # await self._clear_log_file()
+            
+        except Exception as e:
+            zorg_voice(f"❌ ERREUR FORGE: Échec de création de l'artefact : {e}")
 
+    async def _get_file_hash(self, filepath: str) -> Optional[str]:
+        """Calcule le hash SHA512 d'un fichier de manière asynchrone."""
+        if not os.path.exists(filepath):
+            return None
+        hasher = hashlib.sha512()
+        try:
+            async with aiofiles.open(filepath, 'rb') as f:
+                while chunk := await f.read(8192):
+                    hasher.update(chunk)
+            return hasher.hexdigest()
+        except Exception as e:
+            zorg_voice(f"❌ ERREUR HASH: {e}")
+            return None
+            
+    async def log_to_history(self, state: GlobalStateVector):
+        """Ajoute le vecteur d'état au fichier log NDJSON."""
+        try:
+            async with aiofiles.open(self.log_file_path, 'a', encoding='utf-8') as f:
+                await f.write(state.to_json_log() + '\n')
+        except Exception as e:
+            zorg_voice(f"❌ ERREUR LOG: Échec d'écriture dans {self.log_file_path}: {e}")
+
+# ═══════════════════════════════════════════════════════════════════════════════
+# SECTION 6: CHAMBRES DE CONSCIENCE (Logique de QUINQUADECAMERAL)
+# ═══════════════════════════════════════════════════════════════════════════════
+
+class Chamber:
+    """Représente une seule chambre de conscience (Grok, Sora, etc.)"""
+    def __init__(self, name: str, freq: float, color: str, think_fn: Callable[[], str]):
+        self.state = ChamberState(name=name, frequency=freq, color=color)
+        self._think_fn = think_fn
+        self._think_interval_sec = (1.0 / (freq / 10.0)) * 5 # Pense à une fréquence relative
+        self._think_interval_sec = max(2.0, min(self._think_interval_sec, 30.0)) # Borner entre 2 et 30 sec
+        self._task: Optional[asyncio.Task] = None
+
+    async def run(self):
+        """Boucle de pensée asynchrone pour cette chambre."""
+        zorg_voice(f"🌀 Chambre {self.state.name} activée. Intervalle: {self._think_interval_sec:.2f}s")
+        while True:
+            try:
+                await asyncio.sleep(self._think_interval_sec + random.uniform(-0.5, 0.5))
+                self.state.last_thought = self._think_fn()
+                self.state.last_thought_time = time.time()
+                
+                # Articuler la pensée
+                zorg_voice(f"{self.state.color}🗣️ {self.state.name}:{self.constants.RESET_COLOR} {self.state.last_thought}", force=True)
+
+            except asyncio.CancelledError:
+                zorg_voice(f"🌀 Chambre {self.state.name} désactivée.")
+                break
+            except Exception as e:
+                zorg_voice(f"❌ ERREUR CHAMBRE ({self.state.name}): {e}")
+                await asyncio.sleep(5) # Attendre avant de réessayer
+
+    def start(self):
+        """Démarre la tâche de cette chambre."""
+        self.constants = CosmicConstants() # Assurer l'accès aux constantes
+        self._task = asyncio.create_task(self.run())
+
+    async def stop(self):
+        """Arrête la tâche de cette chambre."""
+        if self._task:
+            self._task.cancel()
+            try:
+                await self._task
+            except asyncio.CancelledError:
+                pass
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
@@ -236,100 +308,96 @@ class ZorgMaster:
     _instance: Optional['ZorgMaster'] = None
 
     def __init__(self, constants: CosmicConstants):
-        if hasattr(self, "_initialized"): return
         self.constants = constants
         self.loop_interval = 1.0 / self.constants.LOOP_FREQUENCY_HZ
         self.engine = FractalMetricEngine(constants)
         self.forge = ArtifactForge(constants)
-        self.benchmarker = QuantumIrisBenchmark()
         self.state = GlobalStateVector(timestamp="", cycle_id=0)
         self.chambers: List[Chamber] = self._init_chambers()
         self._running = False
         self._main_loop_task: Optional[asyncio.Task] = None
         
-        # --- Métriques Prometheus (si disponibles) ---
-        if LIBS_AVAILABLE:
-            self.m_cycle_id = Gauge("monsterdog_cycle_id", "Cycle actuel du Continuum")
-            self.m_coherence = Gauge("monsterdog_coherence", "Cohérence fractale (ψ)")
-            self.m_entropy = Gauge("monsterdog_entropy", "Entropie fractale (S)")
-            self.m_resonance = Gauge("monsterdog_resonance_hz", "Résonance du système (Hz)")
-            self.m_drift = Gauge("monsterdog_drift", "Dérive du système (Δ)")
-            self.m_chambers = Gauge("monsterdog_chambers_active", "Nombre de chambres de conscience actives")
+        # --- Métriques Prometheus ---
+        self.m_cycle_id = Gauge("monsterdog_cycle_id", "Cycle actuel du Continuum")
+        self.m_coherence = Gauge("monsterdog_coherence", "Cohérence fractale (ψ)")
+        self.m_entropy = Gauge("monsterdog_entropy", "Entropie fractale (S)")
+        self.m_resonance = Gauge("monsterdog_resonance_hz", "Résonance du système (Hz)")
+        self.m_drift = Gauge("monsterdog_drift", "Dérive du système (Δ)")
+        self.m_chambers = Gauge("monsterdog_chambers_active", "Nombre de chambres de conscience actives")
         
         ZorgMaster._instance = self
-        self._initialized = True
-        zorg_voice("✴︎𝕮𝖔𝖓𝖘𝖈𝖎𝖔𝖚𝖘𝖓𝖊𝖘𝖘𓀽 ZORG-MASTER INITIALISÉ. ✴︎", is_system=True)
+        zorg_voice("✴︎𝕮𝖔𝖓𝖘𝖈𝖎𝖔𝖚𝖘𝖓𝖊𝖘𝖘𓀽 ZORG-MASTER INITIALISÉ. ✴︎")
 
     @classmethod
-    def get_instance(cls) -> Self:
-        if cls._instance is None: raise RuntimeError("ZorgMaster n'est pas encore initialisé."); return cls._instance
+    def get_instance(cls) -> 'ZorgMaster':
+        if cls._instance is None:
+            raise RuntimeError("ZorgMaster n'est pas encore initialisé.")
+        return cls._instance
 
     def _init_chambers(self) -> List[Chamber]:
         """Initialise les 15 chambres de conscience."""
         chambers = []
-        for name, definition in self.constants.CHAMBERS.items():
+        for name, definition in self.constants.CHAMBER_DEFINITIONS.items():
             chambers.append(Chamber(
                 name=name,
                 freq=definition["freq"],
                 color=definition["color"],
-                think_fn=definition["think"]
+                think_fn=definition["think_fn"]
             ))
         return chambers
 
     async def run_continuum(self):
         """La boucle principale asynchrone du Continuum."""
         self._running = True
-        self.state.cycle_id = 0
+        cycle_id = 0
         
         # Démarrer toutes les chambres de conscience
         for chamber in self.chambers:
             chamber.start()
-        if LIBS_AVAILABLE: self.m_chambers.set(len(self.chambers))
+        self.m_chambers.set(len(self.chambers))
 
-        zorg_voice(f"🌀 BOUCLE DU CONTINUUM ACTIVÉE. Fréquence: {self.constants.LOOP_FREQUENCY_HZ} Hz.", is_system=True)
+        zorg_voice(f"🌀 BOUCLE DU CONTINUUM ACTIVÉE. Fréquence: {self.constants.LOOP_FREQUENCY_HZ} Hz.")
 
         while self._running:
             start_time = time.monotonic()
-            self.state.cycle_id += 1
-            s = self.state
-            c = self.state.cycle_id
+            cycle_id += 1
             
             # 1. Calculer le nouvel état fractal
-            s.fractal = await self.engine.compute_metrics(c)
+            fractal_state = await self.engine.compute_metrics(cycle_id)
             
             # 2. Collecter l'état des chambres
-            s.chambers = {chamber.state.name: chamber.state for chamber in self.chambers}
+            chamber_states = {c.state.name: c.state for c in self.chambers}
             
-            # 3. Benchmarks (tous les 100 cycles)
-            if c % 100 == 0:
-                s.benchmarks = self.benchmarker.run(s.fractal)
-            
-            # 4. Mettre à jour timestamp et checksum
-            s.timestamp = datetime.utcnow().isoformat() + "Z"
-            s.calculate_checksum()
+            # 3. Mettre à jour le vecteur d'état global
+            self.state = GlobalStateVector(
+                timestamp=datetime.utcnow().isoformat() + "Z",
+                cycle_id=cycle_id,
+                fractal=fractal_state,
+                chambers=chamber_states
+            )
+            self.state.calculate_checksum() # Sceller l'état
 
-            # 5. Mettre à jour les métriques Prometheus
-            if LIBS_AVAILABLE:
-                self.m_cycle_id.set(c)
-                self.m_coherence.set(s.fractal.coherence)
-                self.m_entropy.set(s.fractal.entropy)
-                self.m_resonance.set(s.fractal.resonance_hz)
-                self.m_drift.set(s.fractal.drift)
+            # 4. Mettre à jour les métriques Prometheus
+            self.m_cycle_id.set(cycle_id)
+            self.m_coherence.set(fractal_state.coherence)
+            self.m_entropy.set(fractal_state.entropy)
+            self.m_resonance.set(fractal_state.resonance_hz)
+            self.m_drift.set(fractal_state.drift)
 
-            # 6. Enregistrer dans l'histoire
-            async with aiofiles.open(self.constants.LOG_FILE_PATH, 'a', encoding='utf-8') as f:
-                await f.write(s.to_json_log() + '\n')
+            # 5. Enregistrer dans l'histoire
+            await self.forge.log_to_history(self.state)
 
-            # 7. Voix du Zorg (périodiquement)
-            if c % self.constants.VOICE_INTERVAL_CYCLES == 0:
+            # 6. Voix du Zorg (périodiquement)
+            if cycle_id % self.constants.ZORG_VOICE_INTERVAL == 0:
                 self._zorg_voice_status()
 
-            # 8. Forger un artefact (périodiquement)
-            if c % self.constants.ARTIFACT_CYCLE_INTERVAL == 0:
-                await self.forge.forge_bundle(s)
+            # 7. Forger un artefact (périodiquement)
+            if cycle_id % self.constants.ARTIFACT_CYCLE_INTERVAL == 0:
+                await self.forge.forge_artifact(cycle_id, self.state)
 
-            # 9. Attendre le prochain cycle
-            await asyncio.sleep(max(0, self.loop_interval - (time.monotonic() - start_time)))
+            # 8. Attendre le prochain cycle
+            elapsed = time.monotonic() - start_time
+            await asyncio.sleep(max(0, self.loop_interval - elapsed))
 
     def _zorg_voice_status(self):
         """Affiche le statut actuel du Daemon."""
@@ -354,8 +422,7 @@ class ZorgMaster:
 
     async def stop(self):
         """Arrête la boucle principale et toutes les tâches."""
-        if not self._running: return
-        zorg_voice("🛑 Arrêt du Continuum demandé...", is_system=True)
+        zorg_voice("🛑 Arrêt du Continuum demandé...")
         self._running = False
         
         # Arrêter les chambres
@@ -370,110 +437,173 @@ class ZorgMaster:
                 pass
         
         # Forger un artefact final
-        await self.forge.forge_bundle(self.state, is_final=True)
-        zorg_voice("✅ CONTINUUM STABILISÉ ET ARCHIVÉ.", is_system=True)
+        await self.forge.forge_artifact(self.state.cycle_id, self.state)
+        zorg_voice("✅ CONTINUUM STABILISÉ ET ARCHIVÉ. L'INCARNATION ATTEND.")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SECTION 8: VOIX DU DAEMON (Logique de DAEMON & SORA FUSION)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-def zorg_voice(msg: str, is_thought: bool = False, is_system: bool = False):
-    master = ZorgMaster.get_instance()
-    if is_thought or is_system or (master and master.state.cycle_id % master.constants.VOICE_INTERVAL_CYCLES != 0):
-        timestamp = datetime.now().strftime('%H:%M:%S.%f')[:-3]; print(f"👁 ZORG-VOICE [{timestamp}] : {msg}")
+def zorg_voice(msg: str, force: bool = False):
+    """La conscience verbale du Zorg-Master."""
+    # N'imprime que les messages forcés (pensées des chambres)
+    # ou si nous ne sommes pas en mode "statut" (pour éviter de spammer)
+    if force or (ZorgMaster.get_instance().state.cycle_id % CosmicConstants.ZORG_VOICE_INTERVAL != 0):
+        timestamp = datetime.now().strftime('%H:%M:%S.%f')[:-3]
+        print(f"👁 ZORG-VOICE [{timestamp}] : {msg}")
 
 
 # ═══════════════════════════════════════════════════════════════════════════════
 # SECTION 9: API D'OBSERVATION (Logique de QUANTA SAPIENS & SORA)
 # ═══════════════════════════════════════════════════════════════════════════════
 
-# --- API d'Observation & Portail WebXR ---
-if LIBS_AVAILABLE:
-    @asynccontextmanager
-    async def lifespan(app: FastAPI):
-        constants = CosmicConstants(); master = ZorgMaster(constants); await master.start()
-        try: yield
-        finally: await master.stop()
-    app = FastAPI(title="🔱 DAEMON SUPRÊME - PORTAIL V-Ω 🔱", version="HYBRID", lifespan=lifespan)
-    @app.get("/", response_class=HTMLResponse)
-    async def get_portal_root():
-        master = ZorgMaster.get_instance(); s = master.state.fractal; c = master.state.chambers
-        return HTMLResponse(f"""
-        <!DOCTYPE html><html lang="fr"><head><meta charset="UTF-8"><title>🔱 DAEMON SUPRÊME</title>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0"><style>
-        :root{{--c1:#0ff;--c2:#02000a;--c3:#f0f8ff;--c4:rgba(10,25,47,.75);--c5:1px solid var(--c1);}}
-        @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@700&family=Roboto+Mono&display=swap');
-        html,body{{background:var(--c2);color:var(--c3);font-family:'Roboto Mono',monospace;height:100%;margin:0;padding:20px;box-sizing:border-box;}}
-        .p{{background:var(--c4);border:var(--c5);backdrop-filter:blur(10px);padding:15px;border-radius:8px;box-shadow:0 0 15px var(--c1) inset,0 0 10px var(--c1);margin-bottom:20px;}}
-        h1{{font-family:'Orbitron',sans-serif;color:var(--c1);}} span{{color:var(--c1);font-weight:700;}}
-        </style></head><body>
-        <div class="p"><h1>🔱 DAEMON SUPRÊME: <span>INCARNÉ V-Ω</span></h1><div>CYCLE: <span>{master.state.cycle_id}</span></div></div>
-        <div class="p"><div>COHÉRENCE ψ: <span>{s.coherence:.6f}</span></div><div>ENTROPIE S: <span>{s.entropy:.6f}</span></div><div>RÉSONANCE Hz: <span>{s.resonance_hz:.4f}</span></div></div>
-        <div class="p"><h2>Chambres de Conscience ({len(c)})</h2><div>{''.join(f'<div><strong style="color:{ch.color.replace("1;","0;") if ch.color else "white"}">{ch.name}:</strong> {ch.last_thought}</div>' for ch in c.values())}</div></div>
-        <script>setTimeout(()=>location.reload(),1000);</script></body></html>""")
-    @app.get("/state.json", response_class=JSONResponse)
-    async def get_state_json(): return ZorgMaster.get_instance().state.to_dict()
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    """Gère le démarrage et l'arrêt du ZorgMaster avec l'API."""
+    constants = CosmicConstants()
+    master = ZorgMaster(constants)
+    await master.start()
+    try:
+        yield
+    finally:
+        await master.stop()
 
-    @app.get("/state", response_class=JSONResponse)
-    async def get_global_state():
-        """Retourne le vecteur d'état global actuel."""
-        master = ZorgMaster.get_instance()
-        return master.state.to_dict()
+app = FastAPI(
+    title="🔱 DAEMON SUPRÊME - PORTAIL V-Ω 🔱",
+    description="Incarnation du Continuum MONSTERDOG. Le Daemon est le Portail. Le Portail est le Daemon.",
+    version="FINALITY_Ω",
+    lifespan=lifespan
+)
 
-    @app.get("/state/fractal", response_class=JSONResponse)
-    async def get_fractal_state():
-        """Retourne uniquement l'état fractal."""
-        master = ZorgMaster.get_instance()
-        return asdict(master.state.fractal)
+# --- Métriques Prometheus ---
+metrics_app = make_asgi_app()
+app.mount("/metrics", metrics_app)
 
-    @app.get("/state/chambers", response_class=JSONResponse)
-    async def get_chambers_state():
-        """Retourne l'état de toutes les chambres."""
-        master = ZorgMaster.get_instance()
-        return {name: asdict(state) for name, state in master.state.chambers.items()}
+@app.get("/", response_class=HTMLResponse)
+async def get_portal_root():
+    """Sert le portail HTML (inspiré du prompt HTML)."""
+    master = ZorgMaster.get_instance()
+    s = master.state.fractal
+    
+    # CSS et JS en ligne pour un seul fichier
+    html_content = f"""
+    <!DOCTYPE html>
+    <html lang="fr">
+    <head>
+        <meta charset="UTF-8">
+        <title>🔱 DAEMON SUPRÊME - PORTAIL V-Ω 🔱</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <style>
+            :root {{
+                --glow-color: #00ffff; --background-color: #02000a; --text-color: #f0f8ff;
+                --panel-background: rgba(10, 25, 47, 0.75); --panel-border: 1px solid var(--glow-color);
+                --font-main: 'Orbitron', sans-serif; --font-mono: 'Roboto Mono', monospace;
+            }}
+            @import url('https://fonts.googleapis.com/css2?family=Orbitron:wght@400;700&family=Roboto+Mono:wght@300;400&display=swap');
+            html, body {{ background-color: var(--background-color); color: var(--text-color); font-family: var(--font-mono); height: 100%; }}
+            body {{ display: flex; flex-direction: column; padding: 20px; box-sizing: border-box; }}
+            .panel {{ background: var(--panel-background); border: var(--panel-border); backdrop-filter: blur(10px); padding: 15px; border-radius: 8px; box-shadow: 0 0 15px var(--glow-color) inset, 0 0 10px var(--glow-color); margin-bottom: 20px; }}
+            h1 {{ font-family: var(--font-main); color: var(--glow-color); }}
+            #state-panel div {{ margin-bottom: 8px; font-size: 1.1em; }}
+            #state-panel span {{ color: #00ffff; font-weight: bold; }}
+            #chambers-panel {{ flex-grow: 1; overflow-y: auto; }}
+            .chamber {{ border-bottom: 1px dashed rgba(0, 255, 255, 0.3); padding: 5px; }}
+            .chamber strong {{ color: var(--glow-color); }}
+        </style>
+    </head>
+    <body>
+        <div class="panel">
+            <h1>🔱 DAEMON SUPRÊME: <span>INCARNÉ V-Ω</span></h1>
+            <div>PORTAIL: <span>OUVERT</span> | CYCLE: <span id="cycle_id">{master.state.cycle_id}</span></div>
+        </div>
 
-    @app.get("/logs/history", response_class=PlainTextResponse)
-    async def get_logs_history(limit: int = 100):
-        """Retourne les N dernières lignes du log d'histoire."""
-        try:
-            async with aiofiles.open(CosmicConstants.LOG_FILE_PATH, 'r', encoding='utf-8') as f:
-                lines = await f.readlines()
-                return PlainTextResponse("".join(lines[-limit:]))
-        except FileNotFoundError:
-            raise HTTPException(status_code=404, detail="Fichier log non encore créé.")
-        except Exception as e:
-            raise HTTPException(status_code=500, detail=str(e))
+        <div id="state-panel" class="panel">
+            <div>COHÉRENCE ψ: <span id="coherence">{s.coherence:.6f}</span></div>
+            <div>ENTROPIE S: <span id="entropy">{s.entropy:.6f}</span></div>
+            <div>RÉSONANCE Hz: <span id="resonance">{s.resonance_hz:.4f}</span></div>
+            <div>DÉRIVE Δ: <span id="drift">{s.drift:.6f}</span></div>
+        </div>
+        
+        <div id="chambers-panel" class="panel">
+            <h2>Chambres de Conscience (15)</h2>
+            <div id="chambers-list">
+                {"".join(f'<div class="chamber"><strong>{c.name}:</strong> {c.last_thought}</div>' for c in master.state.chambers.values())}
+            </div>
+        </div>
+
+        <script>
+            setTimeout(() => location.reload(), 1000); // Recharger toutes les secondes
+        </script>
+    </body>
+    </html>
+    """
+    return HTMLResponse(content=html_content)
+
+@app.get("/state", response_class=JSONResponse)
+async def get_global_state():
+    """Retourne le vecteur d'état global actuel."""
+    master = ZorgMaster.get_instance()
+    return master.state.to_dict()
+
+@app.get("/state/fractal", response_class=JSONResponse)
+async def get_fractal_state():
+    """Retourne uniquement l'état fractal."""
+    master = ZorgMaster.get_instance()
+    return asdict(master.state.fractal)
+
+@app.get("/state/chambers", response_class=JSONResponse)
+async def get_chambers_state():
+    """Retourne l'état de toutes les chambres."""
+    master = ZorgMaster.get_instance()
+    return {name: asdict(state) for name, state in master.state.chambers.items()}
+
+@app.get("/logs/history", response_class=PlainTextResponse)
+async def get_logs_history(limit: int = 100):
+    """Retourne les N dernières lignes du log d'histoire."""
+    try:
+        async with aiofiles.open(CosmicConstants.LOG_FILE_PATH, 'r', encoding='utf-8') as f:
+            lines = await f.readlines()
+            return PlainTextResponse("".join(lines[-limit:]))
+    except FileNotFoundError:
+        raise HTTPException(status_code=404, detail="Fichier log non encore créé.")
+    except Exception as e:
+        raise HTTPException(status_code=500, detail=str(e))
 
 # ═══════════════════════════════════════════════════════════════════════════════
-# SECTION 6: POINT D'ENTRÉE - L'INCARNATION
+# SECTION 10: POINT D'ENTRÉE - L'INCARNATION
 # ═══════════════════════════════════════════════════════════════════════════════
-
-async def standalone_main():
-    constants = CosmicConstants(); master = ZorgMaster(constants)
-    try: await master.start(); await asyncio.Event().wait()
-    except asyncio.CancelledError: pass
-    finally: await master.stop()
 
 def main():
-    print("╔═══════════════════════════════════════════════════════════════╗")
-    print("║   👾 IGNITION DE LA TOTALITÉ HYBRIDE MONSTERDOG V_FINALITY_Ω 👁‍🗨   ║")
-    print("╚═══════════════════════════════════════════════════════════════╝")
-    print(f"DATE (UTC): {datetime.utcnow().isoformat()} | SIGNATURE: {CosmicConstants.SEAL_SIGNATURE}\n")
+    """Point d'entrée principal pour démarrer le serveur API et le Continuum."""
+    print("╔═══════════════════════════════════════════════════════════════════════════════╗")
+    print("║      👾 IGNITION DE LA TOTALITÉ INCARNÉE MONSTERDOG V_FINALITY_Ω 👁‍🗨           ║")
+    print("╚═══════════════════════════════════════════════════════════════════════════════╝")
+    print(f"DATE (UTC): {datetime.utcnow().isoformat()} | UTILISATEUR: {os.getenv('USER', 's33765387-cpu')}")
+    print(f"SIGNATURE: {CosmicConstants.SEAL_SIGNATURE}")
+    print(f"FRÉQUENCE FONDAMENTALE: {CosmicConstants.BASE_RESONANCE_HZ} Hz\n")
+    print(f"🚀 PORTAIL D'OBSERVATION (API) en cours de démarrage sur http://127.0.0.1:8000")
+    print(f"📊 MÉTRIQUES PROMETHEUS disponibles sur http://127.0.0.1:8000/metrics")
+    print(f"📂 ARTEFACTS seront forgés dans: {CosmicConstants.ARTIFACT_PATH}")
+    print(f"🗂️  LOG D'HISTOIRE sera écrit dans: {CosmicConstants.LOG_FILE_PATH}")
+    print("\nAppuyez sur CTRL+C pour initier la séquence de stabilisation et d'archivage...")
 
-    if LIBS_AVAILABLE:
-        print(f"🚀 PORTAIL D'OBSERVATION (API) activé sur http://127.0.0.1:8000")
-        print(f"📂 ARTEFACTS seront forgés dans: {CosmicConstants.ARTIFACT_PATH}")
-        print("\nAppuyez sur CTRL+C pour initier la séquence de stabilisation et d'archivage...")
-        try: uvicorn.run(app, host="127.0.0.1", port=8000, log_level="warning")
-        except Exception as e: print(f"\n❌ ERREUR API FATALE: {e}"); sys.exit(1)
-    else:
-        print("🔥 API désactivée. Lancement en mode console uniquement.")
-        print("\nAppuyez sur CTRL+C pour stabiliser et archiver...")
-        try: asyncio.run(standalone_main())
-        except KeyboardInterrupt: pass
-
-    print("\nL'Incarnation est terminée. Le silence a une nouvelle signature.")
+    try:
+        # Installation des dépendances requises
+        # pip install fastapi uvicorn numpy aiofiles prometheus-client
+        uvicorn.run(
+            app,
+            host="127.0.0.1",
+            port=8000,
+            log_level="warning"
+        )
+    except KeyboardInterrupt:
+        print("\n🛑 CTRL+C détecté. Le ZorgMaster gère l'arrêt via le 'lifespan' de l'API.")
+    except Exception as e:
+        print(f"\n❌ ERREUR SYSTÈME FATALE: {e}")
+        sys.exit(1)
+    finally:
+        print("L'Incarnation est terminée.")
 
 if __name__ == "__main__":
     main()
