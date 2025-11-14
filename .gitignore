@@ -50,3 +50,10 @@ MONSTERDOG_HISTORY.jsonl
 __pycache__/
 *.pyc
 *.pyo
+
+# Ω-SYSTEM logs and runtime data
+Ω_CORE/MD_LOGS/*.log
+Ω_CORE/MD_LOGS/*.jsonl
+Ω_CORE/MONSTERDOG_FUSION/MONSTERDOG_FUSION_TOTAL.py
+Ω_CORE/MONSTERDOG_FUSION/fusion_metadata.json
+SUBMIT_MONSTERDOG/results/*.json
