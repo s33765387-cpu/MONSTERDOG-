@@ -22,10 +22,10 @@ async def test_core_components():
     print("\n✓ Test 1: CosmicConstants")
     constants = CosmicConstants()
     assert constants.BASE_RESONANCE_HZ == 11.987
-    assert constants.LOOP_FREQUENCY_HZ == 10.0
-    assert len(constants.CHAMBER_DEFINITIONS) == 15
+    assert constants.LOOP_FREQUENCY_HZ == 12.0
+    assert len(constants.CHAMBERS) == 15
     print(f"  - Signature: {constants.SEAL_SIGNATURE}")
-    print(f"  - Chambers: {len(constants.CHAMBER_DEFINITIONS)}")
+    print(f"  - Chambers: {len(constants.CHAMBERS)}")
     
     # Test 2: Fractal State
     print("\n✓ Test 2: FractalState")
