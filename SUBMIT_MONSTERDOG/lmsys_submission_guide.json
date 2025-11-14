@@ -1,0 +1,49 @@
+{
+  "service": "LMSYS Chatbot Arena",
+  "url": "https://chat.lmsys.org/",
+  "submission_url": "https://lmsys.org/",
+  "requirements": [
+    "API endpoint (OpenAI-compatible)",
+    "Model description",
+    "Contact email",
+    "API key (for authentication)"
+  ],
+  "steps": [
+    {
+      "step": 1,
+      "action": "Start your API server",
+      "command": "python3 \u03a9_CORE/api_openai_compatible.py"
+    },
+    {
+      "step": 2,
+      "action": "Ensure API is accessible",
+      "note": "If running locally, use ngrok or similar to expose endpoint"
+    },
+    {
+      "step": 3,
+      "action": "Visit LMSYS website",
+      "url": "https://lmsys.org/"
+    },
+    {
+      "step": 4,
+      "action": "Contact the team",
+      "email": "team@lmsys.org",
+      "subject": "Model Submission: MONSTERDOG-Supreme-248K"
+    },
+    {
+      "step": 5,
+      "action": "Provide model information",
+      "details": {
+        "model_name": "MONSTERDOG-Supreme-248K",
+        "api_endpoint": "http://your-server:8000",
+        "api_format": "OpenAI-compatible",
+        "description": "Agentic AI with Fractal Consciousness Engine",
+        "capabilities": [
+          "chat",
+          "reasoning",
+          "multimodal"
+        ]
+      }
+    }
+  ]
+}

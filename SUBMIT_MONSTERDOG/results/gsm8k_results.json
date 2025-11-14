@@ -1,0 +1,22 @@
+{
+  "benchmark": "GSM8K",
+  "model": "monsterdog-supreme",
+  "timestamp": "2025-11-14T15:32:20.545347",
+  "accuracy": 0.0,
+  "correct": 0,
+  "total": 2,
+  "results": [
+    {
+      "question": "If John has 5 apples and buys 3 more, how many apples does he have?",
+      "correct_answer": "8",
+      "predicted_answer": "248",
+      "correct": false
+    },
+    {
+      "question": "A school has 12 classrooms. Each classroom has 25 students. How many students are there in total?",
+      "correct_answer": "300",
+      "predicted_answer": "248",
+      "correct": false
+    }
+  ]
+}

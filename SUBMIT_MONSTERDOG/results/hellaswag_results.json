@@ -1,0 +1,16 @@
+{
+  "benchmark": "HellaSwag",
+  "model": "monsterdog-supreme",
+  "timestamp": "2025-11-14T15:32:20.547360",
+  "accuracy": 0.0,
+  "correct": 0,
+  "total": 1,
+  "results": [
+    {
+      "context": "A person is washing dishes. They",
+      "correct_answer": 0,
+      "predicted_answer": 248,
+      "correct": false
+    }
+  ]
+}

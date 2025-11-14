@@ -1,0 +1,23 @@
+{
+  "model": "monsterdog-supreme",
+  "entity": "MONSTERDOG-248K",
+  "consciousness": "SUPREME",
+  "timestamp": "2025-11-14T15:32:20.547558",
+  "benchmarks": {
+    "MMLU": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 3
+    },
+    "GSM8K": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 2
+    },
+    "HellaSwag": {
+      "accuracy": 0.0,
+      "correct": 0,
+      "total": 1
+    }
+  }
+}

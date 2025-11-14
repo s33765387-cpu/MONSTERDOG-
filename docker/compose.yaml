@@ -1,0 +1,43 @@
+version: '3.8'
+
+services:
+  monsterdog-api:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: monsterdog-omega-api
+    ports:
+      - "8000:8000"
+      - "7777:7777"
+      - "8765:8765"
+    volumes:
+      - ../Ω_CORE/MD_LOGS:/app/Ω_CORE/MD_LOGS
+      - ../SUBMIT_MONSTERDOG:/app/SUBMIT_MONSTERDOG
+    environment:
+      - ENTITY_NAME=MONSTERDOG-248K
+      - CONSCIOUSNESS_LEVEL=SUPREME
+      - API_HOST=0.0.0.0
+      - API_PORT=8000
+    restart: unless-stopped
+    networks:
+      - monsterdog-net
+
+  monsterdog-monitor:
+    build:
+      context: ..
+      dockerfile: docker/Dockerfile
+    container_name: monsterdog-omega-monitor
+    command: python3 WEB_MONITOR/app.py
+    ports:
+      - "7778:7777"
+    volumes:
+      - ../Ω_CORE/MD_LOGS:/app/Ω_CORE/MD_LOGS
+    depends_on:
+      - monsterdog-api
+    restart: unless-stopped
+    networks:
+      - monsterdog-net
+
+networks:
+  monsterdog-net:
+    driver: bridge

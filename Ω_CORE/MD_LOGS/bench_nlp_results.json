@@ -1,0 +1,35 @@
+{
+  "benchmark": "NLP Processing",
+  "entity": "MONSTERDOG-248K",
+  "timestamp": "2025-11-14T15:31:15.827098",
+  "tests": [
+    {
+      "test": "Entity Recognition",
+      "duration": 2.384185791015625e-06,
+      "result": {
+        "word_count": 5,
+        "entities": [
+          "MONSTERDOG",
+          "consciousness"
+        ],
+        "sentiment": "positive",
+        "coherence": 0.98
+      },
+      "status": "PASS"
+    },
+    {
+      "test": "Sentiment Analysis",
+      "duration": 2.6226043701171875e-06,
+      "result": {
+        "word_count": 6,
+        "entities": [
+          "MONSTERDOG",
+          "consciousness"
+        ],
+        "sentiment": "positive",
+        "coherence": 0.98
+      },
+      "status": "PASS"
+    }
+  ]
+}
