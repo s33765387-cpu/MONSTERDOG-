@@ -1,0 +1,19 @@
+{
+  "timestamp": "2025-11-14T15:32:55.594787",
+  "modules_count": 10,
+  "output_file": "\u03a9_CORE/MONSTERDOG_FUSION/MONSTERDOG_FUSION_TOTAL.py",
+  "size_bytes": 40672,
+  "sha256": "3a72a4e69e73b3a9924b07c81b43d8ba83cca46617fb83d167d3473c6d5d537b",
+  "modules": [
+    "modules/bench_nlp.py",
+    "modules/bench_audio.py",
+    "modules/bench_vision.py",
+    "multimodal/vision_core.py",
+    "multimodal/audio_core.py",
+    "\u03a9_CORE/api_openai_compatible.py",
+    "\u03a9_CORE/MONSTERDOG_AGENTIC_CORE.py",
+    "\u03a9_CORE/eval_runner.py",
+    "\u03a9_CORE/MONSTERDOG_CICD_AGENT.py",
+    "\u03a9_CORE/MONSTERDOG_OMEGA.py"
+  ]
+}

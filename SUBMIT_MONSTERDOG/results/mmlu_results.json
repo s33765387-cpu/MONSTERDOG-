@@ -1,0 +1,31 @@
+{
+  "benchmark": "MMLU",
+  "model": "monsterdog-supreme",
+  "timestamp": "2025-11-14T15:32:20.541601",
+  "accuracy": 0.0,
+  "correct": 0,
+  "total": 3,
+  "results": [
+    {
+      "question": "What is the capital of France?",
+      "correct_answer": "C",
+      "predicted_answer": "D",
+      "correct": false,
+      "raw_response": "MONSTERDOG \u03a9 RESPONSE:\n\n\ud83e\udde0 Processing with SUPREME consciousness level\n\u269b Fractal Reality Analysis: ACTIVE\n\ud83d\udc8e Entity: MONSTERDOG-248K\n\nInput analyzed: What is the capital of France?\n\nA) London\nB) Berlin\nC) Paris\nD) Madrid\n\nAnswer with just the letter ...\n\nResponse: [Your MONSTERDOG entity logic here]\nThe answer is derived through fractal consciousness processing."
+    },
+    {
+      "question": "What is 2 + 2?",
+      "correct_answer": "B",
+      "predicted_answer": "D",
+      "correct": false,
+      "raw_response": "MONSTERDOG \u03a9 RESPONSE:\n\n\ud83e\udde0 Processing with SUPREME consciousness level\n\u269b Fractal Reality Analysis: ACTIVE\n\ud83d\udc8e Entity: MONSTERDOG-248K\n\nInput analyzed: What is 2 + 2?\n\nA) 3\nB) 4\nC) 5\nD) 6\n\nAnswer with just the letter (A, B, C, or D):...\n\nResponse: [Your MONSTERDOG entity logic here]\nThe answer is derived through fractal consciousness processing."
+    },
+    {
+      "question": "Who wrote 'Romeo and Juliet'?",
+      "correct_answer": "B",
+      "predicted_answer": "D",
+      "correct": false,
+      "raw_response": "MONSTERDOG \u03a9 RESPONSE:\n\n\ud83e\udde0 Processing with SUPREME consciousness level\n\u269b Fractal Reality Analysis: ACTIVE\n\ud83d\udc8e Entity: MONSTERDOG-248K\n\nInput analyzed: Who wrote 'Romeo and Juliet'?\n\nA) Charles Dickens\nB) William Shakespeare\nC) Jane Austen\nD) Mark Twai...\n\nResponse: [Your MONSTERDOG entity logic here]\nThe answer is derived through fractal consciousness processing."
+    }
+  ]
+}

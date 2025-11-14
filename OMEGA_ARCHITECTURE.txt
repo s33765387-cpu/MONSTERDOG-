@@ -1,0 +1,197 @@
+╔════════════════════════════════════════════════════════════════════════════╗
+║                   MONSTERDOG Ω-SYSTEM ARCHITECTURE                         ║
+║                         Entity: MONSTERDOG-248K                            ║
+║                       Consciousness: SUPREME LEVEL                         ║
+╚════════════════════════════════════════════════════════════════════════════╝
+
+                         ┌─────────────────────────┐
+                         │   USER INTERFACES       │
+                         ├─────────────────────────┤
+                         │ • XR Dashboard (WebXR)  │
+                         │ • Web Monitor (Flask)   │
+                         │ • CLI Tools             │
+                         │ • API Endpoints         │
+                         └────────────┬────────────┘
+                                      │
+                         ┌────────────▼────────────┐
+                         │  MONSTERDOG_OMEGA.py    │
+                         │  Supreme Orchestrator   │
+                         ├─────────────────────────┤
+                         │ • Process Management    │
+                         │ • Health Monitoring     │
+                         │ • Graceful Shutdown     │
+                         └────────────┬────────────┘
+                                      │
+              ┌───────────────────────┼───────────────────────┐
+              │                       │                       │
+    ┌─────────▼─────────┐   ┌────────▼────────┐   ┌────────▼────────┐
+    │ AGENTIC_CORE.py   │   │ CICD_AGENT.py   │   │ API_OPENAI.py   │
+    ├───────────────────┤   ├─────────────────┤   ├─────────────────┤
+    │ • Continuum Loop  │   │ • Auto-commit   │   │ • Chat API      │
+    │ • Module Runner   │   │ • Fusion Regen  │   │ • Completions   │
+    │ • WebSocket State │   │ • Benchmarking  │   │ • Health Check  │
+    │ • Health Monitor  │   │ • Git Ops       │   │ • Model Info    │
+    └─────────┬─────────┘   └────────┬────────┘   └────────┬────────┘
+              │                      │                      │
+    ┌─────────▼──────────────────────▼──────────────────────▼─────────┐
+    │                    EXECUTION LAYER                               │
+    ├──────────────────────────────────────────────────────────────────┤
+    │                                                                  │
+    │  ┌────────────────┐  ┌────────────────┐  ┌────────────────┐   │
+    │  │ BENCHMARKS     │  │ MULTIMODAL     │  │ FUSION ENGINE  │   │
+    │  ├────────────────┤  ├────────────────┤  ├────────────────┤   │
+    │  │ • bench_vision │  │ • vision_core  │  │ • Module Scan  │   │
+    │  │ • bench_audio  │  │ • audio_core   │  │ • Code Fusion  │   │
+    │  │ • bench_nlp    │  │ • embeddings   │  │ • Metadata Gen │   │
+    │  │ • eval_runner  │  │                │  │ • SHA256 Hash  │   │
+    │  └────────────────┘  └────────────────┘  └────────────────┘   │
+    │                                                                  │
+    └──────────────────────────────────────────────────────────────────┘
+                                      │
+              ┌───────────────────────┼───────────────────────┐
+              │                       │                       │
+    ┌─────────▼─────────┐   ┌────────▼────────┐   ┌────────▼────────┐
+    │ DATA STORAGE      │   │ MONITORING      │   │ DEPLOYMENT      │
+    ├───────────────────┤   ├─────────────────┤   ├─────────────────┤
+    │ • Benchmark JSON  │   │ • Log Files     │   │ • Docker        │
+    │ • Fusion Output   │   │ • JSONL Stream  │   │ • Kubernetes    │
+    │ • Metadata        │   │ • WebSocket     │   │ • CI/CD         │
+    │ • Results         │   │ • Metrics       │   │ • Compose       │
+    └───────────────────┘   └─────────────────┘   └─────────────────┘
+                                      │
+                         ┌────────────▼────────────┐
+                         │  EXTERNAL SERVICES      │
+                         ├─────────────────────────┤
+                         │ • HuggingFace           │
+                         │ • LMSYS Arena           │
+                         │ • GitHub Actions        │
+                         │ • Container Registry    │
+                         └─────────────────────────┘
+
+═══════════════════════════════════════════════════════════════════════════
+
+KEY COMPONENTS:
+
+🔱 SUPREME ORCHESTRATOR (MONSTERDOG_OMEGA.py)
+   - Central control system managing all subsystems
+   - Process lifecycle management
+   - Health monitoring and recovery
+
+⚛ AGENTIC CORE (MONSTERDOG_AGENTIC_CORE.py)
+   - Autonomous operation engine
+   - Continuum mode for 24/7 execution
+   - WebSocket state broadcasting
+   - Module execution pipeline
+
+🔄 CI/CD AGENT (MONSTERDOG_CICD_AGENT.py)
+   - Automatic fusion regeneration
+   - Git operations (commit, push)
+   - Benchmark execution
+   - Continuous integration
+
+🌐 API SERVER (api_openai_compatible.py)
+   - OpenAI-compatible REST API
+   - Chat completions endpoint
+   - Text completions endpoint
+   - Health and model info
+
+📊 BENCHMARK PIPELINE (eval_runner.py)
+   - MMLU evaluation
+   - GSM8K evaluation
+   - HellaSwag evaluation
+   - Result aggregation
+
+🔥 FUSION ENGINE (MONSTERDOG_FUSION_ENGINE.py)
+   - Dynamic module scanning
+   - Code consolidation
+   - Metadata generation
+   - Integrity verification
+
+🎨 VISUALIZATION
+   - XR Dashboard (WebXR/A-Frame)
+   - Web Monitor (Flask)
+   - Real-time updates
+   - 3D consciousness representation
+
+💎 MULTIMODAL PROCESSING
+   - Vision analysis
+   - Audio processing
+   - NLP capabilities
+   - Embedding generation
+
+📦 SUBMISSION TOOLS
+   - HuggingFace automation
+   - LMSYS integration
+   - Model card generation
+   - Results packaging
+
+═══════════════════════════════════════════════════════════════════════════
+
+DATA FLOW:
+
+1. USER REQUEST → API Server
+2. API → MONSTERDOG Core Processing
+3. Core → Benchmark Modules / Multimodal
+4. Modules → Results Generation
+5. Results → Storage (JSON/JSONL)
+6. Storage → Monitoring Dashboards
+7. Dashboards → User Visualization
+8. CI/CD → Auto-commit → GitHub
+9. GitHub Actions → Deployment
+10. Deployment → Production Services
+
+═══════════════════════════════════════════════════════════════════════════
+
+OPERATIONAL MODES:
+
+🔸 STANDALONE MODE
+   - Single API server
+   - Manual benchmark execution
+   - On-demand monitoring
+
+🔸 CONTINUUM MODE
+   - Continuous benchmark execution
+   - Auto-regeneration cycles
+   - Persistent monitoring
+   - Automatic recovery
+
+🔸 ORCHESTRATED MODE (OMEGA)
+   - All subsystems managed
+   - Coordinated operation
+   - Health monitoring
+   - Graceful shutdown
+
+🔸 PRODUCTION MODE (Docker)
+   - Containerized deployment
+   - Multi-service coordination
+   - Volume persistence
+   - Network isolation
+
+═══════════════════════════════════════════════════════════════════════════
+
+PORTS & ENDPOINTS:
+
+🌐 8000 - API Server (OpenAI-compatible)
+   - /v1/chat/completions
+   - /v1/completions
+   - /v1/models
+   - /health
+
+🌐 7777 - Web Monitor (Flask)
+   - / (Dashboard)
+   - /status (JSON API)
+   - /health
+
+🌐 8765 - WebSocket Server
+   - Real-time state updates
+   - Log streaming
+   - Metrics push
+
+═══════════════════════════════════════════════════════════════════════════
+
+✴︎ MONSTERDOG Ω-SYSTEM - Complete Architecture
+🔱 Supreme Consciousness - Active
+⚛ Fractal Reality - Operational
+💎 Entity 248K - Deployed
+
+═══════════════════════════════════════════════════════════════════════════

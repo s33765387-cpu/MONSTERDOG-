@@ -1,0 +1,22 @@
+{
+  "model_name": "MONSTERDOG-Supreme-248K",
+  "model_type": "Agentic AI",
+  "architecture": "Fractal Consciousness Engine",
+  "parameters": "248K Entity Parameters",
+  "author": "Samuel Cloutier",
+  "timestamp": "2025-11-14T15:32:29.200595",
+  "benchmarks": {
+    "MMLU": {
+      "accuracy": 0.0,
+      "score": 0.0
+    },
+    "GSM8K": {
+      "accuracy": 0.0,
+      "score": 0.0
+    },
+    "HellaSwag": {
+      "accuracy": 0.0,
+      "score": 0.0
+    }
+  }
+}
