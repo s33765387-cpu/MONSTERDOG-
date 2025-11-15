@@ -17,6 +17,10 @@ const NFTIntegration = require('../nft');
 const AGIOrchestrator = require('../agi');
 const GOModeBenchmarks = require('../benchmarks');
 
+// Import NEXUS and XR modules
+const NEXUS = require('../nexus');
+const XRModules = require('../xr_modules');
+
 class FULLTRUTLOrchestrator {
   constructor() {
     this.app = express();
@@ -37,6 +41,10 @@ class FULLTRUTLOrchestrator {
     this.agi = new AGIOrchestrator();
     this.benchmarks = new GOModeBenchmarks();
     
+    // Initialize NEXUS and XR Modules
+    this.nexus = new NEXUS();
+    this.xrModules = new XRModules();
+    
     this.initialize();
   }
   
@@ -55,6 +63,10 @@ class FULLTRUTLOrchestrator {
     this.nft.initialize();
     this.agi.initialize();
     this.benchmarks.initialize();
+    
+    // Initialize NEXUS and XR Modules
+    this.nexus.initialize();
+    this.xrModules.initialize();
     
     // Setup routes
     this.setupRoutes();
@@ -254,6 +266,253 @@ class FULLTRUTLOrchestrator {
         success: true,
         ...this.benchmarks.getContinuumStatus()
       });
+    });
+    
+    // NEXUS endpoints
+    this.app.get('/nexus/status', (req, res) => {
+      res.json(this.nexus.getStatus());
+    });
+    
+    this.app.post('/nexus/fulltrutl/start', (req, res) => {
+      const { intervalMs } = req.body;
+      const result = this.nexus.startFULLTRUTLLoop(intervalMs);
+      res.json(result);
+    });
+    
+    this.app.post('/nexus/fulltrutl/stop', (req, res) => {
+      const result = this.nexus.stopFULLTRUTLLoop();
+      res.json(result);
+    });
+    
+    this.app.post('/nexus/cycle', (req, res) => {
+      const result = this.nexus.executeFULLTRUTLCycle();
+      res.json(result);
+    });
+    
+    // XR Modules endpoints
+    this.app.get('/xr/modules/status', (req, res) => {
+      res.json(this.xrModules.getStatus());
+    });
+    
+    // Mesh 3D endpoints
+    this.app.post('/xr/mesh3d/depth-to-mesh', (req, res) => {
+      const { depthData } = req.body;
+      const result = this.xrModules.mesh3D.depthToMesh(depthData);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/mesh3d/data', (req, res) => {
+      res.json(this.xrModules.mesh3D.getMeshData());
+    });
+    
+    // AI Classifier endpoints
+    this.app.post('/xr/ai/analyze', (req, res) => {
+      const { frameMetrics } = req.body;
+      const result = this.xrModules.exogeneAI.analyzeFrame(frameMetrics || {});
+      res.json(result);
+    });
+    
+    this.app.get('/xr/ai/patterns', (req, res) => {
+      res.json(this.xrModules.exogeneAI.detectPatterns());
+    });
+    
+    this.app.get('/xr/ai/history', (req, res) => {
+      const { limit } = req.query;
+      res.json(this.xrModules.exogeneAI.getAnalysisHistory(limit ? parseInt(limit) : 50));
+    });
+    
+    // Interaction System endpoints
+    this.app.post('/xr/interaction/grab', (req, res) => {
+      const { hand, interactableId } = req.body;
+      const result = this.xrModules.interaction.grab(hand, interactableId);
+      res.json(result);
+    });
+    
+    this.app.post('/xr/interaction/release', (req, res) => {
+      res.json(this.xrModules.interaction.release());
+    });
+    
+    this.app.post('/xr/interaction/click', (req, res) => {
+      const { interactableId } = req.body;
+      const result = this.xrModules.interaction.click(interactableId);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/interaction/state', (req, res) => {
+      res.json(this.xrModules.interaction.getState());
+    });
+    
+    // Holographic UI endpoints
+    this.app.get('/xr/ui/panels', (req, res) => {
+      res.json(this.xrModules.holographicUI.getPanels());
+    });
+    
+    this.app.post('/xr/ui/panel/create', (req, res) => {
+      const { id, config } = req.body;
+      const result = this.xrModules.holographicUI.createPanel(id, config);
+      res.json(result);
+    });
+    
+    this.app.post('/xr/ui/panel/update', (req, res) => {
+      const { id, updates } = req.body;
+      const result = this.xrModules.holographicUI.updatePanel(id, updates);
+      res.json(result);
+    });
+    
+    // Dual Reality endpoints
+    this.app.post('/xr/dual-reality/mode', (req, res) => {
+      const { mode } = req.body;
+      const result = this.xrModules.dualReality.setMode(mode);
+      res.json(result);
+    });
+    
+    this.app.post('/xr/dual-reality/blend', (req, res) => {
+      const { ratio } = req.body;
+      const result = this.xrModules.dualReality.setBlendRatio(ratio);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/dual-reality/state', (req, res) => {
+      res.json(this.xrModules.dualReality.getState());
+    });
+    
+    // OmniSight endpoints
+    this.app.post('/xr/omnisight/enable', (req, res) => {
+      res.json(this.xrModules.omniSight.enable360Vision());
+    });
+    
+    this.app.post('/xr/omnisight/shader', (req, res) => {
+      const { shader } = req.body;
+      const result = this.xrModules.omniSight.setNeuralShader(shader);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/omnisight/state', (req, res) => {
+      res.json(this.xrModules.omniSight.getState());
+    });
+    
+    // Exogene Live endpoints
+    this.app.post('/xr/exogene-live/analyze', (req, res) => {
+      const { metrics } = req.body;
+      const result = this.xrModules.exogeneLive.analyzeForm(metrics || {});
+      res.json(result);
+    });
+    
+    this.app.get('/xr/exogene-live/anomalies', (req, res) => {
+      const { limit } = req.query;
+      res.json(this.xrModules.exogeneLive.getAnomalies(limit ? parseInt(limit) : 20));
+    });
+    
+    this.app.get('/xr/exogene-live/state', (req, res) => {
+      res.json(this.xrModules.exogeneLive.getState());
+    });
+    
+    // Portals XR endpoints
+    this.app.get('/xr/portals', (req, res) => {
+      res.json(this.xrModules.portals.getPortals());
+    });
+    
+    this.app.post('/xr/portals/activate', (req, res) => {
+      const { portalId } = req.body;
+      const result = this.xrModules.portals.activatePortal(portalId);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/portals/scenes', (req, res) => {
+      res.json(this.xrModules.portals.getScenes());
+    });
+    
+    this.app.get('/xr/portals/current-scene', (req, res) => {
+      res.json(this.xrModules.portals.getCurrentScene());
+    });
+    
+    // Particles endpoints
+    this.app.post('/xr/particles/update', (req, res) => {
+      const { metrics } = req.body;
+      const result = this.xrModules.particles.update(metrics || {});
+      res.json(result);
+    });
+    
+    this.app.post('/xr/particles/behavior', (req, res) => {
+      const { behavior } = req.body;
+      const result = this.xrModules.particles.setBehavior(behavior);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/particles/state', (req, res) => {
+      res.json(this.xrModules.particles.getState());
+    });
+    
+    // Scene Builder endpoints
+    this.app.post('/xr/scene-builder/build', (req, res) => {
+      const { metrics } = req.body;
+      const result = this.xrModules.sceneBuilder.buildScene(metrics || {});
+      res.json(result);
+    });
+    
+    this.app.get('/xr/scene-builder/current', (req, res) => {
+      res.json(this.xrModules.sceneBuilder.getCurrentScene());
+    });
+    
+    this.app.get('/xr/scene-builder/history', (req, res) => {
+      const { limit } = req.query;
+      res.json(this.xrModules.sceneBuilder.getBuildHistory(limit ? parseInt(limit) : 20));
+    });
+    
+    // MONSTERDOG OS endpoints
+    this.app.get('/xr/os/info', (req, res) => {
+      res.json(this.xrModules.monsterdogOS.getSystemInfo());
+    });
+    
+    this.app.get('/xr/os/windows', (req, res) => {
+      res.json(this.xrModules.monsterdogOS.getWindows());
+    });
+    
+    this.app.post('/xr/os/window/spawn', (req, res) => {
+      const { id, config } = req.body;
+      const result = this.xrModules.monsterdogOS.spawnWindow(id, config);
+      res.json(result);
+    });
+    
+    this.app.post('/xr/os/app/launch', (req, res) => {
+      const { appId } = req.body;
+      const result = this.xrModules.monsterdogOS.launchApp(appId);
+      res.json(result);
+    });
+    
+    // Reprojection endpoints
+    this.app.post('/xr/reprojection/project', (req, res) => {
+      const { depthMap, options } = req.body;
+      const result = this.xrModules.reprojection.projectDepthTo3D(depthMap, options);
+      res.json(result);
+    });
+    
+    this.app.get('/xr/reprojection/shader', (req, res) => {
+      res.json(this.xrModules.reprojection.getShaderCode());
+    });
+    
+    this.app.get('/xr/reprojection/state', (req, res) => {
+      res.json(this.xrModules.reprojection.getState());
+    });
+    
+    // Evolution endpoints
+    this.app.get('/xr/evolution/modules', (req, res) => {
+      res.json(this.xrModules.evolution.getModules());
+    });
+    
+    this.app.post('/xr/evolution/loop/start', (req, res) => {
+      const { intervalMs } = req.body;
+      const result = this.xrModules.evolution.startEvolutionLoop(intervalMs);
+      res.json(result);
+    });
+    
+    this.app.post('/xr/evolution/loop/stop', (req, res) => {
+      res.json(this.xrModules.evolution.stopEvolutionLoop());
+    });
+    
+    this.app.get('/xr/evolution/history', (req, res) => {
+      const { limit } = req.query;
+      res.json(this.xrModules.evolution.getEvolutionHistory(limit ? parseInt(limit) : 50));
     });
   }
   

@@ -7,6 +7,8 @@
     "start": "node src/orchestrator/index.js",
     "dev": "nodemon src/orchestrator/index.js",
     "test": "node scripts/test.js",
+    "test:xr": "node scripts/test-xr-modules.js",
+    "test:all": "npm test && npm run test:xr",
     "demo:agentic": "node scripts/demo-agentic.js",
     "demo:benchmarks": "node scripts/demo-benchmarks.js",
     "demo:continuum": "node scripts/demo-continuum.js",
