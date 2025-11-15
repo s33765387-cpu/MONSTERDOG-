@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>MONSTERDOG vΩΩ - FULLTRUTL XR Engine</title>
+  <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/aframe-extras@6.1.1/dist/aframe-extras.min.js"></script>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Courier New', monospace;
+      background: #000;
+      color: #0f0;
+    }
+    
+    #info {
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border: 2px solid #00ff00;
+      max-width: 400px;
+    }
+    
+    #metrics {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      z-index: 1000;
+      background: rgba(0, 0, 0, 0.8);
+      padding: 15px;
+      border: 2px solid #00ffff;
+      min-width: 200px;
+    }
+    
+    .metric {
+      margin: 5px 0;
+      font-size: 14px;
+    }
+    
+    h1 {
+      margin: 0 0 10px 0;
+      font-size: 18px;
+      color: #00ff00;
+    }
+    
+    h2 {
+      margin: 10px 0 5px 0;
+      font-size: 14px;
+      color: #00ffff;
+    }
+  </style>
+</head>
+<body>
+  <div id="info">
+    <h1>🔱 MONSTERDOG vΩΩ 🔱</h1>
+    <p>FULLTRUTL SUPRÊME ENGINE</p>
+    <h2>Controls:</h2>
+    <p>WASD - Move | Mouse - Look<br>
+    VR - Enter VR mode button</p>
+    <h2>Features Active:</h2>
+    <ul style="margin: 5px 0; padding-left: 20px;">
+      <li>NEXUS Reality Hub</li>
+      <li>Vision Pipeline</li>
+      <li>3D Mesh System</li>
+      <li>AI Classifier</li>
+      <li>Particle System</li>
+      <li>Portals XR</li>
+      <li>Dual Reality</li>
+      <li>MONSTERDOG OS</li>
+    </ul>
+  </div>
+  
+  <div id="metrics">
+    <h2>Reality Metrics</h2>
+    <div class="metric">Entropy: <span id="entropy">0.000</span></div>
+    <div class="metric">Gradient: <span id="gradient">0.000</span></div>
+    <div class="metric">Vacuum: <span id="vacuum">0.000</span></div>
+    <div class="metric">Coherence: <span id="coherence">1.000</span></div>
+    <div class="metric">Density: <span id="density">0.000</span></div>
+  </div>
+
+  <a-scene background="color: #000">
+    <!-- Camera with controls -->
+    <a-entity id="camera" camera look-controls wasd-controls position="0 1.6 0">
+      <!-- HUD Rings -->
+      <a-entity id="hud" position="0 0 -1">
+        <!-- Entropy ring -->
+        <a-ring id="entropyRing"
+                radius-inner="0.35" radius-outer="0.40"
+                color="#ff3333"
+                opacity="0.75"
+                rotation="0 0 0"></a-ring>
+
+        <!-- Gradient ring -->
+        <a-ring id="gradientRing"
+                radius-inner="0.45" radius-outer="0.50"
+                color="#33aaff"
+                opacity="0.75"
+                rotation="0 0 0"></a-ring>
+
+        <!-- Vacuum ring -->
+        <a-ring id="vacuumRing"
+                radius-inner="0.55" radius-outer="0.60"
+                color="#aa33ff"
+                opacity="0.75"
+                rotation="0 0 0"></a-ring>
+      </a-entity>
+    </a-entity>
+
+    <!-- 360° Sky for OMNISIGHT -->
+    <a-sky id="omnisky" radius="10" color="#000"></a-sky>
+
+    <!-- Point cloud mesh container -->
+    <a-entity id="pointCloud" position="0 1.5 -2"></a-entity>
+
+    <!-- Portals -->
+    <a-entity id="portal1" 
+              geometry="primitive: plane; width: 1; height: 2"
+              position="-2 1.5 -4"
+              material="color: #6633ff; opacity: 0.7; side: double"
+              class="clickable">
+      <a-text value="SPECTRAL" align="center" color="#fff" position="0 1.1 0.01" scale="0.5 0.5 0.5"></a-text>
+    </a-entity>
+
+    <a-entity id="portal2" 
+              geometry="primitive: plane; width: 1; height: 2"
+              position="2 1.5 -4"
+              material="color: #33ff88; opacity: 0.7; side: double"
+              class="clickable">
+      <a-text value="FRACTAL" align="center" color="#fff" position="0 1.1 0.01" scale="0.5 0.5 0.5"></a-text>
+    </a-entity>
+
+    <a-entity id="portal3" 
+              geometry="primitive: plane; width: 1; height: 2"
+              position="0 1.5 -4"
+              material="color: #3388ff; opacity: 0.7; side: double"
+              class="clickable">
+      <a-text value="QUANTUM" align="center" color="#fff" position="0 1.1 0.01" scale="0.5 0.5 0.5"></a-text>
+    </a-entity>
+
+    <!-- Holographic UI Panels -->
+    <a-entity id="uiPanel" position="0 2.2 -1.5" rotation="0 0 0">
+      <a-plane width="1.4" height="0.7"
+               color="#111"
+               opacity="0.85"></a-plane>
+
+      <a-text id="metricsText" 
+              value="MONSTERDOG OS\nMetrics Loading..." 
+              color="#00ff00"
+              align="left"
+              position="-0.65 0.25 0.01"
+              scale="0.4 0.4 0.4"></a-text>
+    </a-entity>
+
+    <!-- Entities -->
+    <a-entity id="monsterdog-entity"
+              geometry="primitive: sphere; radius: 0.3"
+              material="color: #ff0000; metalness: 0.8; roughness: 0.2"
+              position="-1 1.6 -3"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+      <a-text value="MONSTERDOG" align="center" color="#fff" position="0 0.5 0" scale="0.3 0.3 0.3"></a-text>
+    </a-entity>
+
+    <a-entity id="geminidog-entity"
+              geometry="primitive: sphere; radius: 0.3"
+              material="color: #0000ff; metalness: 0.8; roughness: 0.2"
+              position="0 1.6 -3"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 8000">
+      <a-text value="GEMINIDOG" align="center" color="#fff" position="0 0.5 0" scale="0.3 0.3 0.3"></a-text>
+    </a-entity>
+
+    <a-entity id="exochronos-entity"
+              geometry="primitive: sphere; radius: 0.3"
+              material="color: #00ff00; metalness: 0.8; roughness: 0.2"
+              position="1 1.6 -3"
+              animation="property: rotation; to: 0 360 0; loop: true; dur: 12000">
+      <a-text value="EXOCHRONOS" align="center" color="#fff" position="0 0.5 0" scale="0.3 0.3 0.3"></a-text>
+    </a-entity>
+
+    <!-- Floor -->
+    <a-plane position="0 0 0" rotation="-90 0 0" width="20" height="20" 
+             color="#111" opacity="0.8"></a-plane>
+
+    <!-- Lighting -->
+    <a-light type="ambient" color="#4444aa" intensity="0.5"></a-light>
+    <a-light type="directional" color="#ffffff" intensity="0.8" position="1 1 1"></a-light>
+  </a-scene>
+
+  <script>
+    // WebSocket connection for real-time metrics
+    let ws = null;
+    let metricsData = {
+      entropy: 0,
+      gradient: 0,
+      vacuum_index: 0,
+      coherence: 1.0,
+      density: 0
+    };
+
+    // Initialize connection
+    function connectWebSocket() {
+      // In real implementation, connect to backend WebSocket
+      console.log('🔱 MONSTERDOG XR Interface initialized');
+      simulateMetrics();
+    }
+
+    // Simulate metrics updates
+    function simulateMetrics() {
+      setInterval(() => {
+        metricsData.entropy = Math.random() * 10;
+        metricsData.gradient = Math.random() * 5;
+        metricsData.vacuum_index = Math.random() * 5;
+        metricsData.coherence = 0.8 + Math.random() * 0.2;
+        metricsData.density = Math.random();
+        
+        updateMetricsDisplay();
+        updateHUD();
+      }, 100);
+    }
+
+    // Update metrics display
+    function updateMetricsDisplay() {
+      document.getElementById('entropy').textContent = metricsData.entropy.toFixed(3);
+      document.getElementById('gradient').textContent = metricsData.gradient.toFixed(3);
+      document.getElementById('vacuum').textContent = metricsData.vacuum_index.toFixed(3);
+      document.getElementById('coherence').textContent = metricsData.coherence.toFixed(3);
+      document.getElementById('density').textContent = metricsData.density.toFixed(3);
+    }
+
+    // Update HUD rings
+    function updateHUD() {
+      const entropyRing = document.querySelector('#entropyRing');
+      const gradientRing = document.querySelector('#gradientRing');
+      const vacuumRing = document.querySelector('#vacuumRing');
+      
+      if (entropyRing) {
+        entropyRing.setAttribute('rotation', {
+          x: 0,
+          y: (metricsData.entropy * 120) % 360,
+          z: (metricsData.entropy * 80) % 360
+        });
+      }
+      
+      if (gradientRing) {
+        gradientRing.setAttribute('rotation', {
+          x: (metricsData.gradient * 40) % 360,
+          y: 0,
+          z: (metricsData.gradient * 90) % 360
+        });
+      }
+      
+      if (vacuumRing) {
+        vacuumRing.setAttribute('rotation', {
+          x: 0,
+          y: (metricsData.vacuum_index * 200) % 360,
+          z: (metricsData.vacuum_index * 40) % 360
+        });
+      }
+      
+      // Update UI panel text
+      const metricsText = document.querySelector('#metricsText');
+      if (metricsText) {
+        metricsText.setAttribute('value', 
+          `MONSTERDOG OS vΩΩ\n` +
+          `E: ${metricsData.entropy.toFixed(2)} | ` +
+          `G: ${metricsData.gradient.toFixed(2)}\n` +
+          `V: ${metricsData.vacuum_index.toFixed(2)} | ` +
+          `C: ${metricsData.coherence.toFixed(2)}`
+        );
+      }
+    }
+
+    // Portal click handlers
+    AFRAME.registerComponent('portal-activate', {
+      init: function() {
+        this.el.addEventListener('click', () => {
+          const portalId = this.el.getAttribute('id');
+          const sky = document.querySelector('#omnisky');
+          
+          switch(portalId) {
+            case 'portal1':
+              sky.setAttribute('color', '#110022');
+              console.log('🌀 Entered SPECTRAL realm');
+              break;
+            case 'portal2':
+              sky.setAttribute('color', '#002211');
+              console.log('🌀 Entered FRACTAL realm');
+              break;
+            case 'portal3':
+              sky.setAttribute('color', '#001133');
+              console.log('🌀 Entered QUANTUM realm');
+              break;
+          }
+        });
+      }
+    });
+
+    // Apply portal activation to all portals
+    document.addEventListener('DOMContentLoaded', () => {
+      const portals = document.querySelectorAll('.clickable');
+      portals.forEach(portal => {
+        portal.setAttribute('portal-activate', '');
+      });
+    });
+
+    // Start the system
+    window.addEventListener('load', () => {
+      connectWebSocket();
+      console.log('✴︎ FULLTRUTL XR Engine ACTIVE ✴︎');
+    });
+  </script>
+</body>
+</html>
