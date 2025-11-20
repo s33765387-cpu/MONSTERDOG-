@@ -7,11 +7,13 @@
     "start": "node src/orchestrator/index.js",
     "dev": "nodemon src/orchestrator/index.js",
     "test": "node scripts/test.js",
+    "test:consciousness": "node scripts/test-consciousness.js",
     "test:xr": "node scripts/test-xr-modules.js",
-    "test:all": "npm test && npm run test:xr",
+    "test:all": "npm test && npm run test:xr && npm run test:consciousness",
     "demo:agentic": "node scripts/demo-agentic.js",
     "demo:benchmarks": "node scripts/demo-benchmarks.js",
     "demo:continuum": "node scripts/demo-continuum.js",
+    "demo:consciousness": "node scripts/demo-consciousness.js",
     "validate:manifests": "node scripts/validate-manifests.js",
     "go:continuum": "node scripts/go-mode-continuum.js",
     "package:artifacts": "bash scripts/package-artifacts.sh",
@@ -35,7 +37,8 @@
   "dependencies": {
     "express": "^4.18.2",
     "three": "^0.158.0",
-    "web3": "^4.3.0"
+    "web3": "^4.3.0",
+    "ws": "^8.14.2"
   },
   "devDependencies": {
     "nodemon": "^3.0.2"
