@@ -151,7 +151,7 @@ jobs:
           cat mmlu-report.md
       
       - name: 📤 Upload MMLU Results
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: mmlu-evaluation-results
           path: |
