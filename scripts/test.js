@@ -12,6 +12,7 @@ const WebXREngine = require('../src/webxr');
 const NFTIntegration = require('../src/nft');
 const AGIOrchestrator = require('../src/agi');
 const GOModeBenchmarks = require('../src/benchmarks');
+const ConsciousnessBridge = require('../src/consciousness');
 
 console.log('═══════════════════════════════════════════════════');
 console.log('👾 MONSTERDOG SUPREME - System Test 👾');
@@ -445,6 +446,39 @@ test('Agentic actions count includes GO MODE actions', () => {
   
   const goActions = actions.filter(a => a.category === 'GO_MODE');
   if (goActions.length !== 2) throw new Error(`Expected 2 GO MODE actions, got ${goActions.length}`);
+});
+
+console.log('');
+
+// Test Consciousness Bridge
+console.log('Testing Consciousness Bridge...');
+const bridge = new ConsciousnessBridge();
+test('Consciousness bridge creation', () => {
+  if (!bridge) throw new Error('Bridge not created');
+  if (bridge.active !== false) throw new Error('Should not be active initially');
+});
+test('Consciousness bridge initial state', () => {
+  const state = bridge.getState();
+  if (state.unified !== false) throw new Error('Should not be unified initially');
+  if (state.nodeActive !== true) throw new Error('Node should be active');
+  if (state.syncCount !== 0) throw new Error('Sync count should be 0');
+});
+test('Consciousness bridge metrics', () => {
+  const metrics = bridge.getMetrics();
+  if (metrics.unified !== false) throw new Error('Should not be unified');
+  if (metrics.activeObservers !== 0) throw new Error('No observers initially');
+});
+test('Consciousness bridge custom options', () => {
+  const customBridge = new ConsciousnessBridge({
+    pythonDaemonUrl: 'http://localhost:9000',
+    syncInterval: 2000
+  });
+  if (customBridge.pythonDaemonUrl !== 'http://localhost:9000') {
+    throw new Error('Custom URL not set');
+  }
+  if (customBridge.syncInterval !== 2000) {
+    throw new Error('Custom interval not set');
+  }
 });
 
 console.log('');

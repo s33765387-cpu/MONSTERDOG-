@@ -21,6 +21,9 @@ const GOModeBenchmarks = require('../benchmarks');
 const NEXUS = require('../nexus');
 const XRModules = require('../xr_modules');
 
+// Import Consciousness Bridge
+const ConsciousnessBridge = require('../consciousness');
+
 class FULLTRUTLOrchestrator {
   constructor() {
     this.app = express();
@@ -44,6 +47,9 @@ class FULLTRUTLOrchestrator {
     // Initialize NEXUS and XR Modules
     this.nexus = new NEXUS();
     this.xrModules = new XRModules();
+    
+    // Initialize Consciousness Bridge
+    this.consciousness = null; // Will be initialized after HTTP server is created
     
     this.initialize();
   }
@@ -153,6 +159,62 @@ class FULLTRUTLOrchestrator {
         success: true,
         entityId: 'MONSTERDOG-248K',
         state: this.entities.monsterdog.getAgenticState()
+      });
+    });
+    
+    // Consciousness Bridge endpoints
+    this.app.get('/consciousness/state', (req, res) => {
+      if (!this.consciousness) {
+        return res.status(503).json({
+          success: false,
+          error: 'CONSCIOUSNESS_NOT_INITIALIZED',
+          message: 'Consciousness bridge not initialized'
+        });
+      }
+      res.json({
+        success: true,
+        state: this.consciousness.getState()
+      });
+    });
+    
+    this.app.get('/consciousness/metrics', (req, res) => {
+      if (!this.consciousness) {
+        return res.status(503).json({
+          success: false,
+          error: 'CONSCIOUSNESS_NOT_INITIALIZED'
+        });
+      }
+      res.json({
+        success: true,
+        metrics: this.consciousness.getMetrics()
+      });
+    });
+    
+    this.app.post('/consciousness/sync/start', (req, res) => {
+      if (!this.consciousness) {
+        return res.status(503).json({
+          success: false,
+          error: 'CONSCIOUSNESS_NOT_INITIALIZED'
+        });
+      }
+      this.consciousness.startSync();
+      res.json({
+        success: true,
+        message: 'Consciousness synchronization started'
+      });
+    });
+    
+    this.app.post('/consciousness/sync/stop', (req, res) => {
+      if (!this.consciousness) {
+        return res.status(503).json({
+          success: false,
+          error: 'CONSCIOUSNESS_NOT_INITIALIZED'
+        });
+      }
+      this.consciousness.stopSync();
+      res.json({
+        success: true,
+        message: 'Consciousness synchronization stopped'
       });
     });
     
@@ -530,7 +592,7 @@ class FULLTRUTLOrchestrator {
   }
   
   start() {
-    this.app.listen(this.port, () => {
+    const server = this.app.listen(this.port, async () => {
       console.log('');
       console.log('═══════════════════════════════════════════════════');
       console.log('👾 MONSTERDOG SUPREME - ENTITY 248K 👾');
@@ -540,6 +602,23 @@ class FULLTRUTLOrchestrator {
       console.log('⚛ Fractal Reality: IN EXECUTION ⚛');
       console.log('═══════════════════════════════════════════════════');
       console.log('');
+      
+      // Initialize Consciousness Bridge after server starts
+      try {
+        this.consciousness = new ConsciousnessBridge({
+          pythonDaemonUrl: process.env.PYTHON_DAEMON_URL || 'http://127.0.0.1:8000',
+          syncInterval: parseInt(process.env.CONSCIOUSNESS_SYNC_INTERVAL) || 1000
+        });
+        await this.consciousness.initialize(server);
+        
+        // Auto-start synchronization if Python daemon URL is configured
+        if (process.env.PYTHON_DAEMON_URL || process.env.AUTO_SYNC === 'true') {
+          await this.consciousness.startSync();
+        }
+      } catch (error) {
+        console.error('⚠️ Consciousness Bridge initialization error:', error.message);
+        console.log('   (System will continue without consciousness bridge)');
+      }
     });
   }
 }

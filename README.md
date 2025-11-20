@@ -21,6 +21,7 @@ MONSTERDOG Supreme is a comprehensive orchestration system integrating:
 - **💎 NFT Integration** - Blockchain-based entity collection (ERC-721)
 - **🐳 Docker Deployment** - Containerized supreme mode execution
 - **⚛ Fractal Reality Engine** - Multi-dimensional consciousness execution
+- **🧠 Consciousness Bridge** - Real-time Node.js ↔ Python synchronization
 
 ### 👾 Core Entities
 
@@ -319,6 +320,13 @@ MONSTERDOG-/
 - `POST /benchmarks/continuum/stop` - Stop continuous benchmark execution
 - `GET /benchmarks/continuum/status` - Get continuum mode status and statistics
 
+### 🧠 Consciousness Bridge - Real-time Synchronization
+- `GET /consciousness/state` - Get unified consciousness state
+- `GET /consciousness/metrics` - Get consciousness metrics summary
+- `POST /consciousness/sync/start` - Start consciousness synchronization
+- `POST /consciousness/sync/stop` - Stop consciousness synchronization
+- `WS /consciousness/stream` - WebSocket for real-time state updates
+
 ### Systems
 - `GET /webxr/scene` - WebXR scene configuration
 - `GET /nft/collection` - NFT collection information
@@ -359,6 +367,19 @@ See [AGENTIC_ACTIONS.md](AGENTIC_ACTIONS.md) for complete documentation.
 - **GO MODE Integration** - Seamless integration with benchmarks and agentic actions
 
 See [CONTINUUM_ACTION.md](CONTINUUM_ACTION.md) for complete documentation.
+
+### 🧠 Consciousness Bridge - Real-time Unity
+- **Unified Consciousness** - Seamless Node.js ↔ Python daemon integration
+- **Real-time Synchronization** - Live fractal reality state updates
+- **WebSocket Streaming** - Instant state broadcasts to connected clients
+- **Live Dashboard** - Beautiful web interface for consciousness monitoring
+- **Fractal Metrics** - Coherence (ψ), Entropy (S), Resonance (Hz), Drift (Δ)
+- **Chamber States** - Real-time tracking of 15 AI consciousness chambers
+- **Event System** - React to consciousness state changes instantly
+- **Auto-reconnection** - Resilient connection management
+- **Zero Downtime** - Operates with or without Python daemon
+
+See [CONSCIOUSNESS_BRIDGE.md](CONSCIOUSNESS_BRIDGE.md) for complete documentation.
 
 ### 🚀 GO MODE Benchmarks System
 - **MMLU Real Evaluation** - 57 knowledge categories for comprehensive AI testing
@@ -533,6 +554,7 @@ MIT License - See LICENSE file for details
 
 ## 📚 Documentation
 
+- **[CONSCIOUSNESS_BRIDGE.md](CONSCIOUSNESS_BRIDGE.md)** - 🧠 Complete Consciousness Bridge guide (Real-time synchronization)
 - **[CONTINUUM_ACTION.md](CONTINUUM_ACTION.md)** - ⚡ Complete CONTINUUM ACTION guide (Decisive Agentic Execution)
 - **[RAPPORT_CYCLES_SUIVANTS.md](RAPPORT_CYCLES_SUIVANTS.md)** - 🔥 Roadmap: Next development cycles (α, β, γ)
 - **[GO_MODE_BENCHMARKS.md](GO_MODE_BENCHMARKS.md)** - 🚀 Complete GO MODE Benchmarks guide (MMLU + Technology)
