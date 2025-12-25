@@ -1,0 +1,40 @@
+# Grafana Datasource Configuration for MONSTERDOG
+# Supports TimescaleDB and Prometheus
+
+apiVersion: 1
+
+datasources:
+  # TimescaleDB (PostgreSQL extension) for signal data
+  - name: TimescaleDB
+    type: postgres
+    access: proxy
+    url: timescaledb:5432
+    database: monsterdog
+    user: monsterdog_user
+    secureJsonData:
+      password: ${TIMESCALE_PASSWORD}
+    jsonData:
+      sslmode: disable
+      maxOpenConns: 10
+      maxIdleConns: 5
+      connMaxLifetime: 14400
+      postgresVersion: 1500
+      timescaledb: true
+    isDefault: true
+
+  # Prometheus for system metrics
+  - name: Prometheus
+    type: prometheus
+    access: proxy
+    url: http://prometheus:9090
+    jsonData:
+      timeInterval: "15s"
+      httpMethod: GET
+
+  # Loki for logs (optional)
+  - name: Loki
+    type: loki
+    access: proxy
+    url: http://loki:3100
+    jsonData:
+      maxLines: 1000

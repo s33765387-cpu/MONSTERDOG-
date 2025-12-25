@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MONSTERDOG XR - Fractal Reality</title>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script src="https://cdn.socket.io/4.0.0/socket.io.min.js"></script>
+    <style>
+        body {
+            margin: 0;
+            background: #000;
+            overflow: hidden;
+        }
+        #info-panel {
+            position: fixed;
+            top: 20px;
+            left: 20px;
+            background: rgba(0, 255, 255, 0.1);
+            border: 1px solid cyan;
+            padding: 15px;
+            color: white;
+            font-family: 'Courier New', monospace;
+            z-index: 1000;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        #info-panel h2 {
+            margin: 0 0 10px 0;
+            color: cyan;
+            font-size: 16px;
+        }
+        #info-panel .metric {
+            margin: 5px 0;
+            font-size: 14px;
+        }
+        #info-panel .value {
+            color: #0ff;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div id="info-panel">
+        <h2>🔱 MONSTERDOG XR</h2>
+        <div class="metric">Status: <span class="value" id="status">Initializing...</span></div>
+        <div class="metric">Coherence ψ: <span class="value" id="coherence">--</span></div>
+        <div class="metric">Resonance: <span class="value" id="resonance">11.987 Hz</span></div>
+        <div class="metric">Signal Points: <span class="value" id="points">--</span></div>
+    </div>
+
+    <a-scene vr-mode-ui="enabled: true" background="color: #000010">
+        <!-- Ambient lighting -->
+        <a-entity light="type: ambient; color: #222"></a-entity>
+        <a-entity light="type: directional; color: #FFF; intensity: 0.8" position="-1 1 2"></a-entity>
+        
+        <!-- Central MONSTERDOG entity -->
+        <a-entity id="monsterdog-core" position="0 1.5 -4">
+            <!-- Core sphere -->
+            <a-sphere 
+                radius="0.5" 
+                color="#0ff" 
+                opacity="0.8"
+                animation="property: rotation; to: 0 360 0; loop: true; dur: 10000">
+            </a-sphere>
+            
+            <!-- Orbiting rings -->
+            <a-torus 
+                radius="0.8" 
+                radius-tubular="0.02" 
+                color="#f0f" 
+                opacity="0.6"
+                animation="property: rotation; to: 360 0 0; loop: true; dur: 5000">
+            </a-torus>
+            <a-torus 
+                radius="1.0" 
+                radius-tubular="0.02" 
+                color="#ff0" 
+                opacity="0.6"
+                rotation="90 0 0"
+                animation="property: rotation; to: 90 360 0; loop: true; dur: 7000">
+            </a-torus>
+        </a-entity>
+        
+        <!-- Signal wave visualization -->
+        <a-entity id="signalWave" position="0 0.5 -3"></a-entity>
+        
+        <!-- Grid floor -->
+        <a-grid 
+            width="20" 
+            height="20" 
+            color="#0ff" 
+            opacity="0.3"
+            position="0 0 -5">
+        </a-grid>
+        
+        <!-- Particle system -->
+        <a-entity 
+            id="particles"
+            position="0 2 -5"
+            particle-system="preset: dust; color: #0ff, #f0f; particleCount: 1000">
+        </a-entity>
+        
+        <!-- Fractal boxes representing data points -->
+        <a-entity id="fractal-boxes" position="0 1 -5"></a-entity>
+        
+        <!-- Sky -->
+        <a-sky color="#000020"></a-sky>
+        
+        <!-- Camera -->
+        <a-camera position="0 1.6 3">
+            <a-cursor color="#0ff"></a-cursor>
+        </a-camera>
+    </a-scene>
+
+    <script src="xr_app.js"></script>
+</body>
+</html>
