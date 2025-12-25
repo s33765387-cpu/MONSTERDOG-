@@ -1,0 +1,93 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: monsterdog-system
+  labels:
+    app: monsterdog
+    component: system
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: monsterdog
+      component: system
+  template:
+    metadata:
+      labels:
+        app: monsterdog
+        component: system
+    spec:
+      containers:
+      - name: monsterdog
+        image: monsterdog-system:latest
+        ports:
+        - containerPort: 5000
+          name: http
+        - containerPort: 9090
+          name: metrics
+        env:
+        - name: FLASK_ENV
+          value: "production"
+        - name: SUPREME_MODE
+          value: "active"
+        - name: RESONANCE_HZ
+          value: "11.987"
+        resources:
+          requests:
+            memory: "256Mi"
+            cpu: "250m"
+          limits:
+            memory: "512Mi"
+            cpu: "500m"
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 5000
+          initialDelaySeconds: 30
+          periodSeconds: 10
+        readinessProbe:
+          httpGet:
+            path: /api/status
+            port: 5000
+          initialDelaySeconds: 5
+          periodSeconds: 5
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: monsterdog-service
+  labels:
+    app: monsterdog
+spec:
+  type: ClusterIP
+  ports:
+  - port: 5000
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  - port: 9090
+    targetPort: 9090
+    protocol: TCP
+    name: metrics
+  selector:
+    app: monsterdog
+    component: system
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: monsterdog-ingress
+  annotations:
+    nginx.ingress.kubernetes.io/rewrite-target: /
+spec:
+  rules:
+  - host: monsterdog.local
+    http:
+      paths:
+      - path: /
+        pathType: Prefix
+        backend:
+          service:
+            name: monsterdog-service
+            port:
+              number: 5000

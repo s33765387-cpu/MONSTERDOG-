@@ -51,6 +51,12 @@ __pycache__/
 *.pyc
 *.pyo
 
+# Python testing/coverage
+.coverage
+htmlcov/
+.pytest_cache/
+*.egg-info/
+
 # Ω-SYSTEM logs and runtime data
 Ω_CORE/MD_LOGS/*.log
 Ω_CORE/MD_LOGS/*.jsonl

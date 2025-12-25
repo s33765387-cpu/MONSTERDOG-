@@ -1,0 +1,36 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: monsterdog-lb
+  labels:
+    app: monsterdog
+spec:
+  type: LoadBalancer
+  ports:
+  - port: 80
+    targetPort: 5000
+    protocol: TCP
+    name: http
+  selector:
+    app: monsterdog
+    component: system
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: monsterdog-config
+data:
+  FLASK_ENV: "production"
+  SUPREME_MODE: "active"
+  RESONANCE_HZ: "11.987"
+  LOG_LEVEL: "INFO"
+---
+apiVersion: v1
+kind: Secret
+metadata:
+  name: monsterdog-secrets
+type: Opaque
+data:
+  # Base64 encoded secrets (example values)
+  DB_PASSWORD: bW9uc3RlcmRvZ19zZWNyZXQ=
+  API_KEY: YXBpX2tleV9wbGFjZWhvbGRlcg==
