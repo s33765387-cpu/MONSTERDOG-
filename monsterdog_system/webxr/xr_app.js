@@ -3,8 +3,10 @@
  * Real-time signal visualization in WebXR
  */
 
-// Connect to the Flask-SocketIO server
+// Constants
 const SOCKET_URL = window.location.origin || 'http://localhost:5000';
+const BASE_RESONANCE_HZ = 11.987;  // MONSTERDOG fundamental frequency
+const MAX_VISUALIZATION_POINTS = 200;  // Performance limit for 3D visualization
 let socket = null;
 
 // State
@@ -100,7 +102,7 @@ function updateVisualization(data) {
     }
     
     // Create line visualization using boxes
-    const step = Math.max(1, Math.floor(data.sig.length / 200)); // Limit points for performance
+    const step = Math.max(1, Math.floor(data.sig.length / MAX_VISUALIZATION_POINTS)); // Limit points for performance
     
     for (let i = 0; i < data.sig.length; i += step) {
         const box = document.createElement('a-box');
@@ -197,7 +199,7 @@ setTimeout(() => {
         const sig = [];
         for (let i = 0; i < 2000; i++) {
             t.push(i / 1000);
-            sig.push(Math.sin(2 * Math.PI * 11.987 * i / 1000));
+            sig.push(Math.sin(2 * Math.PI * BASE_RESONANCE_HZ * i / 1000));
         }
         
         updateVisualization({ t, sig });

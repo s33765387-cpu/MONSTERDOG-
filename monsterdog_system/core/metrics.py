@@ -7,6 +7,9 @@ These metrics are central to the MONSTERDOG system's operation.
 
 import numpy as np
 
+# Small epsilon to avoid log(0) in entropy calculation
+LOG_EPSILON = 1e-12
+
 
 def compute_coherence(signal):
     """
@@ -60,7 +63,7 @@ def compute_entropy(signal):
     
     p = abs_signal / total
     # Shannon entropy with small epsilon to avoid log(0)
-    entropy = -np.sum(p * np.log(p + 1e-12))
+    entropy = -np.sum(p * np.log(p + LOG_EPSILON))
     return float(entropy)
 
 

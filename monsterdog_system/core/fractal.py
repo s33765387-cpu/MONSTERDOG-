@@ -11,6 +11,10 @@ from collections import deque
 import hashlib
 import time
 
+# Time-based variation constants for coherence computation
+TIME_VARIATION_SCALE = 0.01  # Scale factor for time-based sine wave
+TIME_VARIATION_DIVISOR = 2   # Divisor for normalizing sine to 0-1 range
+
 
 @dataclass
 class FractalState:
@@ -69,7 +73,7 @@ class FractalEngine:
             cycle_id = self.cycle_count
         
         # Time-based variation
-        time_factor = (np.sin(time.time() * 0.01) + 1) / 2
+        time_factor = (np.sin(time.time() * TIME_VARIATION_SCALE) + 1) / TIME_VARIATION_DIVISOR
         
         # Cycle-based deterministic drift
         cycle_hash = hashlib.sha256(str(cycle_id).encode()).digest()
