@@ -46,7 +46,7 @@ originalLog('');
 // Benchmark configuration
 const BENCHMARK_ITERATIONS = 100000; // 100k ops for accurate benchmarks
 const QUANTUM_CYCLES = 100; // Quantum engine simulation cycles
-const AGI_BENCHMARK_ITERATIONS = 500000; // AGI operations are more complex, use fewer iterations
+const AGI_BENCHMARK_ITERATIONS = 500000; // AGI operations are more complex, use more iterations for accuracy
 
 // Store benchmark results
 const benchmarkResults = [];
@@ -349,7 +349,10 @@ try {
   originalLog('📄 Results exported to: /tmp/monsterdog_benchmark_results.json');
   originalLog('');
 } catch (err) {
-  // Silent fail: /tmp may not be writable in certain environments (e.g., restricted containers)
+  // /tmp may not be writable in certain environments (e.g., restricted containers)
   // Benchmark results are still displayed to console, so this is non-critical
-  // Users can manually save console output if needed
+  originalLog('');
+  originalLog('⚠️  Could not export results to /tmp/monsterdog_benchmark_results.json');
+  originalLog('   (Results are available in console output above)');
+  originalLog('');
 }
