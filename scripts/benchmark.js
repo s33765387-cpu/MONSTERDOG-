@@ -10,22 +10,21 @@ const fs = require('fs');
 // Store original console.log BEFORE loading modules
 const originalLog = console.log;
 
+// Patterns to suppress during benchmarking (entity activation messages, etc.)
+const SUPPRESS_PATTERNS = [
+  'activated', 'Initializing', 'synchronized', 'Reality manipulation',
+  'Fractal execution', 'Temporal Control', 'Quantum-Classical', 'parallel processing',
+  'Time streams', 'timeline access', 'Synchronizing', 'established',
+  'ONLINE', 'GRANTED', 'WebXR Engine', 'Reality mode',
+  'Fractal scene', 'NFT Integration', 'Collection initialized', 'Token minted',
+  'AGI Orchestrator', 'Executing AGI', 'Isaac Sim', 'Intelligence level',
+  'Command executed', 'Reality simulated'
+];
+
 // Suppress entity activation messages during benchmarking
 console.log = function(...args) {
   const msg = args.join(' ');
-  if (msg.includes('activated') || msg.includes('Initializing') || 
-      msg.includes('synchronized') || msg.includes('Reality manipulation') ||
-      msg.includes('Fractal execution') || msg.includes('Temporal Control') ||
-      msg.includes('Quantum-Classical') || msg.includes('parallel processing') ||
-      msg.includes('Time streams') || msg.includes('timeline access') ||
-      msg.includes('Synchronizing') || msg.includes('established') ||
-      msg.includes('ONLINE') || msg.includes('GRANTED') ||
-      msg.includes('WebXR Engine') || msg.includes('Reality mode') ||
-      msg.includes('Fractal scene') || msg.includes('NFT Integration') ||
-      msg.includes('Collection initialized') || msg.includes('Token minted') ||
-      msg.includes('AGI Orchestrator') || msg.includes('Executing AGI') ||
-      msg.includes('Isaac Sim') || msg.includes('Intelligence level') ||
-      msg.includes('Command executed') || msg.includes('Reality simulated')) {
+  if (SUPPRESS_PATTERNS.some(pattern => msg.includes(pattern))) {
     return; // Suppress activation messages
   }
   originalLog.apply(console, args);
@@ -47,6 +46,7 @@ originalLog('');
 // Benchmark configuration
 const BENCHMARK_ITERATIONS = 100000; // 100k ops for accurate benchmarks
 const QUANTUM_CYCLES = 100; // Quantum engine simulation cycles
+const AGI_BENCHMARK_ITERATIONS = 500000; // AGI operations are more complex, use fewer iterations
 
 // Store benchmark results
 const benchmarkResults = [];
@@ -255,7 +255,7 @@ benchmark('AGI - Command Execution', () => {
   const agi = new AGIOrchestrator();
   agi.initialize();
   agi.executeCommand({ type: 'STATUS' });
-}, 500000); // Reduced iterations for slower operations
+}, AGI_BENCHMARK_ITERATIONS);
 
 benchmark('AGI - Reality Simulation', () => {
   const agi = new AGIOrchestrator();
@@ -349,5 +349,7 @@ try {
   originalLog('📄 Results exported to: /tmp/monsterdog_benchmark_results.json');
   originalLog('');
 } catch (err) {
-  // Silent fail if can't write to /tmp
+  // Silent fail: /tmp may not be writable in certain environments (e.g., restricted containers)
+  // Benchmark results are still displayed to console, so this is non-critical
+  // Users can manually save console output if needed
 }

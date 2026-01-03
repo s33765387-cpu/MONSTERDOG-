@@ -548,8 +548,8 @@ MONSTERDOG's **QuantumCoreEngine_Simulator** operates at the theoretical limits 
    Synchronized Entities: 72,000
    
    Performance Metrics:
-   ✓ Coherence (ψΩ): 0.49876 → Target: >0.95 (SUPRÊME)
-   ✓ Entropy (ψΩ): 0.75656 → Target: <0.30 (SUPRÊME)
+   ✓ Coherence (ψΩ): 0.49876 → Aspirational Target: >0.95 (SUPRÊME)
+   ✓ Entropy (ψΩ): 0.75656 → Aspirational Target: <0.30 (SUPRÊME)
    ✓ Fractal Dimension: 1.87009
    ✓ Cycle Time: ~165ms per 100 ψΩ cycles
    ✓ État: STABLE → SUPRÊME
