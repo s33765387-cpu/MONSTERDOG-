@@ -7,6 +7,7 @@
     "start": "node src/orchestrator/index.js",
     "dev": "nodemon src/orchestrator/index.js",
     "test": "node scripts/test.js",
+    "benchmark": "node scripts/benchmark.js",
     "test:consciousness": "node scripts/test-consciousness.js",
     "test:xr": "node scripts/test-xr-modules.js",
     "test:all": "npm test && npm run test:xr && npm run test:consciousness",
